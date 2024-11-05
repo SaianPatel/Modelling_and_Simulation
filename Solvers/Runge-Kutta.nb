@@ -1,0 +1,221 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      8041,        211]
+NotebookOptionsPosition[      7477,        193]
+NotebookOutlinePosition[      7869,        209]
+CellTagsIndexPosition[      7826,        206]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Runge-Kutta Solver", "Title",
+ CellChangeTimes->{{3.9398048391319447`*^9, 
+  3.9398048453201733`*^9}},ExpressionUUID->"518d8006-1a72-4672-9894-\
+38b6796030ae"],
+
+Cell["\<\
+The below code is an example of a Runge-Kutta solver.
+It allows for non-linear dynamics in the system by separating the system into \
+2 matrices.\
+\>", "Text",
+ CellChangeTimes->{{3.939804852552745*^9, 
+  3.939804899895735*^9}},ExpressionUUID->"bdf1c87e-97b5-405d-bd49-\
+38d481d8a0a5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RungeKuttaSolver", "[", 
+   RowBox[{
+   "initialState_", ",", " ", "A_", ",", " ", "B_", ",", " ", "stepSize_", 
+    ",", " ", "steps_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"Module", "[", "\n", "    ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "state", ",", " ", "trajectory", ",", " ", "nonlinearTerm", ",", " ", 
+      "k1", ",", " ", "k2", ",", " ", "k3", ",", " ", "k4"}], "}"}], ",", 
+    "\n", "    ", "\n", "    ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Initialize", " ", "the", " ", "state", " ", "and", " ", "trajectory"}], 
+     " ", "*)"}], "\n", "    ", 
+    RowBox[{
+     RowBox[{"state", " ", "=", " ", "initialState"}], ";", "\n", "    ", 
+     RowBox[{"trajectory", " ", "=", " ", 
+      RowBox[{"{", "state", "}"}]}], ";", "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Iterate", " ", "for", " ", "the", " ", "specified", " ", "number", " ",
+        "of", " ", "steps"}], " ", "*)"}], "\n", "    ", 
+     RowBox[{"Do", "[", "\n", "        ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Define", " ", "the", " ", "nonlinear", " ", "term", " ", "for", " ", 
+        "the", " ", "current", " ", "state"}], " ", "*)"}], "\n", "        ", 
+      
+      RowBox[{
+       RowBox[{
+        RowBox[{"nonlinearTerm", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"B", " ", ".", " ", "state"}], " ", "*", " ", 
+          RowBox[{"state", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}]}], ";", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "B", " ", "*", " ", "S", " ", "*", " ", "I", " ", "term", " ", "for",
+           " ", "SIR", " ", "model"}], " ", "*)"}], "\n", "\n", "        ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Calculate", " ", "the", " ", "four", " ", "slopes", " ", 
+          RowBox[{"(", 
+           RowBox[{"k1", ",", " ", "k2", ",", " ", "k3", ",", " ", "k4"}], 
+           ")"}]}], " ", "*)"}], "\n", "        ", 
+        RowBox[{"k1", " ", "=", " ", 
+         RowBox[{"stepSize", " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"A", " ", ".", " ", "state"}], " ", "+", " ", 
+            "nonlinearTerm"}], ")"}]}]}], ";", "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"nonlinearTerm", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"B", " ", ".", " ", 
+           RowBox[{"(", 
+            RowBox[{"state", " ", "+", " ", 
+             RowBox[{"k1", "/", "2"}]}], ")"}]}], " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"state", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+            RowBox[{
+             RowBox[{"k1", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "/", "2"}]}], ")"}]}]}], ";", 
+        "\n", "        ", 
+        RowBox[{"k2", " ", "=", " ", 
+         RowBox[{"stepSize", " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"A", " ", ".", " ", 
+             RowBox[{"(", 
+              RowBox[{"state", " ", "+", " ", 
+               RowBox[{"k1", "/", "2"}]}], ")"}]}], " ", "+", " ", 
+            "nonlinearTerm"}], ")"}]}]}], ";", "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"nonlinearTerm", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"B", " ", ".", " ", 
+           RowBox[{"(", 
+            RowBox[{"state", " ", "+", " ", 
+             RowBox[{"k2", "/", "2"}]}], ")"}]}], " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"state", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+            RowBox[{
+             RowBox[{"k2", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "/", "2"}]}], ")"}]}]}], ";", 
+        "\n", "        ", 
+        RowBox[{"k3", " ", "=", " ", 
+         RowBox[{"stepSize", " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"A", " ", ".", " ", 
+             RowBox[{"(", 
+              RowBox[{"state", " ", "+", " ", 
+               RowBox[{"k2", "/", "2"}]}], ")"}]}], " ", "+", " ", 
+            "nonlinearTerm"}], ")"}]}]}], ";", "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"nonlinearTerm", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"B", " ", ".", " ", 
+           RowBox[{"(", 
+            RowBox[{"state", " ", "+", " ", "k3"}], ")"}]}], " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"state", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+            RowBox[{"k3", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], ")"}]}]}], ";", "\n", 
+        "        ", 
+        RowBox[{"k4", " ", "=", " ", 
+         RowBox[{"stepSize", " ", "*", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"A", " ", ".", " ", 
+             RowBox[{"(", 
+              RowBox[{"state", " ", "+", " ", "k3"}], ")"}]}], " ", "+", " ", 
+            "nonlinearTerm"}], ")"}]}]}], ";", "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Update", " ", "state", " ", "using", " ", "Runge"}], "-", 
+          RowBox[{"Kutta", " ", "formula"}]}], " ", "*)"}], "\n", "        ", 
+        
+        RowBox[{"state", " ", "=", " ", 
+         RowBox[{"state", " ", "+", " ", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1", "/", "6"}], ")"}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{"k1", " ", "+", " ", 
+             RowBox[{"2", " ", "k2"}], " ", "+", " ", 
+             RowBox[{"2", " ", "k3"}], " ", "+", " ", "k4"}], ")"}]}]}]}], 
+        ";", "\n", "        ", "\n", "        ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "Append", " ", "the", " ", "new", " ", "state", " ", "to", " ", 
+          "the", " ", "trajectory"}], " ", "*)"}], "\n", "        ", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"trajectory", ",", " ", "state"}], "]"}], ";"}], "\n", 
+       "        ", "\n", "        ", ",", " ", 
+       RowBox[{"{", "steps", "}"}]}], "\n", "    ", "]"}], ";", "\n", "    ", 
+     "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Return", " ", "the", " ", "trajectory", " ", "as", " ", "a", " ", 
+       "list", " ", "of", " ", "states", " ", "over", " ", "time"}], " ", 
+      "*)"}], "\n", "    ", "trajectory"}]}], "\n", "]"}]}]], "Code",
+ CellChangeTimes->{
+  3.939804913108755*^9},ExpressionUUID->"dcc53f4b-9f6e-4319-9011-\
+779b896ae103"]
+}, Open  ]]
+},
+WindowSize->{808, 775},
+WindowMargins->{{60, Automatic}, {2, Automatic}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"9dbea4c9-23d6-4b2c-bb0b-67c3d434a258"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 165, 3, 96, "Title",ExpressionUUID->"518d8006-1a72-4672-9894-38b6796030ae"],
+Cell[744, 27, 295, 7, 55, "Text",ExpressionUUID->"bdf1c87e-97b5-405d-bd49-38d481d8a0a5"],
+Cell[1042, 36, 6419, 154, 711, "Code",ExpressionUUID->"dcc53f4b-9f6e-4319-9011-779b896ae103"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

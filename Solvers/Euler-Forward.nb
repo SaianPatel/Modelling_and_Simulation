@@ -1,0 +1,131 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4587,        123]
+NotebookOptionsPosition[      4024,        105]
+NotebookOutlinePosition[      4416,        121]
+CellTagsIndexPosition[      4373,        118]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Forward Solver", "Title",
+ CellChangeTimes->{{3.9398048391319447`*^9, 3.9398048453201733`*^9}, {
+  3.939804938443659*^9, 
+  3.939804940599967*^9}},ExpressionUUID->"518d8006-1a72-4672-9894-\
+38b6796030ae"],
+
+Cell["The below code is an example of an Euler Forward solver.", "Text",
+ CellChangeTimes->{{3.939804852552745*^9, 3.939804899895735*^9}, {
+  3.939804945543325*^9, 
+  3.939804951430778*^9}},ExpressionUUID->"bdf1c87e-97b5-405d-bd49-\
+38d481d8a0a5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"EulerForwardSolver", "[", 
+   RowBox[{
+   "initialState_", ",", " ", "A_", ",", " ", "B_", ",", " ", "stepSize_", 
+    ",", " ", "steps_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"Module", "[", "\n", "    ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"state", ",", " ", "trajectory", ",", " ", "nonlinearTerm"}], 
+     "}"}], ",", "\n", "    ", "\n", "    ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Initialize", " ", "the", " ", "state", " ", "and", " ", "trajectory"}], 
+     " ", "*)"}], "\n", "    ", 
+    RowBox[{
+     RowBox[{"state", " ", "=", " ", "initialState"}], ";", "\n", "    ", 
+     RowBox[{"trajectory", " ", "=", " ", 
+      RowBox[{"{", "state", "}"}]}], ";", "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Iterate", " ", "for", " ", "the", " ", "specified", " ", "number", " ",
+        "of", " ", "steps"}], " ", "*)"}], "\n", "    ", 
+     RowBox[{"Do", "[", "\n", "        ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Define", " ", "the", " ", "nonlinear", " ", "term", " ", "for", " ", 
+        "infection"}], " ", "*)"}], "\n", "        ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"nonlinearTerm", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"B", " ", ".", " ", "state"}], " ", "*", " ", 
+          RowBox[{"state", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}]}], ";", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "B", " ", "*", " ", "S", " ", "*", " ", "I", " ", "term", " ", "for",
+           " ", "SIR", " ", "model"}], " ", "*)"}], "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "Update", " ", "state", " ", "using", " ", "Euler", " ", "forward", 
+          " ", "step"}], " ", "*)"}], "\n", "        ", 
+        RowBox[{"state", " ", "=", " ", 
+         RowBox[{"state", " ", "+", " ", 
+          RowBox[{"stepSize", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", "state"}], " ", "+", " ", 
+             "nonlinearTerm"}], ")"}]}]}]}], ";", "\n", "        ", "\n", 
+        "        ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "Append", " ", "the", " ", "new", " ", "state", " ", "to", " ", 
+          "the", " ", "trajectory"}], " ", "*)"}], "\n", "        ", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"trajectory", ",", " ", "state"}], "]"}], ";"}], "\n", 
+       "        ", "\n", "        ", ",", " ", 
+       RowBox[{"{", "steps", "}"}]}], "\n", "    ", "]"}], ";", "\n", "    ", 
+     "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Return", " ", "the", " ", "trajectory", " ", "as", " ", "a", " ", 
+       "list", " ", "of", " ", "states", " ", "over", " ", "time"}], " ", 
+      "*)"}], "\n", "    ", "trajectory"}]}], "\n", "]"}]}]], "Code",
+ CellChangeTimes->{3.939804913108755*^9, 
+  3.939804961312109*^9},ExpressionUUID->"dcc53f4b-9f6e-4319-9011-\
+779b896ae103"]
+}, Open  ]]
+},
+WindowSize->{808, 775},
+WindowMargins->{{60, Automatic}, {2, Automatic}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"b4eae759-1c55-47f6-8acb-c95690fcee6f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 216, 4, 96, "Title",ExpressionUUID->"518d8006-1a72-4672-9894-38b6796030ae"],
+Cell[795, 28, 247, 4, 33, "Text",ExpressionUUID->"bdf1c87e-97b5-405d-bd49-38d481d8a0a5"],
+Cell[1045, 34, 2963, 68, 484, "Code",ExpressionUUID->"dcc53f4b-9f6e-4319-9011-779b896ae103"]
+}, Open  ]]
+}
+]
+*)
+

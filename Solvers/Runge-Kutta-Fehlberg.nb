@@ -1,0 +1,409 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     16423,        401]
+NotebookOptionsPosition[     15850,        383]
+NotebookOutlinePosition[     16249,        399]
+CellTagsIndexPosition[     16206,        396]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Runge-Kutte-Fehlberg Solver", "Title",
+ CellChangeTimes->{{3.9398048391319447`*^9, 3.9398048453201733`*^9}, {
+  3.939804938443659*^9, 3.939804940599967*^9}, {3.9398051255981827`*^9, 
+  3.939805136525848*^9}},ExpressionUUID->"518d8006-1a72-4672-9894-\
+38b6796030ae"],
+
+Cell["\<\
+The below code is an example of a Runge-Kutta-Fehlberg (RKF45) solver.\
+\>", "Text",
+ CellChangeTimes->{{3.939804852552745*^9, 3.939804899895735*^9}, {
+  3.939804945543325*^9, 3.939804951430778*^9}, {3.9398051406622057`*^9, 
+  3.9398051509931107`*^9}},ExpressionUUID->"bdf1c87e-97b5-405d-bd49-\
+38d481d8a0a5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RungeKuttaFehlbergSolver", "[", 
+    RowBox[{
+    "initialState_", ",", " ", "A_", ",", " ", "B_", ",", " ", 
+     "initialStepSize_", ",", " ", "steps_", ",", " ", "tol_"}], "]"}], " ", ":=",
+    " ", "\n", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "state", ",", " ", "trajectory", ",", " ", "nonlinearTerm", ",", " ", 
+       "h", ",", " ", "k1", ",", " ", "k2", ",", " ", "k3", ",", " ", "k4", 
+       ",", " ", "k5", ",", " ", "k6", ",", " ", "error", ",", " ", 
+       "newState"}], "}"}], ",", "\n", "  ", "\n", "  ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Initialize", " ", "the", " ", "state", " ", "and", " ", "trajectory"}],
+       " ", "*)"}], "\n", "  ", 
+     RowBox[{
+      RowBox[{"state", " ", "=", " ", "initialState"}], ";", "\n", "  ", 
+      RowBox[{"trajectory", " ", "=", " ", 
+       RowBox[{"{", "state", "}"}]}], ";", "\n", "  ", 
+      RowBox[{"h", " ", "=", " ", "initialStepSize"}], ";", "\n", "  ", "\n", 
+      "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Iterate", " ", "for", " ", "the", " ", "specified", " ", "number", 
+        " ", "of", " ", "steps"}], " ", "*)"}], "\n", "  ", 
+      RowBox[{"Do", "[", "\n", "   ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Define", " ", "nonlinear", " ", "term", " ", "for", " ", "the", " ", 
+         "current", " ", "state"}], " ", "*)"}], "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", "state"}], " ", "*", " ", 
+           RowBox[{"state", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}]}], ";", " ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "B", " ", "*", " ", "S", " ", "*", " ", "I", " ", "term", " ", 
+           "for", " ", "SIR", " ", "model"}], " ", "*)"}], "\n", "   ", "\n", 
+         "   ", 
+         RowBox[{"(*", " ", 
+          RowBox[{"Calculate", " ", "intermediate", " ", "slopes"}], " ", 
+          "*)"}], "\n", "   ", 
+         RowBox[{"k1", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", "state"}], " ", "+", " ", 
+             "nonlinearTerm"}], ")"}]}]}], ";", "\n", "   ", "\n", "   ", 
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", 
+            RowBox[{"(", 
+             RowBox[{"state", " ", "+", " ", 
+              RowBox[{"k1", "/", "4"}]}], ")"}]}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"state", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+             RowBox[{
+              RowBox[{"k1", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "/", "4"}]}], ")"}]}]}], ";", 
+         "\n", "   ", 
+         RowBox[{"k2", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", 
+              RowBox[{"(", 
+               RowBox[{"state", " ", "+", " ", 
+                RowBox[{"k1", "/", "4"}]}], ")"}]}], " ", "+", " ", 
+             "nonlinearTerm"}], ")"}]}]}], ";", "\n", "   ", "\n", "   ", 
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", 
+            RowBox[{"(", 
+             RowBox[{"state", " ", "+", " ", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"3", " ", "k1"}], " ", "+", " ", 
+                 RowBox[{"9", " ", "k2"}]}], ")"}], "/", "32"}]}], ")"}]}], 
+           " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"state", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"3", " ", 
+                 RowBox[{"k1", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}], " ", "+", " ", 
+                RowBox[{"9", " ", 
+                 RowBox[{"k2", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "/", "32"}]}], 
+            ")"}]}]}], ";", "\n", "   ", 
+         RowBox[{"k3", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", 
+              RowBox[{"(", 
+               RowBox[{"state", " ", "+", " ", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"3", " ", "k1"}], " ", "+", " ", 
+                   RowBox[{"9", " ", "k2"}]}], ")"}], "/", "32"}]}], ")"}]}], 
+             " ", "+", " ", "nonlinearTerm"}], ")"}]}]}], ";", "\n", "   ", 
+         "\n", "   ", 
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", 
+            RowBox[{"(", 
+             RowBox[{"state", " ", "+", " ", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"1932", " ", "k1"}], " ", "-", " ", 
+                 RowBox[{"7200", " ", "k2"}], " ", "+", " ", 
+                 RowBox[{"7296", " ", "k3"}]}], ")"}], "/", "2197"}]}], 
+             ")"}]}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"state", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"1932", " ", 
+                 RowBox[{"k1", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}], " ", "-", " ", 
+                RowBox[{"7200", " ", 
+                 RowBox[{"k2", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}], " ", "+", " ", 
+                RowBox[{"7296", " ", 
+                 RowBox[{"k3", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "/", "2197"}]}], 
+            ")"}]}]}], ";", "\n", "   ", 
+         RowBox[{"k4", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", 
+              RowBox[{"(", 
+               RowBox[{"state", " ", "+", " ", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"1932", " ", "k1"}], " ", "-", " ", 
+                   RowBox[{"7200", " ", "k2"}], " ", "+", " ", 
+                   RowBox[{"7296", " ", "k3"}]}], ")"}], "/", "2197"}]}], 
+               ")"}]}], " ", "+", " ", "nonlinearTerm"}], ")"}]}]}], ";", 
+         "\n", "   ", "\n", "   ", 
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", 
+            RowBox[{"(", 
+             RowBox[{"state", " ", "+", " ", 
+              RowBox[{"439", " ", 
+               RowBox[{"k1", "/", "216"}]}], " ", "-", " ", 
+              RowBox[{"8", " ", "k2"}], " ", "+", " ", 
+              RowBox[{"3680", " ", 
+               RowBox[{"k3", "/", "513"}]}], " ", "-", " ", 
+              RowBox[{"845", " ", 
+               RowBox[{"k4", "/", "4104"}]}]}], ")"}]}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"state", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", 
+             RowBox[{"439", " ", 
+              RowBox[{
+               RowBox[{"k1", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "216"}]}], " ", "-", " ", 
+             RowBox[{"8", " ", 
+              RowBox[{"k2", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], " ", "+", " ", 
+             RowBox[{"3680", " ", 
+              RowBox[{
+               RowBox[{"k3", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "513"}]}], " ", "-", " ", 
+             RowBox[{"845", " ", 
+              RowBox[{
+               RowBox[{"k4", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "4104"}]}]}], ")"}]}]}], 
+         ";", "\n", "   ", 
+         RowBox[{"k5", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", 
+              RowBox[{"(", 
+               RowBox[{"state", " ", "+", " ", 
+                RowBox[{"439", " ", 
+                 RowBox[{"k1", "/", "216"}]}], " ", "-", " ", 
+                RowBox[{"8", " ", "k2"}], " ", "+", " ", 
+                RowBox[{"3680", " ", 
+                 RowBox[{"k3", "/", "513"}]}], " ", "-", " ", 
+                RowBox[{"845", " ", 
+                 RowBox[{"k4", "/", "4104"}]}]}], ")"}]}], " ", "+", " ", 
+             "nonlinearTerm"}], ")"}]}]}], ";", "\n", "   ", "\n", "   ", 
+         RowBox[{"nonlinearTerm", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"B", " ", ".", " ", 
+            RowBox[{"(", 
+             RowBox[{"state", " ", "-", " ", 
+              RowBox[{"8", " ", 
+               RowBox[{"k1", "/", "27"}]}], " ", "+", " ", 
+              RowBox[{"2", " ", "k2"}], " ", "-", " ", 
+              RowBox[{"3544", " ", 
+               RowBox[{"k3", "/", "2565"}]}], " ", "+", " ", 
+              RowBox[{"1859", " ", 
+               RowBox[{"k4", "/", "4104"}]}], " ", "-", " ", 
+              RowBox[{"11", " ", 
+               RowBox[{"k5", "/", "40"}]}]}], ")"}]}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"state", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], " ", "-", " ", 
+             RowBox[{"8", " ", 
+              RowBox[{
+               RowBox[{"k1", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "27"}]}], " ", "+", " ", 
+             
+             RowBox[{"2", " ", 
+              RowBox[{"k2", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], " ", "-", " ", 
+             RowBox[{"3544", " ", 
+              RowBox[{
+               RowBox[{"k3", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "2565"}]}], " ", "+", 
+             " ", 
+             RowBox[{"1859", " ", 
+              RowBox[{
+               RowBox[{"k4", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "4104"}]}], " ", "-", 
+             " ", 
+             RowBox[{"11", " ", 
+              RowBox[{
+               RowBox[{"k5", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "/", "40"}]}]}], ")"}]}]}], 
+         ";", "\n", "   ", 
+         RowBox[{"k6", " ", "=", " ", 
+          RowBox[{"h", " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"A", " ", ".", " ", 
+              RowBox[{"(", 
+               RowBox[{"state", " ", "-", " ", 
+                RowBox[{"8", " ", 
+                 RowBox[{"k1", "/", "27"}]}], " ", "+", " ", 
+                RowBox[{"2", " ", "k2"}], " ", "-", " ", 
+                RowBox[{"3544", " ", 
+                 RowBox[{"k3", "/", "2565"}]}], " ", "+", " ", 
+                RowBox[{"1859", " ", 
+                 RowBox[{"k4", "/", "4104"}]}], " ", "-", " ", 
+                RowBox[{"11", " ", 
+                 RowBox[{"k5", "/", "40"}]}]}], ")"}]}], " ", "+", " ", 
+             "nonlinearTerm"}], ")"}]}]}], ";", "\n", "   ", "\n", "   ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Compute", " ", "the", " ", "fourth", " ", "and", " ", "fifth", " ",
+            "order", " ", "estimates"}], " ", "*)"}], "\n", "   ", 
+         RowBox[{"newState", " ", "=", " ", 
+          RowBox[{"state", " ", "+", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"25", " ", 
+              RowBox[{"k1", "/", "216"}]}], " ", "+", " ", 
+             RowBox[{"1408", " ", 
+              RowBox[{"k3", "/", "2565"}]}], " ", "+", " ", 
+             RowBox[{"2197", " ", 
+              RowBox[{"k4", "/", "4104"}]}], " ", "-", " ", 
+             RowBox[{"k5", "/", "5"}]}], ")"}]}]}], ";", "\n", "   ", 
+         RowBox[{"error", " ", "=", " ", 
+          RowBox[{"Norm", "[", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"1", "/", "360"}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"2", " ", "k1"}], " ", "-", " ", 
+              RowBox[{"9", " ", "k3"}], " ", "+", " ", 
+              RowBox[{"8", " ", "k4"}], " ", "-", " ", "k5"}], ")"}]}], 
+           "]"}]}], ";", "\n", "   ", "\n", "   ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Adjust", " ", "step", " ", "size", " ", "based", " ", "on", " ", 
+           "error"}], " ", "*)"}], "\n", "   ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"error", " ", ">", " ", "tol"}], ",", "\n", "    ", 
+           RowBox[{"h", " ", "=", " ", 
+            RowBox[{"h", " ", "*", " ", "0.9", " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"tol", "/", "error"}], ")"}], "^", 
+              RowBox[{"(", 
+               RowBox[{"1", "/", "4"}], ")"}]}]}]}], ",", " ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Reduce", " ", "step", " ", "size", " ", "if", " ", "error", " ", 
+             "is", " ", "too", " ", "high"}], " ", "*)"}], "\n", "    ", 
+           RowBox[{"h", " ", "=", " ", 
+            RowBox[{"h", " ", "*", " ", 
+             RowBox[{"Min", "[", 
+              RowBox[{"1.5", ",", " ", 
+               RowBox[{"0.9", " ", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"tol", "/", "error"}], ")"}], "^", 
+                 RowBox[{"(", 
+                  RowBox[{"1", "/", "4"}], ")"}]}]}]}], "]"}]}]}]}], " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Increase", " ", "step", " ", "size", " ", "if", " ", "error", " ",
+             "is", " ", "acceptable"}], " ", "*)"}], "\n", "   ", "]"}], ";", 
+         "\n", "   ", "\n", "   ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Update", " ", "state", " ", "and", " ", "append", " ", "to", " ", 
+           "trajectory"}], " ", "*)"}], "\n", "   ", 
+         RowBox[{"state", " ", "=", " ", "newState"}], ";", "\n", "   ", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"trajectory", ",", " ", "state"}], "]"}], ";"}], "\n", 
+        "   ", "\n", "   ", ",", " ", 
+        RowBox[{"{", "steps", "}"}]}], "\n", "  ", "]"}], ";", "\n", "  ", 
+      "\n", "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Return", " ", "the", " ", "trajectory", " ", "as", " ", "a", " ", 
+        "list", " ", "of", " ", "states", " ", "over", " ", "time"}], " ", 
+       "*)"}], "\n", "  ", "trajectory"}]}], "\n", "]"}]}], "\n"}]], "Code",
+ CellChangeTimes->{
+  3.939804913108755*^9, 3.939804961312109*^9, {3.939805157089098*^9, 
+   3.939805160715087*^9}},ExpressionUUID->"dcc53f4b-9f6e-4319-9011-\
+779b896ae103"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{-1495, Automatic}, {Automatic, -40}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"28c072d3-6a55-402a-ab5e-c4d0451643c6"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 271, 4, 96, "Title",ExpressionUUID->"518d8006-1a72-4672-9894-38b6796030ae"],
+Cell[850, 28, 319, 6, 33, "Text",ExpressionUUID->"bdf1c87e-97b5-405d-bd49-38d481d8a0a5"],
+Cell[1172, 36, 14662, 344, 1012, "Code",ExpressionUUID->"dcc53f4b-9f6e-4319-9011-779b896ae103"]
+}, Open  ]]
+}
+]
+*)
+
