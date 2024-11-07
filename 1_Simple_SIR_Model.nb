@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     63809,       1487]
-NotebookOptionsPosition[     61425,       1437]
-NotebookOutlinePosition[     61824,       1453]
-CellTagsIndexPosition[     61781,       1450]
+NotebookDataLength[     78880,       1827]
+NotebookOptionsPosition[     76264,       1773]
+NotebookOutlinePosition[     76663,       1789]
+CellTagsIndexPosition[     76620,       1786]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -115,7 +115,7 @@ Cell[BoxData[
        "list", " ", "of", " ", "states", " ", "over", " ", "time"}], " ", 
       "*)"}], "\n", "    ", "trajectory"}]}], "\n", "]"}]}]], "Code",
  CellChangeTimes->{{3.939792220698206*^9, 3.939792222821808*^9}},
- CellLabel->"In[6]:=",ExpressionUUID->"4eacf75e-b60d-4646-923f-2cdcce599040"]
+ CellLabel->"In[19]:=",ExpressionUUID->"4eacf75e-b60d-4646-923f-2cdcce599040"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -278,7 +278,7 @@ Cell[BoxData[
        "list", " ", "of", " ", "states", " ", "over", " ", "time"}], " ", 
       "*)"}], "\n", "    ", "trajectory"}]}], "\n", "]"}]}]], "Code",
  CellChangeTimes->{{3.93979535279746*^9, 3.939795357370846*^9}},
- CellLabel->"In[7]:=",ExpressionUUID->"b5d79a28-6cd3-4d5c-a0ab-dcda8e8fa692"]
+ CellLabel->"In[11]:=",ExpressionUUID->"b5d79a28-6cd3-4d5c-a0ab-dcda8e8fa692"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -333,7 +333,7 @@ Cell[BoxData[
  CellChangeTimes->{
   3.939792280578817*^9, 3.9397941817214212`*^9, {3.939794214521109*^9, 
    3.9397942167697983`*^9}},
- CellLabel->"In[2]:=",ExpressionUUID->"bda029db-1da6-42ec-8f59-397ec1b0ceba"]
+ CellLabel->"In[12]:=",ExpressionUUID->"bda029db-1da6-42ec-8f59-397ec1b0ceba"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -375,7 +375,7 @@ Cell[BoxData[
    "}"}]}]], "Code",
  CellChangeTimes->{{3.93979375237035*^9, 3.9397938014364853`*^9}, 
    3.9397939340657578`*^9, 3.9397942610749083`*^9},
- CellLabel->"In[4]:=",ExpressionUUID->"2631c4b3-dd96-4fe6-930d-dbdd84e7b942"]
+ CellLabel->"In[14]:=",ExpressionUUID->"2631c4b3-dd96-4fe6-930d-dbdd84e7b942"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -618,13 +618,13 @@ Cell[BoxData[
    3.93979475229988*^9, {3.939794782877844*^9, 3.939794797899407*^9}, {
    3.939794854698304*^9, 3.939794870782947*^9}, 3.9397949533139687`*^9, 
    3.939795012729755*^9},
- CellLabel->"In[5]:=",ExpressionUUID->"0ca54422-599c-4635-a2df-2d0cc7303cc9"],
+ CellLabel->"In[15]:=",ExpressionUUID->"0ca54422-599c-4635-a2df-2d0cc7303cc9"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
    DynamicModuleBox[{$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
-    0.9, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
+    0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
     Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
     Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
@@ -639,7 +639,7 @@ Cell[BoxData[
        0, 
       Dynamic[1 - $CellContext`initialS$$], 0.01, ControlType -> 
       Manipulator}}, Typeset`size$$ = {
-    613.6324645996093, {167.6719322933028, 173.4038658870528}}, 
+    724.9065648437501, {74.52640450593526, 80.25833809968526}}, 
     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
     DynamicBox[Manipulate`ManipulateBoxes[
@@ -707,7 +707,7 @@ $CellContext`eigenvaluesFree$}, {
          Dynamic[1 - $CellContext`initialS$$], 0.01}}, "Options" :> {}, 
       "DefaultOptions" :> {}],
      ImageSizeCache->{
-      656.7324645996092, {299.6223577083419, 305.3542913020919}},
+      768.00656484375, {157.59682992097433`, 163.32876351472433`}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -721,9 +721,10 @@ $CellContext`eigenvaluesFree$}, {
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{{3.939794724691185*^9, 3.939794742099852*^9}, {
-  3.939794799009719*^9, 3.939794812768496*^9}, {3.9397948742717*^9, 
-  3.939794885233186*^9}, {3.9397951984766617`*^9, 3.939795208918674*^9}},
- CellLabel->"Out[5]=",ExpressionUUID->"5c00a2f8-b4a1-4d86-8a6b-2adb059a13bb"]
+   3.939794799009719*^9, 3.939794812768496*^9}, {3.9397948742717*^9, 
+   3.939794885233186*^9}, {3.9397951984766617`*^9, 3.939795208918674*^9}, 
+   3.9399670364056273`*^9},
+ CellLabel->"Out[15]=",ExpressionUUID->"7af7744c-10bf-44f3-b1a1-ea97cb445c44"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -906,7 +907,8 @@ Cell[BoxData[
            RowBox[{"ItemStyle", " ", "->", " ", 
             RowBox[{"Directive", "[", 
              RowBox[{"Bold", ",", " ", "Blue"}], "]"}]}]}], "]"}]}], "\n", 
-        "  ", "}"}], "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
+        "  ", "}"}], "]"}]}]}], "\n", "\n", " ", "]"}], ",", "\n", " ", "\n", 
+   " ", 
    RowBox[{"(*", " ", 
     RowBox[{
      RowBox[{"Define", " ", "sliders", " ", "for", " ", "alpha"}], ",", " ", 
@@ -955,14 +957,15 @@ Cell[BoxData[
      RowBox[{"(*", " ", 
       RowBox[{"Number", " ", "of", " ", "steps"}], " ", "*)"}], "\n", " ", 
      ")"}]}]}], "\n", "]"}]], "Code",
- CellChangeTimes->{{3.939795391620544*^9, 3.939795402757084*^9}},
- CellLabel->"In[8]:=",ExpressionUUID->"8e20939e-5926-4cdd-a94a-a18875c642af"],
+ CellChangeTimes->{{3.939795391620544*^9, 3.939795402757084*^9}, {
+  3.939966824348679*^9, 3.939966901398221*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"8e20939e-5926-4cdd-a94a-a18875c642af"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
    DynamicModuleBox[{$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
-    0.9, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
+    0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
     Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
     Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
@@ -977,7 +980,7 @@ Cell[BoxData[
        0, 
       Dynamic[1 - $CellContext`initialS$$], 0.01, ControlType -> 
       Manipulator}}, Typeset`size$$ = {
-    710.2629577636719, {197.53239685583029`, 203.26433044958029`}}, 
+    709.30656484375, {74.52640450593526, 80.25833809968526}}, 
     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
     DynamicBox[Manipulate`ManipulateBoxes[
@@ -1045,7 +1048,7 @@ $CellContext`eigenvaluesFree$}, {
          Dynamic[1 - $CellContext`initialS$$], 0.01}}, "Options" :> {}, 
       "DefaultOptions" :> {}],
      ImageSizeCache->{
-      753.3629577636718, {329.48282227086935`, 335.21475586461935`}},
+      752.40656484375, {157.59682992097433`, 163.32876351472433`}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -1058,8 +1061,9 @@ $CellContext`eigenvaluesFree$}, {
    Deployed->True,
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
- CellChangeTimes->{{3.9397954230829897`*^9, 3.939795434333503*^9}},
- CellLabel->"Out[8]=",ExpressionUUID->"a1d2d3b0-4f99-4be2-bb8a-5e36defd3cad"]
+ CellChangeTimes->{{3.9397954230829897`*^9, 3.939795434333503*^9}, 
+   3.9399670365636177`*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"4294f0cd-0e80-4a36-8d61-c0074911baab"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1318,13 +1322,13 @@ Model\>\""}], ",", "\n", "   ",
       ")"}]}]}], "\n", "]"}], "\n"}]], "Code",
  CellChangeTimes->{
   3.939795604407467*^9, {3.9397957136243143`*^9, 3.939795720352027*^9}},
- CellLabel->"In[10]:=",ExpressionUUID->"22ee4eaf-0eaf-46c4-9631-6f5fbc0b901c"],
+ CellLabel->"In[17]:=",ExpressionUUID->"22ee4eaf-0eaf-46c4-9631-6f5fbc0b901c"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
    DynamicModuleBox[{$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
-    0.8, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
+    0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
     Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
     Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
@@ -1339,8 +1343,8 @@ Cell[BoxData[
        0, 
       Dynamic[1 - $CellContext`initialS$$], 0.01, ControlType -> 
       Manipulator}}, Typeset`size$$ = {
-    1019.3318359375, {254.439464756088, 260.171398349838}}, Typeset`update$$ =
-     0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
+    523.0466796874999, {101.0789174188119, 106.81085101256187`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
@@ -1415,7 +1419,8 @@ $CellContext`SValuesEuler$ =
           "Initial Infected Fraction (I0)"}, 0, 
          Dynamic[1 - $CellContext`initialS$$], 0.01}}, "Options" :> {}, 
       "DefaultOptions" :> {}],
-     ImageSizeCache->{1062.4318359375, {386.3898901711271, 392.1218237648771}},
+     ImageSizeCache->{
+      566.1466796874998, {184.14934283385094`, 189.88127642760094`}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -1429,8 +1434,339 @@ $CellContext`SValuesEuler$ =
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{{3.9397956173159943`*^9, 3.939795623624309*^9}, 
-   3.9397957227337112`*^9, {3.9397957595152817`*^9, 3.93979576045119*^9}},
- CellLabel->"Out[10]=",ExpressionUUID->"5fae39df-c9c9-4fe0-9971-6952f14b7696"]
+   3.9397957227337112`*^9, {3.9397957595152817`*^9, 3.93979576045119*^9}, 
+   3.939967036700437*^9},
+ CellLabel->"Out[17]=",ExpressionUUID->"4194b233-b7fa-4671-b19b-3b5105e32384"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\n", " ", 
+   RowBox[{
+    RowBox[{"Module", "[", "\n", "  ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "A", ",", " ", "B", ",", " ", "SPrime", ",", " ", "IPrime", ",", " ", 
+        "initialState", ",", " ", "eigenvaluesFree", ",", " ", 
+        "eigenvaluesCurrent", ",", " ", "jacobian", ",", " ", "streamPlot"}], 
+       "}"}], ",", "\n", "  ", "\n", "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Update", " ", "matrices", " ", "A", " ", "and", " ", "B", " ", 
+        "based", " ", "on", " ", "the", " ", "current", " ", "alpha", " ", 
+        "and", " ", "beta"}], " ", "*)"}], "\n", "  ", 
+      RowBox[{
+       RowBox[{"A", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0", ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"-", "alpha"}], ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "alpha", ",", " ", "0"}], "}"}]}], "}"}]}], 
+       ";", "\n", "  ", 
+       RowBox[{"B", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "beta"}], ",", " ", "0", ",", " ", "0"}], "}"}], ",",
+           " ", 
+          RowBox[{"{", 
+           RowBox[{"beta", ",", " ", "0", ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0", ",", " ", "0"}], "}"}]}], "}"}]}], ";",
+        "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Define", " ", "the", " ", "differential", " ", "equations", " ", 
+         "for", " ", "the", " ", "S", " ", "and", " ", "I", " ", 
+         "compartments", " ", "based", " ", "on", " ", "alpha", " ", "and", 
+         " ", "beta"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{
+        RowBox[{"SPrime", "[", 
+         RowBox[{"S_", ",", " ", "I_"}], "]"}], " ", ":=", " ", 
+        RowBox[{
+         RowBox[{"-", "beta"}], " ", "S", " ", "I"}]}], ";", "\n", "  ", 
+       RowBox[{
+        RowBox[{"IPrime", "[", 
+         RowBox[{"S_", ",", " ", "I_"}], "]"}], " ", ":=", " ", 
+        RowBox[{
+         RowBox[{"beta", " ", "S", " ", "I"}], " ", "-", " ", 
+         RowBox[{"alpha", " ", "I"}]}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Define", " ", "the", " ", "initial", " ", "state", " ", "vector", 
+         " ", "based", " ", "on", " ", "user", " ", "input"}], " ", "*)"}], 
+       "\n", "  ", 
+       RowBox[{"initialState", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{"initialS", ",", " ", "initialI", ",", " ", 
+          RowBox[{
+          "1", " ", "-", " ", "initialS", " ", "-", " ", "initialI"}]}], 
+         "}"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+          "Perform", " ", "eigenvalue", " ", "analysis", " ", "at", " ", 
+           "the", " ", "disease"}], "-", 
+          RowBox[{"free", " ", "fixed", " ", "point", " ", 
+           RowBox[{"(", 
+            RowBox[{"S", ",", " ", "I", ",", " ", "R"}], ")"}]}]}], " ", "=", 
+         " ", 
+         RowBox[{"(", 
+          RowBox[{"1", ",", " ", "0", ",", " ", "0"}], ")"}]}], " ", "*)"}], 
+       "\n", "  ", 
+       RowBox[{"eigenvaluesFree", " ", "=", " ", 
+        RowBox[{"Eigenvalues", "[", 
+         RowBox[{"JacobianFunc", "[", 
+          RowBox[{"1", ",", " ", "0", ",", " ", "alpha", ",", " ", "beta"}], 
+          "]"}], "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Perform", " ", "eigenvalue", " ", "analysis", " ", "at", " ", "the", 
+         " ", "current", " ", "state"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"jacobian", " ", "=", " ", 
+        RowBox[{"JacobianFunc", "[", 
+         RowBox[{
+          RowBox[{"initialState", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+          RowBox[{"initialState", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", " ", "alpha", ",", " ", 
+          "beta"}], "]"}]}], ";", "\n", "  ", 
+       RowBox[{"eigenvaluesCurrent", " ", "=", " ", 
+        RowBox[{"Eigenvalues", "[", "jacobian", "]"}]}], ";", "\n", "  ", 
+       "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Generate", " ", "the", " ", "stream", " ", "plot", " ", "of", " ", 
+         "the", " ", "phase", " ", "space", " ", "for", " ", "S", " ", "and", 
+         " ", "I"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"streamPlot", " ", "=", " ", 
+        RowBox[{"StreamPlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"SPrime", "[", 
+             RowBox[{"S", ",", " ", "I"}], "]"}], ",", " ", 
+            RowBox[{"IPrime", "[", 
+             RowBox[{"S", ",", " ", "I"}], "]"}]}], "}"}], ",", "\n", "    ", 
+          
+          RowBox[{"{", 
+           RowBox[{"S", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"I", ",", " ", "0", ",", " ", "1"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"StreamStyle", " ", "->", " ", 
+           RowBox[{"Arrowheads", "[", "Small", "]"}]}], ",", "\n", "    ", 
+          RowBox[{"StreamColorFunction", " ", "->", " ", "\"\<Rainbow\>\""}], 
+          ",", "\n", "    ", 
+          RowBox[{"PlotRange", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", " ", "1"}], "}"}]}], "}"}]}], ",", "\n", 
+          "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Susceptible (S)\>\"", ",", " ", "\"\<Infected (I)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"GridLines", " ", "->", " ", "Automatic"}], ",", "\n", 
+          "    ", 
+          RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "    ", 
+          RowBox[{
+          "PlotLabel", " ", "->", " ", "\"\<Phase Space of SIR Model\>\""}]}],
+          "\n", "  ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Display", " ", "the", " ", "stream", " ", "plot", " ", "and", " ", 
+         "the", " ", "eigenvalues"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"Column", "[", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{"streamPlot", ",", "\n", "    ", 
+          RowBox[{"Grid", "[", 
+           RowBox[{
+            RowBox[{"{", "\n", "      ", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+               "\"\<Fixed Point (Disease-Free) Eigenvalues\>\"", ",", " ", 
+                "eigenvaluesFree"}], "}"}], ",", "\n", "      ", 
+              RowBox[{"{", 
+               RowBox[{
+               "\"\<Current State Eigenvalues\>\"", ",", " ", 
+                "eigenvaluesCurrent"}], "}"}]}], "\n", "    ", "}"}], ",", 
+            " ", 
+            RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+            RowBox[{"ItemStyle", " ", "->", " ", 
+             RowBox[{"Directive", "[", 
+              RowBox[{"Bold", ",", " ", "Blue"}], "]"}]}]}], "]"}]}], "\n", 
+         "  ", "}"}], "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
+    
+    RowBox[{"(*", " ", 
+     RowBox[{
+      RowBox[{"Define", " ", "sliders", " ", "for", " ", "alpha"}], ",", " ", 
+      "beta", ",", " ", 
+      RowBox[{"and", " ", "initial", " ", "conditions"}]}], " ", "*)"}], "\n",
+     " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "alpha", ",", " ", "0.1", ",", " ", 
+        "\"\<Recovery Rate (\[Alpha])\>\""}], "}"}], ",", " ", "0.01", ",", 
+      " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "beta", ",", " ", "0.5", ",", " ", 
+        "\"\<Infection Rate (\[Beta])\>\""}], "}"}], ",", " ", "0.01", ",", 
+      " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "initialS", ",", " ", "0.99", ",", " ", 
+        "\"\<Initial Susceptible Fraction (S0)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "initialI", ",", " ", "0.01", ",", " ", 
+        "\"\<Initial Infected Fraction (I0)\>\""}], "}"}], ",", " ", "0", ",",
+       " ", 
+      RowBox[{"1", " ", "-", " ", "initialS"}], ",", " ", "0.01"}], "}"}], 
+    ",", "\n", " ", "\n", " ", 
+    RowBox[{"(*", " ", 
+     RowBox[{"Fixed", " ", "parameters"}], " ", "*)"}], "\n", " ", 
+    RowBox[{"Initialization", " ", ":>", " ", 
+     RowBox[{"(", "\n", "   ", 
+      RowBox[{
+       RowBox[{"stepSize", " ", "=", " ", "0.1"}], ";", " ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Time", " ", "step", " ", "size"}], " ", "*)"}], "\n", "   ", 
+       
+       RowBox[{"steps", " ", "=", " ", "100"}], ";"}], "    ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Number", " ", "of", " ", "steps"}], " ", "*)"}], "\n", " ", 
+      ")"}]}]}], "\n", "]"}], "\n"}]], "Code",
+ CellChangeTimes->{3.9399670319787493`*^9},
+ CellLabel->"In[18]:=",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
+    0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`alpha$$], 0.1, "Recovery Rate (\[Alpha])"}, 0.01, 1, 
+      0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`beta$$], 0.5, "Infection Rate (\[Beta])"}, 0.01, 1, 
+      0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`initialS$$], 0.99, 
+       "Initial Susceptible Fraction (S0)"}, 0, 1, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`initialI$$], 0.01, "Initial Infected Fraction (I0)"},
+       0, 
+      Dynamic[1 - $CellContext`initialS$$], 0.01, ControlType -> 
+      Manipulator}}, Typeset`size$$ = {
+    518.9288635253906, {283.12547082519535`, 288.85740441894535`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
+        0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`A$, $CellContext`B$, $CellContext`SPrime$, \
+$CellContext`IPrime$, $CellContext`initialState$, \
+$CellContext`eigenvaluesFree$, $CellContext`eigenvaluesCurrent$, \
+$CellContext`jacobian$, $CellContext`streamPlot$}, $CellContext`A$ = {{0, 0, 
+           0}, {0, -$CellContext`alpha$$, 0}, {
+           0, $CellContext`alpha$$, 
+            0}}; $CellContext`B$ = {{-$CellContext`beta$$, 0, 
+            0}, {$CellContext`beta$$, 0, 0}, {0, 0, 0}}; $CellContext`SPrime$[
+          
+           Pattern[$CellContext`S$, 
+            Blank[]], 
+           Pattern[I$, 
+            Blank[]]] := (-$CellContext`beta$$) $CellContext`S$ 
+          I$; $CellContext`IPrime$[
+           Pattern[$CellContext`S$, 
+            Blank[]], 
+           Pattern[I$, 
+            Blank[]]] := $CellContext`beta$$ $CellContext`S$ 
+           I$ - $CellContext`alpha$$ 
+          I$; $CellContext`initialState$ = {$CellContext`initialS$$, \
+$CellContext`initialI$$, 
+           1 - $CellContext`initialS$$ - $CellContext`initialI$$}; \
+$CellContext`eigenvaluesFree$ = Eigenvalues[
+           $CellContext`JacobianFunc[
+           1, 0, $CellContext`alpha$$, $CellContext`beta$$]]; \
+$CellContext`jacobian$ = $CellContext`JacobianFunc[
+           Part[$CellContext`initialState$, 1], 
+           
+           Part[$CellContext`initialState$, 
+            2], $CellContext`alpha$$, $CellContext`beta$$]; \
+$CellContext`eigenvaluesCurrent$ = 
+         Eigenvalues[$CellContext`jacobian$]; $CellContext`streamPlot$ = 
+         StreamPlot[{
+            $CellContext`SPrime$[$CellContext`S, I], 
+            $CellContext`IPrime$[$CellContext`S, I]}, {$CellContext`S, 0, 
+            1}, {I, 0, 1}, StreamStyle -> Arrowheads[Small], 
+           StreamColorFunction -> "Rainbow", PlotRange -> {{0, 1}, {0, 1}}, 
+           AxesLabel -> {"Susceptible (S)", "Infected (I)"}, GridLines -> 
+           Automatic, Frame -> True, PlotLabel -> "Phase Space of SIR Model"]; 
+        Column[{$CellContext`streamPlot$, 
+           
+           Grid[{{"Fixed Point (Disease-Free) Eigenvalues", \
+$CellContext`eigenvaluesFree$}, {
+             "Current State Eigenvalues", $CellContext`eigenvaluesCurrent$}}, 
+            Frame -> All, ItemStyle -> Directive[Bold, Blue]]}]], 
+      "Specifications" :> {{{$CellContext`alpha$$, 0.1, 
+          "Recovery Rate (\[Alpha])"}, 0.01, 1, 
+         0.01}, {{$CellContext`beta$$, 0.5, "Infection Rate (\[Beta])"}, 0.01,
+          1, 0.01}, {{$CellContext`initialS$$, 0.99, 
+          "Initial Susceptible Fraction (S0)"}, 0, 1, 
+         0.01}, {{$CellContext`initialI$$, 0.01, 
+          "Initial Infected Fraction (I0)"}, 0, 
+         Dynamic[1 - $CellContext`initialS$$], 0.01}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      562.0288635253905, {415.07589624023444`, 420.80782983398444`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(($CellContext`stepSize = 0.1; $CellContext`steps = 100; 
+      Null); Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.939967036863336*^9, 3.939967048112653*^9}},
+ CellLabel->"Out[18]=",ExpressionUUID->"23c3c3fd-085c-4d2e-a4e1-3d28dc86565b"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -1457,35 +1793,39 @@ Cell[576, 22, 166, 3, 96, "Title",ExpressionUUID->"a91d64b0-1e74-470e-b456-c71f0
 Cell[745, 27, 697, 14, 143, "Text",ExpressionUUID->"ae16b600-d43e-4836-8200-d0e8c72f1ad5"],
 Cell[CellGroupData[{
 Cell[1467, 45, 170, 3, 52, "Subtitle",ExpressionUUID->"56108926-38a5-425f-8e36-cb95342665dd"],
-Cell[1640, 50, 2983, 67, 484, "Code",ExpressionUUID->"4eacf75e-b60d-4646-923f-2cdcce599040"]
+Cell[1640, 50, 2984, 67, 484, "Code",ExpressionUUID->"4eacf75e-b60d-4646-923f-2cdcce599040"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4660, 122, 164, 3, 52, "Subtitle",ExpressionUUID->"3b3e50d5-0173-4d20-8cd0-b5b17e77984c"],
-Cell[4827, 127, 6460, 153, 711, "Code",ExpressionUUID->"b5d79a28-6cd3-4d5c-a0ab-dcda8e8fa692"]
+Cell[4661, 122, 164, 3, 52, "Subtitle",ExpressionUUID->"3b3e50d5-0173-4d20-8cd0-b5b17e77984c"],
+Cell[4828, 127, 6461, 153, 711, "Code",ExpressionUUID->"b5d79a28-6cd3-4d5c-a0ab-dcda8e8fa692"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[11324, 285, 170, 3, 52, "Subtitle",ExpressionUUID->"f0ee8b7e-84b2-4afe-9941-dc62c3bac88b"],
-Cell[11497, 290, 332, 8, 77, "Text",ExpressionUUID->"92b403a7-d61f-474f-816e-4c3fdccefe10"],
-Cell[11832, 300, 1232, 35, 88, "Code",ExpressionUUID->"bda029db-1da6-42ec-8f59-397ec1b0ceba"]
+Cell[11326, 285, 170, 3, 52, "Subtitle",ExpressionUUID->"f0ee8b7e-84b2-4afe-9941-dc62c3bac88b"],
+Cell[11499, 290, 332, 8, 77, "Text",ExpressionUUID->"92b403a7-d61f-474f-816e-4c3fdccefe10"],
+Cell[11834, 300, 1233, 35, 88, "Code",ExpressionUUID->"bda029db-1da6-42ec-8f59-397ec1b0ceba"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[13101, 340, 165, 3, 52, "Subtitle",ExpressionUUID->"c3728d02-4784-4072-9651-8f2eba4479b4"],
-Cell[13269, 345, 218, 5, 33, "Text",ExpressionUUID->"17b5acbd-72b4-4f9f-851e-eaeb33fd13ec"],
-Cell[13490, 352, 911, 25, 126, "Code",ExpressionUUID->"2631c4b3-dd96-4fe6-930d-dbdd84e7b942"]
+Cell[13104, 340, 165, 3, 52, "Subtitle",ExpressionUUID->"c3728d02-4784-4072-9651-8f2eba4479b4"],
+Cell[13272, 345, 218, 5, 33, "Text",ExpressionUUID->"17b5acbd-72b4-4f9f-851e-eaeb33fd13ec"],
+Cell[13493, 352, 912, 25, 126, "Code",ExpressionUUID->"2631c4b3-dd96-4fe6-930d-dbdd84e7b942"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14438, 382, 154, 3, 52, "Subtitle",ExpressionUUID->"00706f56-b3b8-4636-ab84-3187b2eb1239"],
+Cell[14442, 382, 154, 3, 52, "Subtitle",ExpressionUUID->"00706f56-b3b8-4636-ab84-3187b2eb1239"],
 Cell[CellGroupData[{
-Cell[14617, 389, 9697, 231, 1125, "Code",ExpressionUUID->"0ca54422-599c-4635-a2df-2d0cc7303cc9"],
-Cell[24317, 622, 5469, 103, 621, "Output",ExpressionUUID->"5c00a2f8-b4a1-4d86-8a6b-2adb059a13bb"]
+Cell[14621, 389, 9698, 231, 1125, "Code",ExpressionUUID->"0ca54422-599c-4635-a2df-2d0cc7303cc9"],
+Cell[24322, 622, 5502, 104, 337, "Output",ExpressionUUID->"7af7744c-10bf-44f3-b1a1-ea97cb445c44"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[29823, 730, 9522, 228, 1125, "Code",ExpressionUUID->"8e20939e-5926-4cdd-a94a-a18875c642af"],
-Cell[39348, 960, 5333, 101, 681, "Output",ExpressionUUID->"a1d2d3b0-4f99-4be2-bb8a-5e36defd3cad"]
+Cell[29861, 731, 9582, 230, 1144, "Code",ExpressionUUID->"8e20939e-5926-4cdd-a94a-a18875c642af"],
+Cell[39446, 963, 5354, 102, 337, "Output",ExpressionUUID->"4294f0cd-0e80-4a36-8d61-c0074911baab"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[44718, 1066, 10717, 254, 1333, "Code",ExpressionUUID->"22ee4eaf-0eaf-46c4-9631-6f5fbc0b901c"],
-Cell[55438, 1322, 5947, 110, 795, "Output",ExpressionUUID->"5fae39df-c9c9-4fe0-9971-6952f14b7696"]
+Cell[44837, 1070, 10717, 254, 1333, "Code",ExpressionUUID->"22ee4eaf-0eaf-46c4-9631-6f5fbc0b901c"],
+Cell[55557, 1326, 5992, 112, 391, "Output",ExpressionUUID->"4194b233-b7fa-4671-b19b-3b5105e32384"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61586, 1443, 9353, 221, 1125, "Code",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
+Cell[70942, 1666, 5282, 102, 852, "Output",ExpressionUUID->"23c3c3fd-085c-4d2e-a4e1-3d28dc86565b"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
