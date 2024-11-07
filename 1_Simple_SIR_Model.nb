@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     78880,       1827]
-NotebookOptionsPosition[     76264,       1773]
-NotebookOutlinePosition[     76663,       1789]
-CellTagsIndexPosition[     76620,       1786]
+NotebookDataLength[     79823,       1845]
+NotebookOptionsPosition[     77206,       1791]
+NotebookOutlinePosition[     77605,       1807]
+CellTagsIndexPosition[     77562,       1804]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1449,15 +1449,16 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"{", 
        RowBox[{
-       "A", ",", " ", "B", ",", " ", "SPrime", ",", " ", "IPrime", ",", " ", 
-        "initialState", ",", " ", "eigenvaluesFree", ",", " ", 
-        "eigenvaluesCurrent", ",", " ", "jacobian", ",", " ", "streamPlot"}], 
+       "A", ",", " ", "B", ",", " ", "trajectory", ",", " ", "SValues", ",", 
+        " ", "IValues", ",", " ", "RValues", ",", " ", "initialState", ",", 
+        " ", "eigenvaluesFree", ",", " ", "eigenvaluesCurrent", ",", " ", 
+        "jacobian", ",", " ", "streamPlot", ",", " ", "timeSeriesPlot"}], 
        "}"}], ",", "\n", "  ", "\n", "  ", 
       RowBox[{"(*", " ", 
        RowBox[{
-       "Update", " ", "matrices", " ", "A", " ", "and", " ", "B", " ", 
-        "based", " ", "on", " ", "the", " ", "current", " ", "alpha", " ", 
-        "and", " ", "beta"}], " ", "*)"}], "\n", "  ", 
+       "Define", " ", "the", " ", "matrices", " ", "A", " ", "and", " ", "B", 
+        " ", "based", " ", "on", " ", "the", " ", "current", " ", "alpha", 
+        " ", "and", " ", "beta"}], " ", "*)"}], "\n", "  ", 
       RowBox[{
        RowBox[{"A", " ", "=", " ", 
         RowBox[{"{", 
@@ -1484,10 +1485,85 @@ Cell[BoxData[
         "\n", "  ", "\n", "  ", 
        RowBox[{"(*", " ", 
         RowBox[{
-        "Define", " ", "the", " ", "differential", " ", "equations", " ", 
-         "for", " ", "the", " ", "S", " ", "and", " ", "I", " ", 
-         "compartments", " ", "based", " ", "on", " ", "alpha", " ", "and", 
-         " ", "beta"}], " ", "*)"}], "\n", "  ", 
+        "Define", " ", "the", " ", "initial", " ", "state", " ", "vector"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"initialState", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{"initialS", ",", " ", "initialI", ",", " ", 
+          RowBox[{
+          "1", " ", "-", " ", "initialS", " ", "-", " ", "initialI"}]}], 
+         "}"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"Run", " ", "the", " ", "Runge"}], "-", 
+         RowBox[{"Kutta", " ", "solver", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"or", " ", "Euler"}], ",", " ", 
+            RowBox[{"if", " ", "available"}]}], ")"}], " ", "for", " ", 
+          "time", " ", "evolution"}]}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"trajectory", " ", "=", " ", 
+        RowBox[{"RungeKuttaSolver", "[", 
+         RowBox[{
+         "initialState", ",", " ", "A", ",", " ", "B", ",", " ", "stepSize", 
+          ",", " ", "steps"}], "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+         "Extract", " ", "time", " ", "series", " ", "data", " ", "for", " ", 
+          "S"}], ",", " ", "I", ",", " ", 
+         RowBox[{"and", " ", "R"}]}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"SValues", " ", "=", " ", 
+        RowBox[{"trajectory", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", " ", "1"}], "]"}], "]"}]}], ";", "\n", "  ", 
+       RowBox[{"IValues", " ", "=", " ", 
+        RowBox[{"trajectory", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", " ", "2"}], "]"}], "]"}]}], ";", "\n", "  ", 
+       RowBox[{"RValues", " ", "=", " ", 
+        RowBox[{"trajectory", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", " ", "3"}], "]"}], "]"}]}], ";", "\n", "  ", 
+       "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Time", " ", "Series", " ", "Plot"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"timeSeriesPlot", " ", "=", " ", 
+        RowBox[{"ListLinePlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"SValues", ",", " ", "IValues", ",", " ", "RValues"}], 
+           "}"}], ",", "\n", "    ", 
+          RowBox[{"PlotLegends", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Susceptible\>\"", ",", " ", "\"\<Infected\>\"", ",", " ", 
+             "\"\<Recovered\>\""}], "}"}]}], ",", "\n", "    ", 
+          RowBox[{
+          "PlotLabel", " ", "->", " ", 
+           "\"\<SIR Model Dynamics with Adjustable Parameters\>\""}], ",", 
+          "\n", "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Time Step\>\"", ",", " ", "\"\<Population Fraction\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"PlotStyle", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"Blue", ",", " ", "Red", ",", " ", "Green"}], "}"}]}], 
+          ",", "\n", "    ", 
+          RowBox[{"PlotRange", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"1", ",", " ", "steps"}], "}"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", " ", "1"}], "}"}]}], "}"}]}]}], "\n", "  ", 
+         "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Define", " ", "the", " ", "phase", " ", "space", " ", "differential",
+          " ", "equations"}], " ", "*)"}], "\n", "  ", 
        RowBox[{
         RowBox[{"SPrime", "[", 
          RowBox[{"S_", ",", " ", "I_"}], "]"}], " ", ":=", " ", 
@@ -1501,53 +1577,8 @@ Cell[BoxData[
          RowBox[{"alpha", " ", "I"}]}]}], ";", "\n", "  ", "\n", "  ", 
        RowBox[{"(*", " ", 
         RowBox[{
-        "Define", " ", "the", " ", "initial", " ", "state", " ", "vector", 
-         " ", "based", " ", "on", " ", "user", " ", "input"}], " ", "*)"}], 
-       "\n", "  ", 
-       RowBox[{"initialState", " ", "=", " ", 
-        RowBox[{"{", 
-         RowBox[{"initialS", ",", " ", "initialI", ",", " ", 
-          RowBox[{
-          "1", " ", "-", " ", "initialS", " ", "-", " ", "initialI"}]}], 
-         "}"}]}], ";", "\n", "  ", "\n", "  ", 
-       RowBox[{"(*", " ", 
-        RowBox[{
-         RowBox[{
-          RowBox[{
-          "Perform", " ", "eigenvalue", " ", "analysis", " ", "at", " ", 
-           "the", " ", "disease"}], "-", 
-          RowBox[{"free", " ", "fixed", " ", "point", " ", 
-           RowBox[{"(", 
-            RowBox[{"S", ",", " ", "I", ",", " ", "R"}], ")"}]}]}], " ", "=", 
-         " ", 
-         RowBox[{"(", 
-          RowBox[{"1", ",", " ", "0", ",", " ", "0"}], ")"}]}], " ", "*)"}], 
-       "\n", "  ", 
-       RowBox[{"eigenvaluesFree", " ", "=", " ", 
-        RowBox[{"Eigenvalues", "[", 
-         RowBox[{"JacobianFunc", "[", 
-          RowBox[{"1", ",", " ", "0", ",", " ", "alpha", ",", " ", "beta"}], 
-          "]"}], "]"}]}], ";", "\n", "  ", "\n", "  ", 
-       RowBox[{"(*", " ", 
-        RowBox[{
-        "Perform", " ", "eigenvalue", " ", "analysis", " ", "at", " ", "the", 
-         " ", "current", " ", "state"}], " ", "*)"}], "\n", "  ", 
-       RowBox[{"jacobian", " ", "=", " ", 
-        RowBox[{"JacobianFunc", "[", 
-         RowBox[{
-          RowBox[{"initialState", "[", 
-           RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
-          RowBox[{"initialState", "[", 
-           RowBox[{"[", "2", "]"}], "]"}], ",", " ", "alpha", ",", " ", 
-          "beta"}], "]"}]}], ";", "\n", "  ", 
-       RowBox[{"eigenvaluesCurrent", " ", "=", " ", 
-        RowBox[{"Eigenvalues", "[", "jacobian", "]"}]}], ";", "\n", "  ", 
-       "\n", "  ", 
-       RowBox[{"(*", " ", 
-        RowBox[{
-        "Generate", " ", "the", " ", "stream", " ", "plot", " ", "of", " ", 
-         "the", " ", "phase", " ", "space", " ", "for", " ", "S", " ", "and", 
-         " ", "I"}], " ", "*)"}], "\n", "  ", 
+        "Stream", " ", "Plot", " ", "for", " ", "phase", " ", "space"}], " ", 
+        "*)"}], "\n", "  ", 
        RowBox[{"streamPlot", " ", "=", " ", 
         RowBox[{"StreamPlot", "[", "\n", "    ", 
          RowBox[{
@@ -1588,36 +1619,21 @@ Cell[BoxData[
           "\n", "  ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
        RowBox[{"(*", " ", 
         RowBox[{
-        "Display", " ", "the", " ", "stream", " ", "plot", " ", "and", " ", 
-         "the", " ", "eigenvalues"}], " ", "*)"}], "\n", "  ", 
-       RowBox[{"Column", "[", 
+        "Display", " ", "both", " ", "plots", " ", "side", " ", "by", " ", 
+         "side"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"Grid", "[", 
         RowBox[{"{", "\n", "    ", 
-         RowBox[{"streamPlot", ",", "\n", "    ", 
-          RowBox[{"Grid", "[", 
-           RowBox[{
-            RowBox[{"{", "\n", "      ", 
-             RowBox[{
-              RowBox[{"{", 
-               RowBox[{
-               "\"\<Fixed Point (Disease-Free) Eigenvalues\>\"", ",", " ", 
-                "eigenvaluesFree"}], "}"}], ",", "\n", "      ", 
-              RowBox[{"{", 
-               RowBox[{
-               "\"\<Current State Eigenvalues\>\"", ",", " ", 
-                "eigenvaluesCurrent"}], "}"}]}], "\n", "    ", "}"}], ",", 
-            " ", 
-            RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
-            RowBox[{"ItemStyle", " ", "->", " ", 
-             RowBox[{"Directive", "[", 
-              RowBox[{"Bold", ",", " ", "Blue"}], "]"}]}]}], "]"}]}], "\n", 
+         RowBox[{"{", 
+          RowBox[{"timeSeriesPlot", ",", " ", "streamPlot"}], "}"}], "\n", 
          "  ", "}"}], "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
     
     RowBox[{"(*", " ", 
      RowBox[{
-      RowBox[{"Define", " ", "sliders", " ", "for", " ", "alpha"}], ",", " ", 
-      "beta", ",", " ", 
-      RowBox[{"and", " ", "initial", " ", "conditions"}]}], " ", "*)"}], "\n",
-     " ", 
+      RowBox[{"Controls", " ", "for", " ", "alpha"}], ",", " ", "beta", ",", 
+      " ", 
+      RowBox[{"initial", " ", "conditions"}], ",", " ", 
+      RowBox[{"and", " ", "solver", " ", "settings"}]}], " ", "*)"}], "\n", 
+    " ", 
     RowBox[{"{", 
      RowBox[{
       RowBox[{"{", 
@@ -1661,14 +1677,15 @@ Cell[BoxData[
       RowBox[{"(*", " ", 
        RowBox[{"Number", " ", "of", " ", "steps"}], " ", "*)"}], "\n", " ", 
       ")"}]}]}], "\n", "]"}], "\n"}]], "Code",
- CellChangeTimes->{3.9399670319787493`*^9},
- CellLabel->"In[18]:=",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
+ CellChangeTimes->{
+  3.9399670319787493`*^9, {3.939968295604793*^9, 3.93996829668297*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
    DynamicModuleBox[{$CellContext`alpha$$ = 0.1, $CellContext`beta$$ = 
-    0.5, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
+    0.8, $CellContext`initialI$$ = 0.01, $CellContext`initialS$$ = 0.99, 
     Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
     Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
@@ -1683,7 +1700,7 @@ Cell[BoxData[
        0, 
       Dynamic[1 - $CellContext`initialS$$], 0.01, ControlType -> 
       Manipulator}}, Typeset`size$$ = {
-    518.9288635253906, {283.12547082519535`, 288.85740441894535`}}, 
+    960.7703002929688, {158.80648803710938`, 164.53842163085938`}}, 
     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False, 
     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
     DynamicBox[Manipulate`ManipulateBoxes[
@@ -1697,51 +1714,51 @@ Cell[BoxData[
         Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
          Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
         Typeset`keyframeList$$}, "Body" :> 
-      Module[{$CellContext`A$, $CellContext`B$, $CellContext`SPrime$, \
-$CellContext`IPrime$, $CellContext`initialState$, \
-$CellContext`eigenvaluesFree$, $CellContext`eigenvaluesCurrent$, \
-$CellContext`jacobian$, $CellContext`streamPlot$}, $CellContext`A$ = {{0, 0, 
-           0}, {0, -$CellContext`alpha$$, 0}, {
+      Module[{$CellContext`A$, $CellContext`B$, $CellContext`trajectory$, \
+$CellContext`SValues$, $CellContext`IValues$, $CellContext`RValues$, \
+$CellContext`initialState$, $CellContext`eigenvaluesFree$, \
+$CellContext`eigenvaluesCurrent$, $CellContext`jacobian$, \
+$CellContext`streamPlot$, $CellContext`timeSeriesPlot$}, $CellContext`A$ = {{
+           0, 0, 0}, {0, -$CellContext`alpha$$, 0}, {
            0, $CellContext`alpha$$, 
             0}}; $CellContext`B$ = {{-$CellContext`beta$$, 0, 
-            0}, {$CellContext`beta$$, 0, 0}, {0, 0, 0}}; $CellContext`SPrime$[
-          
+            0}, {$CellContext`beta$$, 0, 0}, {0, 0, 
+           0}}; $CellContext`initialState$ = {$CellContext`initialS$$, \
+$CellContext`initialI$$, 
+           1 - $CellContext`initialS$$ - $CellContext`initialI$$}; \
+$CellContext`trajectory$ = \
+$CellContext`RungeKuttaSolver[$CellContext`initialState$, $CellContext`A$, \
+$CellContext`B$, $CellContext`stepSize, $CellContext`steps]; \
+$CellContext`SValues$ = 
+         Part[$CellContext`trajectory$, All, 1]; $CellContext`IValues$ = 
+         Part[$CellContext`trajectory$, All, 2]; $CellContext`RValues$ = 
+         Part[$CellContext`trajectory$, All, 3]; $CellContext`timeSeriesPlot$ = 
+         ListLinePlot[{$CellContext`SValues$, $CellContext`IValues$, \
+$CellContext`RValues$}, 
+           PlotLegends -> {"Susceptible", "Infected", "Recovered"}, PlotLabel -> 
+           "SIR Model Dynamics with Adjustable Parameters", 
+           AxesLabel -> {"Time Step", "Population Fraction"}, 
+           PlotStyle -> {Blue, Red, Green}, 
+           PlotRange -> {{1, $CellContext`steps}, {0, 
+             1}}]; $CellContext`SPrime[
            Pattern[$CellContext`S$, 
             Blank[]], 
            Pattern[I$, 
             Blank[]]] := (-$CellContext`beta$$) $CellContext`S$ 
-          I$; $CellContext`IPrime$[
+          I$; $CellContext`IPrime[
            Pattern[$CellContext`S$, 
             Blank[]], 
            Pattern[I$, 
             Blank[]]] := $CellContext`beta$$ $CellContext`S$ 
-           I$ - $CellContext`alpha$$ 
-          I$; $CellContext`initialState$ = {$CellContext`initialS$$, \
-$CellContext`initialI$$, 
-           1 - $CellContext`initialS$$ - $CellContext`initialI$$}; \
-$CellContext`eigenvaluesFree$ = Eigenvalues[
-           $CellContext`JacobianFunc[
-           1, 0, $CellContext`alpha$$, $CellContext`beta$$]]; \
-$CellContext`jacobian$ = $CellContext`JacobianFunc[
-           Part[$CellContext`initialState$, 1], 
-           
-           Part[$CellContext`initialState$, 
-            2], $CellContext`alpha$$, $CellContext`beta$$]; \
-$CellContext`eigenvaluesCurrent$ = 
-         Eigenvalues[$CellContext`jacobian$]; $CellContext`streamPlot$ = 
+           I$ - $CellContext`alpha$$ I$; $CellContext`streamPlot$ = 
          StreamPlot[{
-            $CellContext`SPrime$[$CellContext`S, I], 
-            $CellContext`IPrime$[$CellContext`S, I]}, {$CellContext`S, 0, 
-            1}, {I, 0, 1}, StreamStyle -> Arrowheads[Small], 
-           StreamColorFunction -> "Rainbow", PlotRange -> {{0, 1}, {0, 1}}, 
+            $CellContext`SPrime[$CellContext`S, I], 
+            $CellContext`IPrime[$CellContext`S, I]}, {$CellContext`S, 0, 1}, {
+           I, 0, 1}, StreamStyle -> Arrowheads[Small], StreamColorFunction -> 
+           "Rainbow", PlotRange -> {{0, 1}, {0, 1}}, 
            AxesLabel -> {"Susceptible (S)", "Infected (I)"}, GridLines -> 
            Automatic, Frame -> True, PlotLabel -> "Phase Space of SIR Model"]; 
-        Column[{$CellContext`streamPlot$, 
-           
-           Grid[{{"Fixed Point (Disease-Free) Eigenvalues", \
-$CellContext`eigenvaluesFree$}, {
-             "Current State Eigenvalues", $CellContext`eigenvaluesCurrent$}}, 
-            Frame -> All, ItemStyle -> Directive[Bold, Blue]]}]], 
+        Grid[{{$CellContext`timeSeriesPlot$, $CellContext`streamPlot$}}]], 
       "Specifications" :> {{{$CellContext`alpha$$, 0.1, 
           "Recovery Rate (\[Alpha])"}, 0.01, 1, 
          0.01}, {{$CellContext`beta$$, 0.5, "Infection Rate (\[Beta])"}, 0.01,
@@ -1752,7 +1769,7 @@ $CellContext`eigenvaluesFree$}, {
          Dynamic[1 - $CellContext`initialS$$], 0.01}}, "Options" :> {}, 
       "DefaultOptions" :> {}],
      ImageSizeCache->{
-      562.0288635253905, {415.07589624023444`, 420.80782983398444`}},
+      1003.8703002929688`, {290.75691345214847`, 296.48884704589847`}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -1765,8 +1782,9 @@ $CellContext`eigenvaluesFree$}, {
    Deployed->True,
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
- CellChangeTimes->{{3.939967036863336*^9, 3.939967048112653*^9}},
- CellLabel->"Out[18]=",ExpressionUUID->"23c3c3fd-085c-4d2e-a4e1-3d28dc86565b"]
+ CellChangeTimes->{{3.939967036863336*^9, 3.939967048112653*^9}, {
+  3.939968299171178*^9, 3.939968314435329*^9}},
+ CellLabel->"Out[20]=",ExpressionUUID->"35300507-f4e8-4365-862d-07a7e82738b0"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -1824,8 +1842,8 @@ Cell[44837, 1070, 10717, 254, 1333, "Code",ExpressionUUID->"22ee4eaf-0eaf-46c4-9
 Cell[55557, 1326, 5992, 112, 391, "Output",ExpressionUUID->"4194b233-b7fa-4671-b19b-3b5105e32384"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[61586, 1443, 9353, 221, 1125, "Code",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
-Cell[70942, 1666, 5282, 102, 852, "Output",ExpressionUUID->"23c3c3fd-085c-4d2e-a4e1-3d28dc86565b"]
+Cell[61586, 1443, 10002, 238, 1257, "Code",ExpressionUUID->"255a7e00-473d-4198-9a7f-e2c22b54ed6d"],
+Cell[71591, 1683, 5575, 103, 604, "Output",ExpressionUUID->"35300507-f4e8-4365-862d-07a7e82738b0"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
