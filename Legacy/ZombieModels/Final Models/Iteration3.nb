@@ -1,0 +1,2686 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    126954,       2678]
+NotebookOptionsPosition[    125378,       2645]
+NotebookOutlinePosition[    125777,       2661]
+CellTagsIndexPosition[    125734,       2658]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\n", " ", 
+   RowBox[{
+    RowBox[{"Module", "[", "\n", "  ", 
+     RowBox[{
+      RowBox[{"{", "\n", "   ", 
+       RowBox[{
+       "eqns", ",", " ", "sol", ",", " ", "H", ",", " ", "Z", ",", " ", "T", 
+        ",", " ", "R", ",", " ", "t", ",", " ", "Hfunc", ",", " ", "Zfunc", 
+        ",", " ", "Tfunc", ",", " ", "Rfunc", ",", " ", "fixedPoints", ",", 
+        " ", "\n", "   ", "phasePlotHZ", ",", " ", "phasePlotZT", ",", " ", 
+        "jMatrix", ",", " ", "parameterSpace", ",", "\n", "   ", "detJ", ",", 
+        " ", "finalDetJ", ",", " ", "traceJ", ",", " ", "finalTraceJ"}], "\n",
+        "  ", "}"}], ",", "\n", "  ", "\n", "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Define", " ", "the", " ", "differential", " ", "equations"}], 
+       " ", "*)"}], "\n", "  ", 
+      RowBox[{
+       RowBox[{"eqns", " ", "=", " ", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"H", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"-", " ", "\[Beta]Z"}], " ", 
+            RowBox[{"H", "[", "t", "]"}], " ", 
+            RowBox[{"Z", "[", "t", "]"}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"\[Beta]Z", "-", "\[Delta]ZH"}], ")"}], " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]Z", " ", 
+             RowBox[{"T", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"T", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"\[Beta]T", " ", 
+             RowBox[{"R", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]T", " ", 
+             RowBox[{"T", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"R", "'"}], "[", "t", "]"}], " ", "==", "  ", 
+           RowBox[{
+            RowBox[{"\[Delta]ZH", " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+            RowBox[{"\[Delta]Z", " ", 
+             RowBox[{"T", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Beta]T", " ", 
+             RowBox[{"R", "[", "t", "]"}]}]}]}]}], "\n", "  ", "}"}]}], ";", 
+       "\n", "  ", "\n", "  ", 
+       RowBox[{"jMatrix", " ", "=", " ", 
+        RowBox[{"{", "\n", "   ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "\[Beta]Z"}], " ", "Z"}], ",", " ", 
+            RowBox[{
+             RowBox[{"-", "\[Beta]Z"}], " ", "H"}], ",", " ", "0"}], "}"}], 
+          ",", "\n", "   ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\[Beta]Z", " ", "Z"}], ",", " ", 
+            RowBox[{
+             RowBox[{"\[Beta]Z", " ", "H"}], " ", "-", " ", "\[Delta]Z"}], 
+            ",", " ", "0"}], "}"}], ",", "\n", "   ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"\[Delta]Z", " ", "H"}], ",", " ", "0"}], "}"}]}], "\n", 
+         "}"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"parameterSpace", " ", "=", " ", 
+        RowBox[{"ParametricPlot", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"d", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "t"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              FractionBox[
+               SuperscriptBox["t", "2"], "4"], ",", "t"}], "}"}]}], "}"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", 
+            RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", 
+            RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+          RowBox[{"PlotRange", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}]}], "}"}]}]}], "]"}]}], 
+       ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Solve", " ", "the", " ", "equations", " ", "numerically"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"sol", " ", "=", " ", 
+        RowBox[{"NDSolve", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"eqns", ",", " ", "\n", "     ", 
+            RowBox[{
+             RowBox[{"H", "[", "0", "]"}], " ", "==", " ", "H0"}], ",", " ", 
+            "\n", "     ", 
+            RowBox[{
+             RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", "Z0"}], ",", "\n", 
+            "     ", 
+            RowBox[{
+             RowBox[{"T", "[", "0", "]"}], " ", "==", " ", "T0"}], ",", "\n", 
+            "     ", 
+            RowBox[{
+             RowBox[{"R", "[", "0", "]"}], " ", "==", " ", "R0"}]}], "\n", 
+           "    ", "}"}], ",", " ", "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"H", ",", " ", "Z", ",", " ", "T", ",", " ", "R"}], "}"}], 
+          ",", " ", "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}]}], "\n", 
+         "  ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Extract", " ", "solution", " ", "functions"}], " ", "*)"}], 
+       "\n", "  ", 
+       RowBox[{"Hfunc", " ", "=", " ", 
+        RowBox[{"H", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Zfunc", " ", "=", " ", 
+        RowBox[{"Z", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Tfunc", " ", "=", " ", 
+        RowBox[{"T", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Rfunc", " ", "=", " ", 
+        RowBox[{"R", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"traceJ", " ", "=", " ", 
+        RowBox[{"Tr", "[", "jMatrix", "]"}]}], ";", "\n", "  ", 
+       RowBox[{"detJ", " ", "=", " ", 
+        RowBox[{"Det", "[", "jMatrix", "]"}]}], ";", "\n", "  ", 
+       RowBox[{"finalTraceJ", " ", "=", " ", 
+        RowBox[{"traceJ", " ", "/.", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"H", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"H", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"Z", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Z", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"R", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"R", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"\[Beta]Z", " ", "->", " ", "\[Beta]Z"}], ",", " ", 
+           RowBox[{"\[Delta]Z", " ", "->", " ", "\[Delta]Z"}]}], " ", 
+          "}"}]}]}], ";", "\n", "  ", 
+       RowBox[{"finalDetJ", " ", "=", " ", 
+        RowBox[{"detJ", " ", "/.", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"H", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"H", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"Z", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Z", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"R", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"R", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"\[Beta]Z", " ", "->", " ", "\[Beta]Z"}], ",", " ", 
+           RowBox[{"\[Delta]Z", " ", "->", " ", "\[Delta]Z"}]}], " ", 
+          "}"}]}]}], ";", "\n", "  ", "\n", "  ", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Generate", " ", "phase", " ", "space", " ", "stream", " ", "plot"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"phasePlotHZ", " ", "=", " ", "\n", "   ", 
+        RowBox[{"StreamPlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{
+            RowBox[{"{", "\n", "    ", "\n", "      ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", " ", "\[Beta]Z"}], " ", "H", " ", "Z"}], " ", 
+               "+", " ", 
+               RowBox[{"\[Delta]T", " ", "T"}]}], ",", " ", "\n", "      ", 
+              RowBox[{
+               RowBox[{"\[Beta]Z", " ", "H", " ", "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]Z", " ", "T", " ", "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]ZH", " ", "H", " ", "Z"}]}]}], "\n", "    ", 
+             "}"}], " ", "/.", " ", 
+            RowBox[{"{", 
+             RowBox[{"T", " ", "->", " ", 
+              RowBox[{"Tfunc", "[", "tmax", "]"}]}], "}"}]}], "]"}], ",", 
+          "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"H", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"Z", ",", " ", "0", ",", " ", "1"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"StreamStyle", " ", "->", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Arrowheads", "[", "0.02", "]"}], ",", " ", "Gray"}], 
+            "]"}]}], ",", "\n", "    ", 
+          RowBox[{"StreamScale", " ", "->", " ", "Medium"}], ",", "\n", 
+          "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "    ", 
+          RowBox[{"FrameLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}]}], "\n", "   ", "]"}]}], ";", "\n", "   ", 
+       RowBox[{"phasePlotZT", " ", "=", " ", "\n", "   ", 
+        RowBox[{"StreamPlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{
+            RowBox[{"{", " ", "\n", "      ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"\[Beta]Z", " ", "H", " ", "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]Z", " ", "T", " ", "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]ZH", " ", "H", " ", "Z"}]}], ",", "\n", 
+              "      ", 
+              RowBox[{
+               RowBox[{"\[Beta]T", " ", "R"}], " ", "-", " ", 
+               RowBox[{"\[Delta]T", " ", "T"}]}]}], "\n", "    ", "}"}], " ", 
+            "/.", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"R", " ", "->", " ", 
+               RowBox[{"Rfunc", "[", "tmax", "]"}]}], ",", " ", 
+              RowBox[{"H", " ", "->", " ", 
+               RowBox[{"Hfunc", "[", "tmax", "]"}]}]}], "}"}]}], "]"}], ",", 
+          "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"Z", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"T", ",", " ", "0", ",", " ", "1"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"StreamStyle", " ", "->", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Arrowheads", "[", "0.02", "]"}], ",", " ", "Gray"}], 
+            "]"}]}], ",", "\n", "    ", 
+          RowBox[{"StreamScale", " ", "->", " ", "Medium"}], ",", "\n", 
+          "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "    ", 
+          RowBox[{"FrameLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}]}], "\n", "   ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Display", " ", "the", " ", "results"}], " ", "*)"}], "\n", 
+       "  ", 
+       RowBox[{"Column", "[", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Plot", "[", "\n", "     ", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Hfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Zfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Tfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Rfunc", "[", "t", "]"}]}], "}"}], ",", "\n", "     ", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", "\n",
+             "     ", 
+            RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", "     ", 
+            
+            RowBox[{"PlotLegends", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Humans (S)\>\"", ",", " ", "\"\<Zombies (Z)\>\"", ",", 
+               " ", "\"\<Turned (T)\>\"", ",", " ", "\"\<Removed (R)\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"PlotStyle", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"Blue", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Red", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Green", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Purple", ",", " ", "Thick"}], "}"}]}], "}"}]}], ",", 
+            "\n", "     ", 
+            RowBox[{"AxesLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Time (t)\>\"", ",", " ", "\"\<Population\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "     ", 
+            RowBox[{"FrameLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Time (t)\>\"", ",", " ", "\"\<Population Fractions\>\""}], 
+              "}"}]}]}], "\n", "    ", "]"}], ",", "\n", "    ", 
+          "phasePlotHZ", ",", "\n", "    ", "phasePlotZT"}], "\n", "   ", 
+         "}"}], "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Sliders", " ", "for", " ", "parameters", " ", "and", " ", "initial", 
+      " ", "conditions"}], " ", "*)"}], "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Beta]Z", ",", " ", "0.0095", ",", " ", 
+        "\"\<Zombification rate S to Z (beta_Z)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]Z", ",", " ", "0.013", ",", " ", 
+        "\"\<Zombie removal rate (delta_Z)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]ZH", ",", " ", "0.006", ",", " ", 
+        "\"\<Zombie removal rate by humans (delta_Z)\>\""}], "}"}], ",", " ", 
+      "0", ",", " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Beta]T", ",", " ", "0.003", ",", " ", 
+        "\"\<Mutation rate Z to T (beta_T)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]T", ",", " ", "0.002", ",", " ", 
+        "\"\<Turned removal rate (delta_T)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "H0", ",", " ", "500", ",", " ", "\"\<Initial humans (S0)\>\""}], 
+       "}"}], ",", " ", "0.1", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "Z0", ",", " ", "100", ",", " ", "\"\<Initial zombies (Z0)\>\""}], 
+       "}"}], ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "T0", ",", " ", "100", ",", " ", "\"\<Initial turned (T0)\>\""}], 
+       "}"}], ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "R0", ",", " ", "0", ",", " ", "\"\<Initial removed (R0)\>\""}], "}"}],
+       ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", "\n", 
+    " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "tmax", ",", " ", "10000", ",", " ", "\"\<Simulation time\>\""}], 
+       "}"}], ",", " ", "10", ",", " ", "1000000", ",", " ", "1"}], "}"}]}], 
+   "\n", "]"}], "\n"}]], "Code",
+ CellChangeTimes->{{3.942568861749254*^9, 3.9425689661309423`*^9}, {
+   3.9425694158856897`*^9, 3.942569418708898*^9}, {3.942569533947555*^9, 
+   3.942569544365508*^9}, {3.942569606385242*^9, 3.942569614701667*^9}, {
+   3.9425701736126537`*^9, 3.942570174617716*^9}, {3.942570543206863*^9, 
+   3.9425705597448797`*^9}, {3.942571147765177*^9, 3.94257114795545*^9}, {
+   3.942571334675982*^9, 3.942571334875091*^9}, {3.942571600983206*^9, 
+   3.942571612555653*^9}, {3.942573388728013*^9, 3.9425733889755793`*^9}, {
+   3.942576235628188*^9, 3.942576236826983*^9}, {3.9425762697710657`*^9, 
+   3.942576292134531*^9}, {3.942576324580317*^9, 3.942576350981542*^9}, {
+   3.942576398428941*^9, 3.9425767024076366`*^9}, {3.9425767376677732`*^9, 
+   3.942576787642063*^9}, {3.942576896151649*^9, 3.942576942278614*^9}, {
+   3.9425771664956512`*^9, 3.942577267368413*^9}, {3.942577383582917*^9, 
+   3.942577498696623*^9}, {3.942577986853459*^9, 3.9425780210361423`*^9}, {
+   3.942578885221765*^9, 3.942579150669462*^9}, {3.942579199489257*^9, 
+   3.942579236902091*^9}, {3.9425832690372133`*^9, 3.9425833010053577`*^9}, {
+   3.9425833414696417`*^9, 3.942583343635729*^9}, {3.942583380362493*^9, 
+   3.9425833861619577`*^9}, {3.942583437477683*^9, 3.942583438804572*^9}, 
+   3.942583500472416*^9, {3.9425835501076813`*^9, 3.94258356054707*^9}, {
+   3.9425836156680183`*^9, 3.94258362439462*^9}, {3.9425839238748407`*^9, 
+   3.942583924208112*^9}, {3.942590628253881*^9, 3.942590634461103*^9}, {
+   3.942591174442245*^9, 3.942591181112179*^9}, 3.942591217105631*^9, {
+   3.94259139899337*^9, 3.942591400925837*^9}, 3.9425916184359083`*^9, {
+   3.942591709788013*^9, 3.9425917100559196`*^9}, {3.9425920653998337`*^9, 
+   3.942592137668968*^9}, {3.942595133524193*^9, 3.942595169024489*^9}, 
+   3.942595451088324*^9, {3.942596543850368*^9, 3.942596570295548*^9}, {
+   3.942596683231937*^9, 3.942596732632107*^9}, {3.942596892363093*^9, 
+   3.942596894525754*^9}, {3.942596938465753*^9, 3.942596975765744*^9}, {
+   3.942599071645797*^9, 3.942599205978731*^9}, {3.9426000592250223`*^9, 
+   3.942600068606909*^9}, {3.942674978891893*^9, 3.942675013987845*^9}, {
+   3.942675548042687*^9, 3.942675561210155*^9}},
+ CellLabel->
+  "In[248]:=",ExpressionUUID->"a54f7314-71ab-4641-8904-2e99c7a8588b"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`H0$$ = 500, $CellContext`R0$$ = 
+    0, $CellContext`T0$$ = 100, $CellContext`tmax$$ = 
+    10000, $CellContext`Z0$$ = 100, $CellContext`\[Beta]T$$ = 
+    0.003, $CellContext`\[Beta]Z$$ = 0.149, $CellContext`\[Delta]T$$ = 
+    0.002, $CellContext`\[Delta]Z$$ = 0.014, $CellContext`\[Delta]ZH$$ = 
+    0.006, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Beta]Z$$], 0.0095, 
+       "Zombification rate S to Z (beta_Z)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Delta]Z$$], 0.013, 
+       "Zombie removal rate (delta_Z)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Delta]ZH$$], 0.006, 
+       "Zombie removal rate by humans (delta_Z)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Beta]T$$], 0.003, "Mutation rate Z to T (beta_T)"},
+       0, 1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]T$$], 0.002, 
+       "Turned removal rate (delta_T)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`H0$$], 500, "Initial humans (S0)"}, 0.1, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`Z0$$], 100, "Initial zombies (Z0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`T0$$], 100, "Initial turned (T0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`R0$$], 0, "Initial removed (R0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`tmax$$], 10000, "Simulation time"}, 10, 1000000, 1, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    298.99541015624993`, {238.67599886988125`, 244.40793246363125`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`H0$$ = 500, $CellContext`R0$$ = 
+        0, $CellContext`T0$$ = 100, $CellContext`tmax$$ = 
+        10000, $CellContext`Z0$$ = 100, $CellContext`\[Beta]T$$ = 
+        0.003, $CellContext`\[Beta]Z$$ = 0.0095, $CellContext`\[Delta]T$$ = 
+        0.002, $CellContext`\[Delta]Z$$ = 0.013, $CellContext`\[Delta]ZH$$ = 
+        0.006}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`eqns$, $CellContext`sol$, $CellContext`H$, \
+$CellContext`Z$, $CellContext`T$, $CellContext`R$, $CellContext`t$, \
+$CellContext`Hfunc$, $CellContext`Zfunc$, $CellContext`Tfunc$, \
+$CellContext`Rfunc$, $CellContext`fixedPoints$, $CellContext`phasePlotHZ$, \
+$CellContext`phasePlotZT$, $CellContext`jMatrix$, \
+$CellContext`parameterSpace$, $CellContext`detJ$, $CellContext`finalDetJ$, \
+$CellContext`traceJ$, $CellContext`finalTraceJ$}, $CellContext`eqns$ = {
+          Derivative[
+            1][$CellContext`H$][$CellContext`t$] == \
+(-$CellContext`\[Beta]Z$$) $CellContext`H$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`Z$][$CellContext`t$] == ($CellContext`\[Beta]Z$$ - \
+$CellContext`\[Delta]ZH$$) $CellContext`H$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$] - $CellContext`\[Delta]Z$$ \
+$CellContext`T$[$CellContext`t$] $CellContext`Z$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`T$][$CellContext`t$] == $CellContext`\[Beta]T$$ \
+$CellContext`R$[$CellContext`t$] - $CellContext`\[Delta]T$$ \
+$CellContext`T$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`R$][$CellContext`t$] == $CellContext`\[Delta]ZH$$ \
+$CellContext`H$[$CellContext`t$] $CellContext`Z$[$CellContext`t$] + \
+$CellContext`\[Delta]Z$$ $CellContext`T$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$] - $CellContext`\[Beta]T$$ \
+$CellContext`R$[$CellContext`t$]}; $CellContext`jMatrix$ = {{(-$CellContext`\
+\[Beta]Z$$) $CellContext`Z$, (-$CellContext`\[Beta]Z$$) $CellContext`H$, 
+            0}, {$CellContext`\[Beta]Z$$ $CellContext`Z$, \
+$CellContext`\[Beta]Z$$ $CellContext`H$ - $CellContext`\[Delta]Z$$, 0}, {
+           0, $CellContext`\[Delta]Z$$ $CellContext`H$, 
+            0}}; $CellContext`parameterSpace$ = 
+         ParametricPlot[{{$CellContext`d, 0}, {
+            0, $CellContext`t$}, {$CellContext`t$^2/
+             4, $CellContext`t$}}, {$CellContext`d, -10, 
+            10}, {$CellContext`t$, -10, 10}, 
+           PlotRange -> {{-10, 10}, {-10, 10}}]; $CellContext`sol$ = 
+         NDSolve[{$CellContext`eqns$, $CellContext`H$[
+             0] == $CellContext`H0$$, $CellContext`Z$[
+             0] == $CellContext`Z0$$, $CellContext`T$[
+             0] == $CellContext`T0$$, $CellContext`R$[
+             0] == $CellContext`R0$$}, {$CellContext`H$, $CellContext`Z$, \
+$CellContext`T$, $CellContext`R$}, {$CellContext`t$, 
+            0, $CellContext`tmax$$}]; $CellContext`Hfunc$ = 
+         ReplaceAll[$CellContext`H$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Zfunc$ = 
+         ReplaceAll[$CellContext`Z$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Tfunc$ = 
+         ReplaceAll[$CellContext`T$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Rfunc$ = 
+         ReplaceAll[$CellContext`R$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`traceJ$ = 
+         Tr[$CellContext`jMatrix$]; $CellContext`detJ$ = 
+         Det[$CellContext`jMatrix$]; $CellContext`finalTraceJ$ = 
+         ReplaceAll[$CellContext`traceJ$, {$CellContext`H$ -> ReplaceAll[
+              $CellContext`H$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`Z$ -> ReplaceAll[
+              $CellContext`Z$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`R$ -> ReplaceAll[
+              $CellContext`R$[$CellContext`tmax$$], 
+              
+              Part[$CellContext`sol$, 
+               1]], $CellContext`\[Beta]Z$$ -> $CellContext`\[Beta]Z$$, \
+$CellContext`\[Delta]Z$$ -> $CellContext`\[Delta]Z$$}]; \
+$CellContext`finalDetJ$ = 
+         ReplaceAll[$CellContext`detJ$, {$CellContext`H$ -> ReplaceAll[
+              $CellContext`H$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`Z$ -> ReplaceAll[
+              $CellContext`Z$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`R$ -> ReplaceAll[
+              $CellContext`R$[$CellContext`tmax$$], 
+              
+              Part[$CellContext`sol$, 
+               1]], $CellContext`\[Beta]Z$$ -> $CellContext`\[Beta]Z$$, \
+$CellContext`\[Delta]Z$$ -> $CellContext`\[Delta]Z$$}]; \
+$CellContext`phasePlotHZ$ = StreamPlot[
+           Evaluate[
+            
+            ReplaceAll[{(-$CellContext`\[Beta]Z$$) $CellContext`H$ \
+$CellContext`Z$ + $CellContext`\[Delta]T$$ $CellContext`T$, $CellContext`\
+\[Beta]Z$$ $CellContext`H$ $CellContext`Z$ - $CellContext`\[Delta]Z$$ \
+$CellContext`T$ $CellContext`Z$ - $CellContext`\[Delta]ZH$$ $CellContext`H$ \
+$CellContext`Z$}, {$CellContext`T$ -> \
+$CellContext`Tfunc$[$CellContext`tmax$$]}]], {$CellContext`H$, 0, 
+            1}, {$CellContext`Z$, 0, 1}, StreamStyle -> Directive[
+             Arrowheads[0.02], Gray], StreamScale -> Medium, 
+           AxesLabel -> {"H (Humans)", "Z (Zombies)"}, Frame -> True, 
+           FrameLabel -> {
+            "H (Humans)", "Z (Zombies)"}]; $CellContext`phasePlotZT$ = 
+         StreamPlot[
+           Evaluate[
+            
+            ReplaceAll[{$CellContext`\[Beta]Z$$ $CellContext`H$ \
+$CellContext`Z$ - $CellContext`\[Delta]Z$$ $CellContext`T$ $CellContext`Z$ - \
+$CellContext`\[Delta]ZH$$ $CellContext`H$ $CellContext`Z$, $CellContext`\
+\[Beta]T$$ $CellContext`R$ - $CellContext`\[Delta]T$$ $CellContext`T$}, \
+{$CellContext`R$ -> $CellContext`Rfunc$[$CellContext`tmax$$], $CellContext`H$ -> \
+$CellContext`Hfunc$[$CellContext`tmax$$]}]], {$CellContext`Z$, 0, 
+            1}, {$CellContext`T$, 0, 1}, StreamStyle -> Directive[
+             Arrowheads[0.02], Gray], StreamScale -> Medium, 
+           AxesLabel -> {"H (Humans)", "Z (Zombies)"}, Frame -> True, 
+           FrameLabel -> {"H (Humans)", "Z (Zombies)"}]; Column[{
+           Plot[{
+             $CellContext`Hfunc$[$CellContext`t$], 
+             $CellContext`Zfunc$[$CellContext`t$], 
+             $CellContext`Tfunc$[$CellContext`t$], 
+             $CellContext`Rfunc$[$CellContext`t$]}, {$CellContext`t$, 
+             0, $CellContext`tmax$$}, PlotRange -> All, 
+            PlotLegends -> {
+             "Humans (S)", "Zombies (Z)", "Turned (T)", "Removed (R)"}, 
+            PlotStyle -> {{Blue, Thick}, {Red, Thick}, {Green, Thick}, {
+              Purple, Thick}}, AxesLabel -> {"Time (t)", "Population"}, Frame -> 
+            True, FrameLabel -> {
+             "Time (t)", 
+              "Population Fractions"}], $CellContext`phasePlotHZ$, \
+$CellContext`phasePlotZT$}]], 
+      "Specifications" :> {{{$CellContext`\[Beta]Z$$, 0.0095, 
+          "Zombification rate S to Z (beta_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]Z$$, 0.013, 
+          "Zombie removal rate (delta_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]ZH$$, 0.006, 
+          "Zombie removal rate by humans (delta_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Beta]T$$, 0.003, 
+          "Mutation rate Z to T (beta_T)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]T$$, 0.002, 
+          "Turned removal rate (delta_T)"}, 0, 1, 
+         0.001}, {{$CellContext`H0$$, 500, "Initial humans (S0)"}, 0.1, 5000, 
+         1}, {{$CellContext`Z0$$, 100, "Initial zombies (Z0)"}, 0, 5000, 
+         1}, {{$CellContext`T0$$, 100, "Initial turned (T0)"}, 0, 5000, 
+         1}, {{$CellContext`R0$$, 0, "Initial removed (R0)"}, 0, 5000, 
+         1}, {{$CellContext`tmax$$, 10000, "Simulation time"}, 10, 1000000, 
+         1}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      743.5867578124999, {266.44642428492034`, 272.17835787867034`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.942568977818625*^9, 3.942568979019331*^9}, {
+   3.9425694460876703`*^9, 3.942569453500128*^9}, {3.942569547867321*^9, 
+   3.9425695546727037`*^9}, {3.942569593163629*^9, 3.942569631268051*^9}, 
+   3.9425711526242857`*^9, 3.942571217898593*^9, {3.942571336629122*^9, 
+   3.94257135910047*^9}, {3.942571603355234*^9, 3.9425716138461933`*^9}, {
+   3.9425731872050962`*^9, 3.942573208373104*^9}, {3.9425733932181892`*^9, 
+   3.9425734195524673`*^9}, 3.942574288399219*^9, {3.942576530655716*^9, 
+   3.942576583395631*^9}, 3.9425767483742533`*^9, 3.942576788351324*^9, {
+   3.942576943985812*^9, 3.9425769863902273`*^9}, {3.942577240612393*^9, 
+   3.942577270574812*^9}, 3.942577471295377*^9, 3.942577503240027*^9, 
+   3.94257802459727*^9, {3.942579132559902*^9, 3.942579168418244*^9}, 
+   3.942579242672854*^9, {3.942583309941728*^9, 3.9425834100899153`*^9}, {
+   3.9425834417157507`*^9, 3.942583459663706*^9}, {3.9425835619824743`*^9, 
+   3.942583565995422*^9}, {3.942583625740093*^9, 3.942583656453855*^9}, {
+   3.9425839267580233`*^9, 3.942583960076029*^9}, {3.9425912210649977`*^9, 
+   3.942591238157123*^9}, {3.942591404719817*^9, 3.9425914131474857`*^9}, 
+   3.942591451003351*^9, {3.942591621812278*^9, 3.942591636696753*^9}, {
+   3.942591711482345*^9, 3.942591721009261*^9}, {3.9425921398481817`*^9, 
+   3.942592154838426*^9}, 3.942592215351552*^9, 3.942595170574893*^9, {
+   3.9425961372684193`*^9, 3.942596175976952*^9}, {3.942596589614694*^9, 
+   3.9425966274409723`*^9}, {3.9425967091343117`*^9, 3.94259676253794*^9}, 
+   3.942596895862568*^9, {3.942596977427021*^9, 3.942597008556622*^9}, 
+   3.942598510962668*^9, {3.942599180418395*^9, 3.9425992227947817`*^9}, 
+   3.9425992589635057`*^9, 3.942675367391283*^9, {3.9426755496088257`*^9, 
+   3.942675562657721*^9}},
+ CellLabel->
+  "Out[248]=",ExpressionUUID->"b9b9cc8f-aa3b-4e51-a247-58bf3e5f29be"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Non-Dimensionalisation", "Subtitle",
+ CellChangeTimes->{{3.942675086146934*^9, 
+  3.94267509294487*^9}},ExpressionUUID->"72385e2d-ddc4-4373-b764-\
+5e1ac04289f0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\n", " ", 
+   RowBox[{
+    RowBox[{"Module", "[", "\n", "  ", 
+     RowBox[{
+      RowBox[{"{", "\n", "   ", 
+       RowBox[{
+       "eqns", ",", " ", "sol", ",", " ", "H", ",", " ", "Z", ",", " ", "T", 
+        ",", " ", "R", ",", " ", "t", ",", " ", "Hfunc", ",", " ", "Zfunc", 
+        ",", " ", "Tfunc", ",", " ", "Rfunc", ",", " ", "fixedPoints", ",", 
+        " ", "\n", "   ", "phasePlotHZ", ",", " ", "phasePlotZT", ",", " ", 
+        "jMatrix", ",", " ", "parameterSpace", ",", "\n", "   ", "detJ", ",", 
+        " ", "finalDetJ", ",", " ", "traceJ", ",", " ", "finalTraceJ"}], "\n",
+        "  ", "}"}], ",", "\n", "  ", "\n", "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Define", " ", "the", " ", "differential", " ", "equations"}], 
+       " ", "*)"}], "\n", "  ", 
+      RowBox[{
+       RowBox[{"eqns", " ", "=", " ", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"H", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"H", "[", "t", "]"}]}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+            RowBox[{"\[Delta]T", " ", 
+             RowBox[{"T", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]Z", " ", 
+             RowBox[{"T", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"T", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"\[Beta]T", " ", 
+             RowBox[{"R", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]T", " ", 
+             RowBox[{"T", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"R", "'"}], "[", "t", "]"}], " ", "==", "  ", 
+           RowBox[{
+            RowBox[{"\[Delta]ZH", " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+            RowBox[{"\[Delta]Z", " ", 
+             RowBox[{"T", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Beta]T", " ", 
+             RowBox[{"R", "[", "t", "]"}]}]}]}]}], "\n", "  ", "}"}]}], ";", 
+       "\n", "  ", "\n", "  ", 
+       RowBox[{"jMatrix", " ", "=", " ", 
+        RowBox[{"{", "\n", "   ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", " ", "Z"}], ",", " ", 
+            RowBox[{"-", " ", "H"}], ",", " ", "\[Delta]T", ",", " ", "0"}], 
+           "}"}], ",", "\n", "   ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], "Z"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], "H"}], " ", "-", " ", 
+             
+             RowBox[{"\[Delta]Z", " ", "T"}]}], ",", " ", 
+            RowBox[{
+             RowBox[{"-", " ", "\[Delta]Z"}], " ", "Z"}], ",", " ", "0"}], 
+           "}"}], ",", "\n", "   ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0", ",", " ", 
+            RowBox[{"-", " ", "\[Delta]T"}], ",", " ", "\[Beta]T"}], "}"}], 
+          ",", "\n", "   ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\[Delta]ZH", " ", "Z"}], ",", " ", 
+            RowBox[{
+             RowBox[{"\[Delta]ZH", " ", "H"}], " ", "+", " ", 
+             RowBox[{"\[Delta]Z", " ", "T"}]}], ",", " ", 
+            RowBox[{"\[Delta]Z", " ", "Z"}], ",", " ", "\[Beta]T"}], "}"}]}], 
+         "\n", "}"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"parameterSpace", " ", "=", " ", 
+        RowBox[{"ParametricPlot", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"d", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "t"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              FractionBox[
+               SuperscriptBox["t", "2"], "4"], ",", "t"}], "}"}]}], "}"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", 
+            RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", 
+            RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+          RowBox[{"PlotRange", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}]}], "]"}]}], 
+       ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Solve", " ", "the", " ", "equations", " ", "numerically"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"sol", " ", "=", " ", 
+        RowBox[{"NDSolve", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"eqns", ",", " ", "\n", "     ", 
+            RowBox[{
+             RowBox[{"H", "[", "0", "]"}], " ", "==", " ", 
+             RowBox[{"H0", "/", "H0"}]}], ",", " ", "\n", "     ", 
+            RowBox[{
+             RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", 
+             RowBox[{"Z0", "/", "H0"}]}], ",", "\n", "     ", 
+            RowBox[{
+             RowBox[{"T", "[", "0", "]"}], " ", "==", " ", 
+             RowBox[{"T0", "/", "H0"}]}], ",", "\n", "     ", 
+            RowBox[{
+             RowBox[{"R", "[", "0", "]"}], " ", "==", " ", 
+             RowBox[{"R0", "/", "H0"}]}]}], "\n", "    ", "}"}], ",", " ", 
+          "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"H", ",", " ", "Z", ",", " ", "T", ",", " ", "R"}], "}"}], 
+          ",", " ", "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}]}], "\n", 
+         "  ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Extract", " ", "solution", " ", "functions"}], " ", "*)"}], 
+       "\n", "  ", 
+       RowBox[{"Hfunc", " ", "=", " ", 
+        RowBox[{"H", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Zfunc", " ", "=", " ", 
+        RowBox[{"Z", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Tfunc", " ", "=", " ", 
+        RowBox[{"T", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Rfunc", " ", "=", " ", 
+        RowBox[{"R", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"traceJ", " ", "=", " ", 
+        RowBox[{"Tr", "[", "jMatrix", "]"}]}], ";", "\n", "  ", 
+       RowBox[{"detJ", " ", "=", " ", 
+        RowBox[{"Det", "[", "jMatrix", "]"}]}], ";", "\n", "  ", 
+       RowBox[{"finalTraceJ", " ", "=", " ", 
+        RowBox[{"traceJ", " ", "/.", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"H", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"H", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"Z", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Z", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"T", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"T", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"R", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"R", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"\[Delta]Z", " ", "->", " ", "\[Delta]Z"}]}], " ", 
+          "}"}]}]}], ";", "\n", "  ", 
+       RowBox[{"finalDetJ", " ", "=", " ", 
+        RowBox[{"detJ", " ", "/.", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"H", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"H", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"Z", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Z", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"T", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"T", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"R", " ", "->", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"R", "[", "tmax", "]"}], " ", "/.", " ", 
+              RowBox[{"sol", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], ",", " ", 
+           RowBox[{"\[Delta]Z", " ", "->", " ", "\[Delta]Z"}]}], " ", 
+          "}"}]}]}], ";", "\n", "  ", "\n", "  ", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Generate", " ", "phase", " ", "space", " ", "stream", " ", "plot"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"phasePlotHZ", " ", "=", " ", "\n", "   ", 
+        RowBox[{"StreamPlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{
+            RowBox[{"{", "\n", "    ", "\n", "      ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", " ", "H"}], " ", "Z"}], " ", "+", " ", 
+               RowBox[{"\[Delta]T", " ", "T"}]}], ",", " ", "\n", "      ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], " ", "H", " ", 
+                "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]Z", " ", "T", " ", "Z"}]}]}], "\n", "    ", 
+             "}"}], " ", "/.", " ", 
+            RowBox[{"{", 
+             RowBox[{"T", " ", "->", " ", 
+              RowBox[{"Tfunc", "[", "tmax", "]"}]}], "}"}]}], "]"}], ",", 
+          "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"H", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"Z", ",", " ", "0", ",", " ", "1"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"StreamStyle", " ", "->", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Arrowheads", "[", "0.02", "]"}], ",", " ", "Gray"}], 
+            "]"}]}], ",", "\n", "    ", 
+          RowBox[{"StreamScale", " ", "->", " ", "Medium"}], ",", "\n", 
+          "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "    ", 
+          RowBox[{"FrameLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<H (Humans)\>\"", ",", " ", "\"\<Z (Zombies)\>\""}], 
+            "}"}]}]}], "\n", "   ", "]"}]}], ";", "\n", "   ", 
+       RowBox[{"phasePlotZT", " ", "=", " ", "\n", "   ", 
+        RowBox[{"StreamPlot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{
+            RowBox[{"{", " ", "\n", "      ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], " ", "H", " ", 
+                "Z"}], " ", "-", " ", 
+               RowBox[{"\[Delta]Z", " ", "T", " ", "Z"}]}], ",", "\n", 
+              "      ", 
+              RowBox[{
+               RowBox[{"\[Beta]T", " ", "R"}], " ", "-", " ", 
+               RowBox[{"\[Delta]T", " ", "T"}]}]}], "\n", "    ", "}"}], " ", 
+            "/.", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"R", " ", "->", " ", 
+               RowBox[{"Rfunc", "[", "tmax", "]"}]}], ",", " ", 
+              RowBox[{"H", " ", "->", " ", 
+               RowBox[{"Hfunc", "[", "tmax", "]"}]}]}], "}"}]}], "]"}], ",", 
+          "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"Z", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"T", ",", " ", "0", ",", " ", "1"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"StreamStyle", " ", "->", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Arrowheads", "[", "0.02", "]"}], ",", " ", "Gray"}], 
+            "]"}]}], ",", "\n", "    ", 
+          RowBox[{"StreamScale", " ", "->", " ", "Medium"}], ",", "\n", 
+          "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Z (Zombies)\>\"", ",", " ", "\"\<T (Turned)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "    ", 
+          RowBox[{"FrameLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Z (Zombies)\>\"", ",", " ", "\"\<T (Turned)\>\""}], 
+            "}"}]}]}], "\n", "   ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Display", " ", "the", " ", "results"}], " ", "*)"}], "\n", 
+       "  ", 
+       RowBox[{"Column", "[", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Plot", "[", "\n", "     ", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Hfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Zfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Tfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Rfunc", "[", "t", "]"}]}], "}"}], ",", "\n", "     ", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", "\n",
+             "     ", 
+            RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", "     ", 
+            
+            RowBox[{"PlotLegends", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Humans (S)\>\"", ",", " ", "\"\<Zombies (Z)\>\"", ",", 
+               " ", "\"\<Turned (T)\>\"", ",", " ", "\"\<Removed (R)\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"PlotStyle", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"Blue", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Red", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Green", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Purple", ",", " ", "Thick"}], "}"}]}], "}"}]}], ",", 
+            "\n", "     ", 
+            RowBox[{"AxesLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Time (t)\>\"", ",", " ", "\"\<Population\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "     ", 
+            RowBox[{"FrameLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Time (t)\>\"", ",", " ", "\"\<Population Fractions\>\""}], 
+              "}"}]}]}], "\n", "    ", "]"}], ",", "\n", "    ", 
+          "phasePlotHZ", ",", "\n", "    ", "phasePlotZT", ",", "\n", "    ", 
+          
+          RowBox[{"Show", "[", "\[IndentingNewLine]", "\t\t", 
+           RowBox[{"parameterSpace", ",", "\[IndentingNewLine]", "\t\t", 
+            RowBox[{"ListPlot", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"{", 
+                RowBox[{"finalDetJ", ",", "finalTraceJ"}], "}"}], "}"}], ",", 
+              
+              RowBox[{"PlotStyle", "->", 
+               RowBox[{"PointSize", "[", "Large", "]"}]}]}], "]"}]}], 
+           "\[IndentingNewLine]", "\t", "]"}]}], "\n", "   ", "}"}], 
+        "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Sliders", " ", "for", " ", "parameters", " ", "and", " ", "initial", 
+      " ", "conditions"}], " ", "*)"}], "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]Z", ",", " ", "1.36", ",", " ", 
+        "\"\<Zombie removal rate (delta_Z)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "2", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]ZH", ",", " ", "0.632", ",", " ", 
+        "\"\<Zombie removal rate by humans (delta_Z)\>\""}], "}"}], ",", " ", 
+      "0", ",", " ", "2", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Beta]T", ",", " ", "0.31", ",", " ", 
+        "\"\<Mutation rate Z to T (beta_T)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "2", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]T", ",", " ", "0.2", ",", " ", 
+        "\"\<Turned removal rate (delta_T)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "2", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "H0", ",", " ", "500", ",", " ", "\"\<Initial humans (S0)\>\""}], 
+       "}"}], ",", " ", "0.1", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "Z0", ",", " ", "100", ",", " ", "\"\<Initial zombies (Z0)\>\""}], 
+       "}"}], ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "T0", ",", " ", "100", ",", " ", "\"\<Initial turned (T0)\>\""}], 
+       "}"}], ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", 
+    "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "R0", ",", " ", "0", ",", " ", "\"\<Initial removed (R0)\>\""}], "}"}],
+       ",", " ", "0", ",", " ", "5000", ",", " ", "1"}], "}"}], ",", "\n", 
+    " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "tmax", ",", " ", "10000", ",", " ", "\"\<Simulation time\>\""}], 
+       "}"}], ",", " ", "10", ",", " ", "1000000", ",", " ", "1"}], "}"}]}], 
+   "\n", "]"}], "\n"}]], "Code",
+ CellChangeTimes->{{3.942675105965534*^9, 3.942675498455975*^9}, {
+  3.9426755965656223`*^9, 3.9426756025729322`*^9}, {3.942676519230316*^9, 
+  3.942676597469442*^9}, {3.942676796520504*^9, 3.94267682139863*^9}, {
+  3.942677373701545*^9, 3.942677400650116*^9}},
+ CellLabel->
+  "In[377]:=",ExpressionUUID->"be0c59b6-a896-402d-8585-c57d9f83c3f4"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`H0$$ = 500, $CellContext`R0$$ = 
+    0, $CellContext`T0$$ = 50, $CellContext`tmax$$ = 200, $CellContext`Z0$$ = 
+    50, $CellContext`\[Beta]T$$ = 0.31, $CellContext`\[Delta]T$$ = 
+    0.2, $CellContext`\[Delta]Z$$ = 1.36, $CellContext`\[Delta]ZH$$ = 0.632, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Delta]Z$$], 1.36, "Zombie removal rate (delta_Z)"},
+       0, 2, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]ZH$$], 0.632, 
+       "Zombie removal rate by humans (delta_Z)"}, 0, 2, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Beta]T$$], 0.31, "Mutation rate Z to T (beta_T)"}, 
+      0, 2, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]T$$], 0.2, "Turned removal rate (delta_T)"}, 
+      0, 2, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`H0$$], 500, "Initial humans (S0)"}, 0.1, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`Z0$$], 100, "Initial zombies (Z0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`T0$$], 100, "Initial turned (T0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`R0$$], 0, "Initial removed (R0)"}, 0, 5000, 1, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`tmax$$], 10000, "Simulation time"}, 10, 1000000, 1, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    298.99541015624993`, {327.5026553534644, 333.2345889472144}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`H0$$ = 500, $CellContext`R0$$ = 
+        0, $CellContext`T0$$ = 100, $CellContext`tmax$$ = 
+        10000, $CellContext`Z0$$ = 100, $CellContext`\[Beta]T$$ = 
+        0.31, $CellContext`\[Delta]T$$ = 0.2, $CellContext`\[Delta]Z$$ = 
+        1.36, $CellContext`\[Delta]ZH$$ = 0.632}, "ControllerVariables" :> {},
+       "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`eqns$, $CellContext`sol$, $CellContext`H$, \
+$CellContext`Z$, $CellContext`T$, $CellContext`R$, $CellContext`t$, \
+$CellContext`Hfunc$, $CellContext`Zfunc$, $CellContext`Tfunc$, \
+$CellContext`Rfunc$, $CellContext`fixedPoints$, $CellContext`phasePlotHZ$, \
+$CellContext`phasePlotZT$, $CellContext`jMatrix$, \
+$CellContext`parameterSpace$, $CellContext`detJ$, $CellContext`finalDetJ$, \
+$CellContext`traceJ$, $CellContext`finalTraceJ$}, $CellContext`eqns$ = {
+          Derivative[
+            1][$CellContext`H$][$CellContext`t$] == \
+(-$CellContext`H$[$CellContext`t$]) $CellContext`Z$[$CellContext`t$] + \
+$CellContext`\[Delta]T$$ $CellContext`T$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`Z$][$CellContext`t$] == (
+              1 - $CellContext`\[Delta]ZH$$) $CellContext`H$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$] - $CellContext`\[Delta]Z$$ \
+$CellContext`T$[$CellContext`t$] $CellContext`Z$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`T$][$CellContext`t$] == $CellContext`\[Beta]T$$ \
+$CellContext`R$[$CellContext`t$] - $CellContext`\[Delta]T$$ \
+$CellContext`T$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`R$][$CellContext`t$] == $CellContext`\[Delta]ZH$$ \
+$CellContext`H$[$CellContext`t$] $CellContext`Z$[$CellContext`t$] + \
+$CellContext`\[Delta]Z$$ $CellContext`T$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$] - $CellContext`\[Beta]T$$ \
+$CellContext`R$[$CellContext`t$]}; $CellContext`jMatrix$ = \
+{{-$CellContext`Z$, -$CellContext`H$, $CellContext`\[Delta]T$$, 
+            0}, {(
+             1 - $CellContext`\[Delta]ZH$$) $CellContext`Z$, (
+              1 - $CellContext`\[Delta]ZH$$) $CellContext`H$ - $CellContext`\
+\[Delta]Z$$ $CellContext`T$, (-$CellContext`\[Delta]Z$$) $CellContext`Z$, 
+            0}, {0, 0, -$CellContext`\[Delta]T$$, $CellContext`\[Beta]T$$}, \
+{$CellContext`\[Delta]ZH$$ $CellContext`Z$, $CellContext`\[Delta]ZH$$ \
+$CellContext`H$ + $CellContext`\[Delta]Z$$ $CellContext`T$, $CellContext`\
+\[Delta]Z$$ $CellContext`Z$, $CellContext`\[Beta]T$$}}; \
+$CellContext`parameterSpace$ = 
+         ParametricPlot[{{$CellContext`d, 0}, {
+            0, $CellContext`t$}, {$CellContext`t$^2/
+             4, $CellContext`t$}}, {$CellContext`d, -10, 
+            10}, {$CellContext`t$, -10, 10}, 
+           PlotRange -> {{-1, 1}, {-1, 1}}]; $CellContext`sol$ = 
+         NDSolve[{$CellContext`eqns$, $CellContext`H$[
+             0] == $CellContext`H0$$/$CellContext`H0$$, $CellContext`Z$[
+             0] == $CellContext`Z0$$/$CellContext`H0$$, $CellContext`T$[
+             0] == $CellContext`T0$$/$CellContext`H0$$, $CellContext`R$[
+             0] == $CellContext`R0$$/$CellContext`H0$$}, {$CellContext`H$, \
+$CellContext`Z$, $CellContext`T$, $CellContext`R$}, {$CellContext`t$, 
+            0, $CellContext`tmax$$}]; $CellContext`Hfunc$ = 
+         ReplaceAll[$CellContext`H$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Zfunc$ = 
+         ReplaceAll[$CellContext`Z$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Tfunc$ = 
+         ReplaceAll[$CellContext`T$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Rfunc$ = 
+         ReplaceAll[$CellContext`R$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`traceJ$ = 
+         Tr[$CellContext`jMatrix$]; $CellContext`detJ$ = 
+         Det[$CellContext`jMatrix$]; $CellContext`finalTraceJ$ = 
+         ReplaceAll[$CellContext`traceJ$, {$CellContext`H$ -> ReplaceAll[
+              $CellContext`H$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`Z$ -> ReplaceAll[
+              $CellContext`Z$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`T$ -> ReplaceAll[
+              $CellContext`T$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`R$ -> ReplaceAll[
+              $CellContext`R$[$CellContext`tmax$$], 
+              
+              Part[$CellContext`sol$, 
+               1]], $CellContext`\[Delta]Z$$ -> $CellContext`\[Delta]Z$$}]; \
+$CellContext`finalDetJ$ = 
+         ReplaceAll[$CellContext`detJ$, {$CellContext`H$ -> ReplaceAll[
+              $CellContext`H$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`Z$ -> ReplaceAll[
+              $CellContext`Z$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`T$ -> ReplaceAll[
+              $CellContext`T$[$CellContext`tmax$$], 
+              Part[$CellContext`sol$, 1]], $CellContext`R$ -> ReplaceAll[
+              $CellContext`R$[$CellContext`tmax$$], 
+              
+              Part[$CellContext`sol$, 
+               1]], $CellContext`\[Delta]Z$$ -> $CellContext`\[Delta]Z$$}]; \
+$CellContext`phasePlotHZ$ = StreamPlot[
+           Evaluate[
+            
+            ReplaceAll[{(-$CellContext`H$) $CellContext`Z$ + $CellContext`\
+\[Delta]T$$ $CellContext`T$, (
+                1 - $CellContext`\[Delta]ZH$$) $CellContext`H$ \
+$CellContext`Z$ - $CellContext`\[Delta]Z$$ $CellContext`T$ $CellContext`Z$}, \
+{$CellContext`T$ -> $CellContext`Tfunc$[$CellContext`tmax$$]}]], \
+{$CellContext`H$, 0, 1}, {$CellContext`Z$, 0, 1}, StreamStyle -> Directive[
+             Arrowheads[0.02], Gray], StreamScale -> Medium, 
+           AxesLabel -> {"H (Humans)", "Z (Zombies)"}, Frame -> True, 
+           FrameLabel -> {
+            "H (Humans)", "Z (Zombies)"}]; $CellContext`phasePlotZT$ = 
+         StreamPlot[
+           Evaluate[
+            
+            ReplaceAll[{(
+                1 - $CellContext`\[Delta]ZH$$) $CellContext`H$ \
+$CellContext`Z$ - $CellContext`\[Delta]Z$$ $CellContext`T$ $CellContext`Z$, \
+$CellContext`\[Beta]T$$ $CellContext`R$ - $CellContext`\[Delta]T$$ \
+$CellContext`T$}, {$CellContext`R$ -> \
+$CellContext`Rfunc$[$CellContext`tmax$$], $CellContext`H$ -> \
+$CellContext`Hfunc$[$CellContext`tmax$$]}]], {$CellContext`Z$, 0, 
+            1}, {$CellContext`T$, 0, 1}, StreamStyle -> Directive[
+             Arrowheads[0.02], Gray], StreamScale -> Medium, 
+           AxesLabel -> {"Z (Zombies)", "T (Turned)"}, Frame -> True, 
+           FrameLabel -> {"Z (Zombies)", "T (Turned)"}]; Column[{
+           Plot[{
+             $CellContext`Hfunc$[$CellContext`t$], 
+             $CellContext`Zfunc$[$CellContext`t$], 
+             $CellContext`Tfunc$[$CellContext`t$], 
+             $CellContext`Rfunc$[$CellContext`t$]}, {$CellContext`t$, 
+             0, $CellContext`tmax$$}, PlotRange -> All, 
+            PlotLegends -> {
+             "Humans (S)", "Zombies (Z)", "Turned (T)", "Removed (R)"}, 
+            PlotStyle -> {{Blue, Thick}, {Red, Thick}, {Green, Thick}, {
+              Purple, Thick}}, AxesLabel -> {"Time (t)", "Population"}, Frame -> 
+            True, FrameLabel -> {
+             "Time (t)", 
+              "Population Fractions"}], $CellContext`phasePlotHZ$, \
+$CellContext`phasePlotZT$, 
+           Show[$CellContext`parameterSpace$, 
+            
+            ListPlot[{{$CellContext`finalDetJ$, $CellContext`finalTraceJ$}}, 
+             PlotStyle -> PointSize[Large]]]}]], 
+      "Specifications" :> {{{$CellContext`\[Delta]Z$$, 1.36, 
+          "Zombie removal rate (delta_Z)"}, 0, 2, 
+         0.001}, {{$CellContext`\[Delta]ZH$$, 0.632, 
+          "Zombie removal rate by humans (delta_Z)"}, 0, 2, 
+         0.001}, {{$CellContext`\[Beta]T$$, 0.31, 
+          "Mutation rate Z to T (beta_T)"}, 0, 2, 
+         0.001}, {{$CellContext`\[Delta]T$$, 0.2, 
+          "Turned removal rate (delta_T)"}, 0, 2, 
+         0.001}, {{$CellContext`H0$$, 500, "Initial humans (S0)"}, 0.1, 5000, 
+         1}, {{$CellContext`Z0$$, 100, "Initial zombies (Z0)"}, 0, 5000, 
+         1}, {{$CellContext`T0$$, 100, "Initial turned (T0)"}, 0, 5000, 
+         1}, {{$CellContext`R0$$, 0, "Initial removed (R0)"}, 0, 5000, 
+         1}, {{$CellContext`tmax$$, 10000, "Simulation time"}, 10, 1000000, 
+         1}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      743.5867578124999, {355.27308076850346`, 361.00501436225346`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.942675368019512*^9, 3.942675368627947*^9}, {
+   3.942675459897253*^9, 3.942675468530795*^9}, 3.942675500770446*^9, 
+   3.942675606146772*^9, {3.942675794099395*^9, 3.9426758064033527`*^9}, 
+   3.9426759593925037`*^9, {3.942676579883142*^9, 3.942676598815133*^9}, {
+   3.942676631047681*^9, 3.942676632249419*^9}, {3.9426768300008297`*^9, 
+   3.9426768679595137`*^9}, {3.942677382122005*^9, 3.9426774076387157`*^9}},
+ CellLabel->
+  "Out[377]=",ExpressionUUID->"7ce5de1e-a1d1-4456-bbbb-2fec8564b2a9"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"jMatrix", " ", "=", " ", 
+    RowBox[{"{", "\n", "   ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", " ", "Z"}], ",", " ", 
+        RowBox[{"-", " ", "H"}], ",", " ", "\[Delta]T", ",", " ", "0"}], 
+       "}"}], ",", "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], "Z"}], ",", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], "H"}], " ", "-", " ", 
+         RowBox[{"\[Delta]Z", " ", "T"}]}], ",", " ", 
+        RowBox[{
+         RowBox[{"-", " ", "\[Delta]Z"}], " ", "Z"}], ",", " ", "0"}], "}"}], 
+      ",", "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", " ", "0", ",", " ", 
+        RowBox[{"-", " ", "\[Delta]T"}], ",", " ", "\[Beta]T"}], "}"}], ",", 
+      "\n", "   ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Delta]ZH", " ", "Z"}], ",", " ", 
+        RowBox[{
+         RowBox[{"\[Delta]ZH", " ", "H"}], " ", "+", " ", 
+         RowBox[{"\[Delta]Z", " ", "T"}]}], ",", " ", 
+        RowBox[{"\[Delta]Z", " ", "Z"}], ",", " ", "\[Beta]T"}], "}"}]}], 
+     "\n", "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"fixedPoint1", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"Z", " ", "->", " ", "0"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"fixedPoint2", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"H", " ", "->", " ", "0"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fixedPoint3", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"H", " ", "->", " ", "0"}], ",", " ", 
+      RowBox[{"Z", " ", "->", " ", "0"}], ",", " ", 
+      RowBox[{"T", " ", "->", " ", "0"}], ",", " ", 
+      RowBox[{"R", " ", "->", " ", "0"}]}], "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"genEigenVals", " ", "=", " ", 
+   RowBox[{"Eigenvalues", "[", "jMatrix", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"eigenVals1", " ", "=", " ", 
+   RowBox[{"Eigenvalues", "[", 
+    RowBox[{"jMatrix", " ", "/.", " ", "fixedPoint1"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"eigenVals2", " ", "=", " ", 
+   RowBox[{"Eigenvalues", "[", 
+    RowBox[{"jMatrix", " ", "/.", " ", "fixedPoint2"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"eigenVals3", " ", "=", " ", 
+   RowBox[{"Eigenvalues", "[", 
+    RowBox[{"jMatrix", " ", "/.", " ", "fixedPoint3"}], "]"}]}], 
+  ";"}]}], "Code",
+ CellChangeTimes->{{3.94267637860401*^9, 3.942676404422714*^9}, {
+   3.94267646430175*^9, 3.942676471060153*^9}, {3.9426767213912497`*^9, 
+   3.9426767612945223`*^9}, 3.942677115160344*^9},
+ CellLabel->
+  "In[368]:=",ExpressionUUID->"ff03b2ad-0f99-48d3-99ec-bed19f0734c7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Compute", " ", "final", " ", "values", " ", "of", " ", "H", " ", "and", 
+    " ", "Z", " ", "for", " ", "varying", " ", "deltaZ"}], " ", "*)"}], "\n", 
+  
+  RowBox[{
+   RowBox[{
+    RowBox[{"finalValues", " ", "=", " ", 
+     RowBox[{"Table", "[", "\n", "  ", 
+      RowBox[{
+       RowBox[{"Module", "[", "\n", "    ", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "sol", ",", " ", "Hfunc", ",", " ", "Zfunc", ",", " ", "Tfunc", ",",
+            " ", "finalH", ",", " ", "finalZ", ",", " ", "finalT"}], "}"}], 
+         ",", "\n", "    ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Define", " ", "the", " ", "differential", " ", "equations"}], " ", 
+          "*)"}], "\n", "    ", 
+         RowBox[{
+          RowBox[{"eqns", " ", "=", " ", 
+           RowBox[{"{", "\n", "    ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"H", "'"}], "[", "t", "]"}], " ", "==", " ", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"H", "[", "t", "]"}]}], " ", 
+               RowBox[{"Z", "[", "t", "]"}]}]}], ",", "\n", "    ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"1", "-", "\[Delta]ZH"}], ")"}], " ", 
+                RowBox[{"H", "[", "t", "]"}], " ", 
+                RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+               RowBox[{"\[Delta]Z", " ", 
+                RowBox[{"T", "[", "t", "]"}], " ", 
+                RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"T", "'"}], "[", "t", "]"}], " ", "==", " ", 
+              RowBox[{
+               RowBox[{"\[Beta]T", " ", 
+                RowBox[{"R", "[", "t", "]"}]}], " ", "-", " ", 
+               RowBox[{"\[Delta]T", " ", 
+                RowBox[{"T", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"R", "'"}], "[", "t", "]"}], " ", "==", "  ", 
+              RowBox[{
+               RowBox[{"\[Delta]ZH", " ", 
+                RowBox[{"H", "[", "t", "]"}], " ", 
+                RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+               RowBox[{"\[Delta]Z", " ", 
+                RowBox[{"T", "[", "t", "]"}], " ", 
+                RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+               RowBox[{"\[Beta]T", " ", 
+                RowBox[{"R", "[", "t", "]"}]}]}]}]}], "\n", "  ", "}"}]}], 
+          ";", "\n", "    ", "\n", "    ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Solve", " ", "the", " ", "system", " ", "numerically", " ", "for",
+             " ", "the", " ", "current", " ", "deltaZ"}], " ", "*)"}], "\n", 
+          "    ", 
+          RowBox[{"sol", " ", "=", " ", 
+           RowBox[{"NDSolve", "[", "\n", "      ", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"eqns", " ", "/.", " ", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"\[Delta]ZH", " ", "->", " ", "0.006"}], ",", " ", 
+                  RowBox[{"\[Delta]T", " ", "->", " ", "0.002"}], ",", " ", 
+                  RowBox[{"\[Beta]T", " ", "->", " ", "0.003"}]}], "}"}]}], 
+               ",", " ", "\n", "       ", 
+               RowBox[{
+                RowBox[{"H", "[", "0", "]"}], " ", "==", " ", 
+                RowBox[{"500", "/", "500"}]}], ",", " ", "\n", "       ", 
+               RowBox[{
+                RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", 
+                RowBox[{"100", "/", "500"}]}], ",", "\n", "       ", 
+               RowBox[{
+                RowBox[{"T", "[", "0", "]"}], " ", "==", " ", 
+                RowBox[{"100", "/", "500"}]}], ",", "\n", "       ", 
+               RowBox[{
+                RowBox[{"R", "[", "0", "]"}], " ", "==", " ", 
+                RowBox[{"0", "/", "500"}]}]}], "\n", "      ", "}"}], ",", 
+             "\n", "      ", 
+             RowBox[{"{", 
+              RowBox[{"H", ",", " ", "Z", ",", " ", "T", ",", " ", "R"}], 
+              "}"}], ",", " ", "\n", "      ", 
+             RowBox[{"{", 
+              RowBox[{"t", ",", " ", "0", ",", " ", "1200"}], "}"}]}], "\n", 
+            "    ", "]"}]}], ";", "\n", "    ", "\n", "    ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Extract", " ", "the", " ", "functions", " ", "for", " ", "H", " ",
+             "and", " ", "Z"}], " ", "*)"}], "\n", "    ", 
+          RowBox[{"Hfunc", " ", "=", " ", 
+           RowBox[{"H", " ", "/.", " ", 
+            RowBox[{"sol", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "    ", 
+          RowBox[{"Zfunc", " ", "=", " ", 
+           RowBox[{"Z", " ", "/.", " ", 
+            RowBox[{"sol", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "    ", 
+          RowBox[{"Tfunc", " ", "=", " ", 
+           RowBox[{"T", " ", "/.", " ", 
+            RowBox[{"sol", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "    ", "\n", 
+          "    ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Extract", " ", "the", " ", "final", " ", "values", " ", "of", " ",
+             "H", " ", "and", " ", "Z", " ", "at", " ", "time", " ", "tmax"}],
+            " ", "*)"}], "\n", "    ", 
+          RowBox[{"finalH", " ", "=", " ", 
+           RowBox[{"Hfunc", "[", "2000", "]"}]}], ";", "\n", "    ", 
+          RowBox[{"finalZ", " ", "=", " ", 
+           RowBox[{"Zfunc", "[", "2000", "]"}]}], ";", "\n", "    ", 
+          RowBox[{"finalT", " ", "=", " ", 
+           RowBox[{"Tfunc", "[", "2000", "]"}]}], ";", "\n", "    ", "\n", 
+          "    ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Return", " ", "the", " ", "deltaZ", " ", "and", " ", "final", " ",
+             "values", " ", "for", " ", "plotting"}], " ", "*)"}], "\n", 
+          "    ", 
+          RowBox[{"{", 
+           RowBox[{
+           "\[Delta]Z", ",", " ", "finalH", ",", " ", "finalZ", ",", " ", 
+            "finalT"}], "}"}]}]}], "\n", "  ", "]"}], ",", "\n", "  ", 
+       RowBox[{"{", 
+        RowBox[{"\[Delta]Z", ",", " ", "0", ",", " ", "2", ",", " ", "0.01"}],
+         "}"}]}], " ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Vary", " ", "deltaZ", " ", "from", " ", "0", " ", "to", " ", "2", " ",
+         "in", " ", "steps", " ", "of", " ", "0.01"}], " ", "*)"}], "\n", 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Separate", " ", "deltaZ"}], ",", " ", "H", ",", " ", 
+     RowBox[{"and", " ", "Z", " ", "values", " ", "for", " ", "plotting"}]}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"deltaZValues", " ", "=", " ", 
+     RowBox[{"finalValues", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", " ", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"finalHValues", " ", "=", " ", 
+     RowBox[{"finalValues", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", " ", "2"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"finalZValues", " ", "=", " ", 
+     RowBox[{"finalValues", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", " ", "3"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"finalTValues", " ", "=", " ", 
+     RowBox[{"finalValues", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", " ", "4"}], "]"}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Plot", " ", "final", " ", "human", " ", "and", " ", "zombie", " ", 
+     "populations", " ", "as", " ", "a", " ", "function", " ", "of", " ", 
+     "deltaZ"}], " ", "*)"}], "\n", 
+   RowBox[{"ListLinePlot", "[", "\n", "  ", 
+    RowBox[{
+     RowBox[{"{", "\n", "   ", 
+      RowBox[{
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         RowBox[{"deltaZValues", ",", " ", "finalHValues"}], "}"}], "]"}], 
+       ",", "\n", "   ", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         RowBox[{"deltaZValues", ",", " ", "finalZValues"}], "}"}], "]"}], 
+       ",", "\n", "   ", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         RowBox[{"deltaZValues", ",", " ", "finalTValues"}], "}"}], "]"}]}], 
+      "\n", "  ", "}"}], ",", "\n", "  ", 
+     RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", "  ", 
+     RowBox[{"PlotLegends", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<Final Human Population (H)\>\"", ",", " ", 
+        "\"\<Final Zombie Population (Z)\>\""}], "}"}]}], ",", "\n", "  ", 
+     RowBox[{"PlotStyle", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", " ", "Thick"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Red", ",", " ", "Thick"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Green", ",", " ", "Thick"}], "}"}]}], "}"}]}], ",", "\n", 
+     "  ", 
+     RowBox[{"AxesLabel", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<Zombie Removal Rate (\[Delta]Z)\>\"", ",", " ", 
+        "\"\<Final Population\>\""}], "}"}]}], ",", "\n", "  ", 
+     RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "  ", 
+     RowBox[{"FrameLabel", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<Dimensionless Removal Rate (\[Delta]Z)\>\"", ",", " ", 
+        "\"\<Final Population\>\""}], "}"}]}]}], "\n", "]"}]}]}]], "Code",
+ CellChangeTimes->{{3.942675731294552*^9, 3.942675917695944*^9}, {
+  3.9426759736815033`*^9, 3.942676153471167*^9}, {3.942676217801381*^9, 
+  3.942676260768076*^9}},
+ CellLabel->
+  "In[295]:=",ExpressionUUID->"898fc4e4-dba5-45f3-95af-d047980301bb"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "InterpolatingFunction", "dmval", 
+   "\"Input value \\!\\(\\*RowBox[{\\\"{\\\", \\\"2000\\\", \\\"}\\\"}]\\) \
+lies outside the range of data in the interpolating function. Extrapolation \
+will be used.\"", 2, 295, 185, 34234261493600603175, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.942676222908328*^9, 3.942676261900948*^9}},
+ CellLabel->
+  "During evaluation of \
+In[295]:=",ExpressionUUID->"513222ab-035d-4f97-8e9a-abbb8dd9daed"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "InterpolatingFunction", "dmval", 
+   "\"Input value \\!\\(\\*RowBox[{\\\"{\\\", \\\"2000\\\", \\\"}\\\"}]\\) \
+lies outside the range of data in the interpolating function. Extrapolation \
+will be used.\"", 2, 295, 186, 34234261493600603175, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.942676222908328*^9, 3.942676261908149*^9}},
+ CellLabel->
+  "During evaluation of \
+In[295]:=",ExpressionUUID->"567044c0-67dd-4292-a5f3-8db954feae57"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "InterpolatingFunction", "dmval", 
+   "\"Input value \\!\\(\\*RowBox[{\\\"{\\\", \\\"2000\\\", \\\"}\\\"}]\\) \
+lies outside the range of data in the interpolating function. Extrapolation \
+will be used.\"", 2, 295, 187, 34234261493600603175, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.942676222908328*^9, 3.94267626191236*^9}},
+ CellLabel->
+  "During evaluation of \
+In[295]:=",ExpressionUUID->"d42d7f61-e526-4ea6-819a-1813b828f75a"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"InterpolatingFunction\\\
+\", \\\"::\\\", \\\"dmval\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"", 2, 295, 188, 34234261493600603175, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.942676222908328*^9, 3.942676261916568*^9}},
+ CellLabel->
+  "During evaluation of \
+In[295]:=",ExpressionUUID->"b36e026e-8fea-46a5-9679-3fdc70ff22ce"],
+
+Cell[BoxData[
+ TemplateBox[{
+   GraphicsBox[{{}, 
+     InterpretationBox[{
+       TagBox[{{}, {}, 
+         TagBox[{
+           RGBColor[0, 0, 1], 
+           PointSize[
+            NCache[
+             Rational[1, 90], 0.011111111111111112`]], 
+           Thickness[Large], 
+           LineBox[CompressedData["
+1:eJw11glUzHsbB/CQkrSKiCLcbuEmLwo1/29cKtFBiyxxuVdEHGWv5oqSRJaU
+UtKmlVIZWihLSopIgymK0r5INU3T3qv+z/2dM2dONfP8nuf7eaYzmn8fsrQf
+LSEhUfDrMfz83zmv+Nwwdm1stpvKPdMq17OI2NjvrT2jgmF/DkDXytuT9DN0
+nmRoeDVvzAhDkqNG/77Ooxz279HIF5TytNJyOCHBwycB8pVHM6qvnMlmX38P
+ijfUjFqDt3BaNg7/JhV1VpMNL8sa0PsfINAg+ea0aHPOeMFtJ874dGSFuk/n
++/dksfUysfSi07MFX8w5OnZXckTaWeAE3DmhV7GG6j9B8Sp7rkyKOyfaabjE
+M0Qv+0ch76BjNnvfc/zQWViUpDaes2jkvIAwWaxxVSaK7s/Fx/qG6cryZtkv
+RNq/bsiDm7BvQ29wAvWTD9+0SdLCeh7HcuTCV+D+Vi9TaVuWzfZXAAfHzoKV
+blHZVa7DBQvRcHfKXuPyCOr3DYQLj3Unx6ZxnEcqFmHpNr/yGMs3HLb/t/ga
+f8OillfFYTWKceHfWbqilE6apxgZ8p+1PV5KMWYjF7yH6iI5VT2+KsPO9x4O
+yz0MvZ/+zgzfZnelBL3l19fk3tRn2Hn5kIyZ7uoWvooZGUfAx8aOw0HhsyzJ
+9wNqprx88uH1DmbGcDsaHxFjpFusuncfw+bxEU67d3xotDnK7N0zfD4h8/3L
+g6oZ7gybjwDjC3xLn/DOM8PVVO4J4KftEsebco1h8ypFdYmn5KPtIUzXcDlR
+Kb54fdp+siKKYfMrg3Oq//L7cXcYtuBnOHfPqznOvc+weX6GdlKXhrtpJjPS
+ntcXqH7MeW8t8Zxh8y1HZudp7qDPS6bozfApBy888XB4VhHD5l2ByCK1/D/X
+8JlJIw1+BZNwKTC8sJRh8/+KM0f4srXe35iRcnbf0F32XKe5opphPSrhE7Vh
+jMzbBpqnEo0RNWZlD1oZ1qcSMaGZCvnfOmi+SpSrv97/dIyYvKpQnrTZMKW8
+j+atgv6eF6GZShJg/aoQ0z0zpWKMJNj5v0NcUPxQGCMN1vM7Siwsws5OmAC2
+3Hesexz5OTFdEaxvNXov58+vnjURbD7VUOMrRz7eNxksTzWCy2XNT7ZOBZtX
+DYS50mKvRnWw/jXwjn6ddH6dJtj8arBE1lMhzWc22H2oxeOgJ2Wyd7TA5lmL
+f0KU+ZetdcDuRy2q3oz3yI+cDzbfOjgx5ksPqemB3Zc6GOfxnYdaFoLNuw6S
+Zmnx5bqLwe5PPdK6DB2LffTB5l+Pr4U1m6VkloHdp3oo6C0wMMk1BOvRAIv4
+T5G+cQxYjwbUvjJOOL/eGKxHA2RSpqmkxa4E69GAkLYgWWPXVWA9GvHc/V9L
+pJuA9WjEOKlvy4VnzcijESf6Gp1f5JiTRxPcm6aN0lphgasjHk1YYv3u2IHI
+9eTRhJaYDRleOhvJoxmBBfWflK5ZkkczwkQb55TJWZNHMx7tms0Ni7QhjxYo
+Jt204q61JY8WPPyqzm9Q3UIeLWiqU67e9X0refzArp0vp0/LsiOPH6h/+0Bv
+ftkO8viBnO3cyFy3neTRCq3Q1Qcl1uwij1b8FZG8XPfx3+TRCvlXZczD9N3k
+8RNzxXlzvIzsyeMnyqatncfz2UMeP+GTrXysbZIDebQhc6HP1Dl2+2ieNpz+
+XUnd+u1+8mnDTpWOP1q2HqD52iC41GF7XHCQvNognerosij8EM3bhgkRQ83u
+CU7k14bVSn02MinONH87bg2unj3J5TB5tiOQV7Z0/bUjlEc7BhJ8+M4OR8m3
+HYYXZ2j5OxyjfNrhwI1oLms9Tt7t2OJb4sI9d4Ly6oD2pp7U+rST5N8B21ej
+8gZyXSi/DijvD1Q6aeRGn88OPBjiczZpcynPDvhnFfldCOfSfnRgi80f8qN5
+pyhfIX5TDF9TWO5O+yJEvHayODrmNOUthKZ68Ra7bWdof4Qo4c2cpirjQfkL
+8fqdiTA4x4P2SYgDJiuUjGw8yaMTs41WrJXEWfLoRNYBsWS7mhd5dKKuR1Oz
+8q0XeXRi6MxT3fm3z5FHJ8pKTj3cc8SbPDqhJls59e3a8+TRiXmbckUK2j7k
+IcJWQc+zgZ8+5CGCfn2ISRTvAnmIMHax1E794ovkIcL9Ai1d+SRf8hDh+rNT
+t9QyL5HHr3o7/he1j3eZPLpQuGJmnl7qFfLoQvri0li3zVfJowuHjI25niVX
+yaMLbe6ratrN/MijC+5eyRx+lR95dGGx63dTmZPXyEMMJdOPtnPeXSMPMaTs
+TUMOXfYnDzEEA1ozDVQDyEOMe1aWfotSA8hDjCP8syq6ZtfJQwwFO/1zryqu
+k0c3fpjaeHVvCySPbtxfVWWzQSOIPLrRljL1nTAziDy6MVE+JFZl7w3y6Iat
+yeK/GntukEc3msZqqZn4BpNHN7wD6qerzA0hjx7MncyfatoWQh498BTnVU/0
+vkkePRCY9NfKbQsljx5sdxS82T8YSh49ULKIrSi4f4s8emCRZV9zaUcYefQi
+K89D4fGMcPLohcPPNKN2QTh59MJA7m6jw/oI+n/Zi8pBOf+lcRHk0YtTsqWd
+6acjyaMXE8bJpbYeiCSPPshJhye5PYkkjz5IOTTt5y2KIo8+mFgaBEvdiCKP
+PixIkKra0x9FHn240iCKT1xwmzz6cPoMb8ytwtvk0Y91uuYV85ZGk0c/cit2
+VmksiyGPflzUbN7/Qi6GPPohkXXbItE1hjz6Mdl0ndvc1zHk0Y/RTk4yD8fF
+kkc/ciZrWAfmx5LHANJFQxtqDOLIYwB/btZLVg+JI48BFLYv0ZypHk8eA7++
+r1oJw2zjyWMA49KHAsZKJ5DHAI652GU/4iaQxyBG+xzeFSRMII9BVFo4Wku4
+3SGPQXBHWZgcrr9DHoPgNNn3jdp+lzwG8eCqh+fuL3fJYxDu69rVDvgkkscQ
+KmoESlofE8ljCKckt+72s0oijyEoznmn0qSUTB5DMLfSd3d5eo88hjA/wWjs
+J8E98hjChR8TZgsCkslDwlh9ke24Iy0p+D9vXR3S
+            "]]}, Annotation[#, "Charting`Private`Tag#1"]& ], 
+         TagBox[{
+           RGBColor[1, 0, 0], 
+           PointSize[
+            NCache[
+             Rational[1, 90], 0.011111111111111112`]], 
+           Thickness[Large], 
+           LineBox[CompressedData["
+1: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
+            "]]}, Annotation[#, "Charting`Private`Tag#2"]& ], 
+         TagBox[{
+           RGBColor[0, 1, 0], 
+           PointSize[
+            NCache[
+             Rational[1, 90], 0.011111111111111112`]], 
+           Thickness[Large], 
+           LineBox[CompressedData["
+1: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
+iFXq9q5Mxv8Bue4+NA==
+            "]]}, Annotation[#, "Charting`Private`Tag#3"]& ]}, {
+        "WolframDynamicHighlight", <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>}], 
+       StyleBox[
+        DynamicBox[
+         (Charting`HighlightActionBox["DynamicHighlight", {}, 
+          Slot["HighlightElements"], 
+          Slot["LayoutOptions"], 
+          Slot["Meta"], 
+          Charting`HighlightActionFunction["DynamicHighlight", {{{}, {}, 
+             Annotation[{
+               Hue[0.67, 0.6, 0.6], 
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[0, 0, 1], 
+                Thickness[Large]], 
+               Line[CompressedData["
+1:eJw11glUzHsbB/CQkrSKiCLcbuEmLwo1/29cKtFBiyxxuVdEHGWv5oqSRJaU
+UtKmlVIZWihLSopIgymK0r5INU3T3qv+z/2dM2dONfP8nuf7eaYzmn8fsrQf
+LSEhUfDrMfz83zmv+Nwwdm1stpvKPdMq17OI2NjvrT2jgmF/DkDXytuT9DN0
+nmRoeDVvzAhDkqNG/77Ooxz279HIF5TytNJyOCHBwycB8pVHM6qvnMlmX38P
+ijfUjFqDt3BaNg7/JhV1VpMNL8sa0PsfINAg+ea0aHPOeMFtJ874dGSFuk/n
++/dksfUysfSi07MFX8w5OnZXckTaWeAE3DmhV7GG6j9B8Sp7rkyKOyfaabjE
+M0Qv+0ch76BjNnvfc/zQWViUpDaes2jkvIAwWaxxVSaK7s/Fx/qG6cryZtkv
+RNq/bsiDm7BvQ29wAvWTD9+0SdLCeh7HcuTCV+D+Vi9TaVuWzfZXAAfHzoKV
+blHZVa7DBQvRcHfKXuPyCOr3DYQLj3Unx6ZxnEcqFmHpNr/yGMs3HLb/t/ga
+f8OillfFYTWKceHfWbqilE6apxgZ8p+1PV5KMWYjF7yH6iI5VT2+KsPO9x4O
+yz0MvZ/+zgzfZnelBL3l19fk3tRn2Hn5kIyZ7uoWvooZGUfAx8aOw0HhsyzJ
+9wNqprx88uH1DmbGcDsaHxFjpFusuncfw+bxEU67d3xotDnK7N0zfD4h8/3L
+g6oZ7gybjwDjC3xLn/DOM8PVVO4J4KftEsebco1h8ypFdYmn5KPtIUzXcDlR
+Kb54fdp+siKKYfMrg3Oq//L7cXcYtuBnOHfPqznOvc+weX6GdlKXhrtpJjPS
+ntcXqH7MeW8t8Zxh8y1HZudp7qDPS6bozfApBy888XB4VhHD5l2ByCK1/D/X
+8JlJIw1+BZNwKTC8sJRh8/+KM0f4srXe35iRcnbf0F32XKe5opphPSrhE7Vh
+jMzbBpqnEo0RNWZlD1oZ1qcSMaGZCvnfOmi+SpSrv97/dIyYvKpQnrTZMKW8
+j+atgv6eF6GZShJg/aoQ0z0zpWKMJNj5v0NcUPxQGCMN1vM7Siwsws5OmAC2
+3Hesexz5OTFdEaxvNXov58+vnjURbD7VUOMrRz7eNxksTzWCy2XNT7ZOBZtX
+DYS50mKvRnWw/jXwjn6ddH6dJtj8arBE1lMhzWc22H2oxeOgJ2Wyd7TA5lmL
+f0KU+ZetdcDuRy2q3oz3yI+cDzbfOjgx5ksPqemB3Zc6GOfxnYdaFoLNuw6S
+Zmnx5bqLwe5PPdK6DB2LffTB5l+Pr4U1m6VkloHdp3oo6C0wMMk1BOvRAIv4
+T5G+cQxYjwbUvjJOOL/eGKxHA2RSpqmkxa4E69GAkLYgWWPXVWA9GvHc/V9L
+pJuA9WjEOKlvy4VnzcijESf6Gp1f5JiTRxPcm6aN0lphgasjHk1YYv3u2IHI
+9eTRhJaYDRleOhvJoxmBBfWflK5ZkkczwkQb55TJWZNHMx7tms0Ni7QhjxYo
+Jt204q61JY8WPPyqzm9Q3UIeLWiqU67e9X0refzArp0vp0/LsiOPH6h/+0Bv
+ftkO8viBnO3cyFy3neTRCq3Q1Qcl1uwij1b8FZG8XPfx3+TRCvlXZczD9N3k
+8RNzxXlzvIzsyeMnyqatncfz2UMeP+GTrXysbZIDebQhc6HP1Dl2+2ieNpz+
+XUnd+u1+8mnDTpWOP1q2HqD52iC41GF7XHCQvNognerosij8EM3bhgkRQ83u
+CU7k14bVSn02MinONH87bg2unj3J5TB5tiOQV7Z0/bUjlEc7BhJ8+M4OR8m3
+HYYXZ2j5OxyjfNrhwI1oLms9Tt7t2OJb4sI9d4Ly6oD2pp7U+rST5N8B21ej
+8gZyXSi/DijvD1Q6aeRGn88OPBjiczZpcynPDvhnFfldCOfSfnRgi80f8qN5
+pyhfIX5TDF9TWO5O+yJEvHayODrmNOUthKZ68Ra7bWdof4Qo4c2cpirjQfkL
+8fqdiTA4x4P2SYgDJiuUjGw8yaMTs41WrJXEWfLoRNYBsWS7mhd5dKKuR1Oz
+8q0XeXRi6MxT3fm3z5FHJ8pKTj3cc8SbPDqhJls59e3a8+TRiXmbckUK2j7k
+IcJWQc+zgZ8+5CGCfn2ISRTvAnmIMHax1E794ovkIcL9Ai1d+SRf8hDh+rNT
+t9QyL5HHr3o7/he1j3eZPLpQuGJmnl7qFfLoQvri0li3zVfJowuHjI25niVX
+yaMLbe6ratrN/MijC+5eyRx+lR95dGGx63dTmZPXyEMMJdOPtnPeXSMPMaTs
+TUMOXfYnDzEEA1ozDVQDyEOMe1aWfotSA8hDjCP8syq6ZtfJQwwFO/1zryqu
+k0c3fpjaeHVvCySPbtxfVWWzQSOIPLrRljL1nTAziDy6MVE+JFZl7w3y6Iat
+yeK/GntukEc3msZqqZn4BpNHN7wD6qerzA0hjx7MncyfatoWQh498BTnVU/0
+vkkePRCY9NfKbQsljx5sdxS82T8YSh49ULKIrSi4f4s8emCRZV9zaUcYefQi
+K89D4fGMcPLohcPPNKN2QTh59MJA7m6jw/oI+n/Zi8pBOf+lcRHk0YtTsqWd
+6acjyaMXE8bJpbYeiCSPPshJhye5PYkkjz5IOTTt5y2KIo8+mFgaBEvdiCKP
+PixIkKra0x9FHn240iCKT1xwmzz6cPoMb8ytwtvk0Y91uuYV85ZGk0c/cit2
+VmksiyGPflzUbN7/Qi6GPPohkXXbItE1hjz6Mdl0ndvc1zHk0Y/RTk4yD8fF
+kkc/ciZrWAfmx5LHANJFQxtqDOLIYwB/btZLVg+JI48BFLYv0ZypHk8eA7++
+r1oJw2zjyWMA49KHAsZKJ5DHAI652GU/4iaQxyBG+xzeFSRMII9BVFo4Wku4
+3SGPQXBHWZgcrr9DHoPgNNn3jdp+lzwG8eCqh+fuL3fJYxDu69rVDvgkkscQ
+KmoESlofE8ljCKckt+72s0oijyEoznmn0qSUTB5DMLfSd3d5eo88hjA/wWjs
+J8E98hjChR8TZgsCkslDwlh9ke24Iy0p+D9vXR3S
+                "]]}, "Charting`Private`Tag#1"], 
+             Annotation[{
+               Hue[0.9060679774997897, 0.6, 0.6], 
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[1, 0, 0], 
+                Thickness[Large]], 
+               Line[CompressedData["
+1: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
+                "]]}, "Charting`Private`Tag#2"], 
+             Annotation[{
+               Hue[0.1421359549995791, 0.6, 0.6], 
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[0, 1, 0], 
+                Thickness[Large]], 
+               Line[CompressedData["
+1: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
+iFXq9q5Mxv8Bue4+NA==
+                "]]}, "Charting`Private`Tag#3"]}}, <|
+           "HighlightElements" -> <|
+             "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+            "LayoutOptions" -> <|
+             "PanelPlotLayout" -> <||>, 
+              "PlotRange" -> {{0, 2.}, {-0.06825949588475742, 
+                1.194000000009827}}, "Frame" -> {{True, True}, {True, True}}, 
+              "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+              "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+              GoldenRatio^(-1), "DefaultStyle" -> {
+                Directive[
+                 PointSize[
+                  Rational[1, 90]], 
+                 AbsoluteThickness[2], 
+                 RGBColor[0, 1, 0], 
+                 Thickness[Large]], 
+                Directive[
+                 PointSize[
+                  Rational[1, 90]], 
+                 AbsoluteThickness[2], 
+                 RGBColor[1, 0, 0], 
+                 Thickness[Large]], 
+                Directive[
+                 PointSize[
+                  Rational[1, 90]], 
+                 AbsoluteThickness[2], 
+                 RGBColor[0, 0, 1], 
+                 Thickness[Large]]}, 
+              "HighlightLabelingFunctions" -> <|
+               "CoordinatesToolOptions" -> ({
+                  Identity[
+                   Part[#, 1]], 
+                  Identity[
+                   Part[#, 2]]}& ), 
+                "ScalingFunctions" -> {{Identity, Identity}, {
+                  Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+              False|>, 
+            "Meta" -> <|
+             "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+              "Function" -> ListLinePlot, "GroupHighlight" -> False|>|>]]& )[<|
+          "HighlightElements" -> <|
+            "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+           "LayoutOptions" -> <|
+            "PanelPlotLayout" -> <||>, 
+             "PlotRange" -> {{0, 2.}, {-0.06825949588475742, 
+               1.194000000009827}}, "Frame" -> {{True, True}, {True, True}}, 
+             "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+             "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+             GoldenRatio^(-1), "DefaultStyle" -> {
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[0, 1, 0], 
+                Thickness[Large]], 
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[1, 0, 0], 
+                Thickness[Large]], 
+               Directive[
+                PointSize[
+                 Rational[1, 90]], 
+                AbsoluteThickness[2], 
+                RGBColor[0, 0, 1], 
+                Thickness[Large]]}, 
+             "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+                 Identity[
+                  Part[#, 1]], 
+                 Identity[
+                  Part[#, 2]]}& ), 
+               "ScalingFunctions" -> {{Identity, Identity}, {
+                 Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+             False|>, 
+           "Meta" -> <|
+            "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+             "Function" -> ListLinePlot, "GroupHighlight" -> False|>|>], 
+         ImageSizeCache -> {{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], Selectable -> 
+        False]}, 
+      Annotation[{{{}, {}, 
+         Annotation[{
+           Hue[0.67, 0.6, 0.6], 
+           Directive[
+            PointSize[
+             Rational[1, 90]], 
+            AbsoluteThickness[2], 
+            RGBColor[0, 0, 1], 
+            Thickness[Large]], 
+           Line[CompressedData["
+1:eJw11glUzHsbB/CQkrSKiCLcbuEmLwo1/29cKtFBiyxxuVdEHGWv5oqSRJaU
+UtKmlVIZWihLSopIgymK0r5INU3T3qv+z/2dM2dONfP8nuf7eaYzmn8fsrQf
+LSEhUfDrMfz83zmv+Nwwdm1stpvKPdMq17OI2NjvrT2jgmF/DkDXytuT9DN0
+nmRoeDVvzAhDkqNG/77Ooxz279HIF5TytNJyOCHBwycB8pVHM6qvnMlmX38P
+ijfUjFqDt3BaNg7/JhV1VpMNL8sa0PsfINAg+ea0aHPOeMFtJ874dGSFuk/n
++/dksfUysfSi07MFX8w5OnZXckTaWeAE3DmhV7GG6j9B8Sp7rkyKOyfaabjE
+M0Qv+0ch76BjNnvfc/zQWViUpDaes2jkvIAwWaxxVSaK7s/Fx/qG6cryZtkv
+RNq/bsiDm7BvQ29wAvWTD9+0SdLCeh7HcuTCV+D+Vi9TaVuWzfZXAAfHzoKV
+blHZVa7DBQvRcHfKXuPyCOr3DYQLj3Unx6ZxnEcqFmHpNr/yGMs3HLb/t/ga
+f8OillfFYTWKceHfWbqilE6apxgZ8p+1PV5KMWYjF7yH6iI5VT2+KsPO9x4O
+yz0MvZ/+zgzfZnelBL3l19fk3tRn2Hn5kIyZ7uoWvooZGUfAx8aOw0HhsyzJ
+9wNqprx88uH1DmbGcDsaHxFjpFusuncfw+bxEU67d3xotDnK7N0zfD4h8/3L
+g6oZ7gybjwDjC3xLn/DOM8PVVO4J4KftEsebco1h8ypFdYmn5KPtIUzXcDlR
+Kb54fdp+siKKYfMrg3Oq//L7cXcYtuBnOHfPqznOvc+weX6GdlKXhrtpJjPS
+ntcXqH7MeW8t8Zxh8y1HZudp7qDPS6bozfApBy888XB4VhHD5l2ByCK1/D/X
+8JlJIw1+BZNwKTC8sJRh8/+KM0f4srXe35iRcnbf0F32XKe5opphPSrhE7Vh
+jMzbBpqnEo0RNWZlD1oZ1qcSMaGZCvnfOmi+SpSrv97/dIyYvKpQnrTZMKW8
+j+atgv6eF6GZShJg/aoQ0z0zpWKMJNj5v0NcUPxQGCMN1vM7Siwsws5OmAC2
+3Hesexz5OTFdEaxvNXov58+vnjURbD7VUOMrRz7eNxksTzWCy2XNT7ZOBZtX
+DYS50mKvRnWw/jXwjn6ddH6dJtj8arBE1lMhzWc22H2oxeOgJ2Wyd7TA5lmL
+f0KU+ZetdcDuRy2q3oz3yI+cDzbfOjgx5ksPqemB3Zc6GOfxnYdaFoLNuw6S
+Zmnx5bqLwe5PPdK6DB2LffTB5l+Pr4U1m6VkloHdp3oo6C0wMMk1BOvRAIv4
+T5G+cQxYjwbUvjJOOL/eGKxHA2RSpqmkxa4E69GAkLYgWWPXVWA9GvHc/V9L
+pJuA9WjEOKlvy4VnzcijESf6Gp1f5JiTRxPcm6aN0lphgasjHk1YYv3u2IHI
+9eTRhJaYDRleOhvJoxmBBfWflK5ZkkczwkQb55TJWZNHMx7tms0Ni7QhjxYo
+Jt204q61JY8WPPyqzm9Q3UIeLWiqU67e9X0refzArp0vp0/LsiOPH6h/+0Bv
+ftkO8viBnO3cyFy3neTRCq3Q1Qcl1uwij1b8FZG8XPfx3+TRCvlXZczD9N3k
+8RNzxXlzvIzsyeMnyqatncfz2UMeP+GTrXysbZIDebQhc6HP1Dl2+2ieNpz+
+XUnd+u1+8mnDTpWOP1q2HqD52iC41GF7XHCQvNognerosij8EM3bhgkRQ83u
+CU7k14bVSn02MinONH87bg2unj3J5TB5tiOQV7Z0/bUjlEc7BhJ8+M4OR8m3
+HYYXZ2j5OxyjfNrhwI1oLms9Tt7t2OJb4sI9d4Ly6oD2pp7U+rST5N8B21ej
+8gZyXSi/DijvD1Q6aeRGn88OPBjiczZpcynPDvhnFfldCOfSfnRgi80f8qN5
+pyhfIX5TDF9TWO5O+yJEvHayODrmNOUthKZ68Ra7bWdof4Qo4c2cpirjQfkL
+8fqdiTA4x4P2SYgDJiuUjGw8yaMTs41WrJXEWfLoRNYBsWS7mhd5dKKuR1Oz
+8q0XeXRi6MxT3fm3z5FHJ8pKTj3cc8SbPDqhJls59e3a8+TRiXmbckUK2j7k
+IcJWQc+zgZ8+5CGCfn2ISRTvAnmIMHax1E794ovkIcL9Ai1d+SRf8hDh+rNT
+t9QyL5HHr3o7/he1j3eZPLpQuGJmnl7qFfLoQvri0li3zVfJowuHjI25niVX
+yaMLbe6ratrN/MijC+5eyRx+lR95dGGx63dTmZPXyEMMJdOPtnPeXSMPMaTs
+TUMOXfYnDzEEA1ozDVQDyEOMe1aWfotSA8hDjCP8syq6ZtfJQwwFO/1zryqu
+k0c3fpjaeHVvCySPbtxfVWWzQSOIPLrRljL1nTAziDy6MVE+JFZl7w3y6Iat
+yeK/GntukEc3msZqqZn4BpNHN7wD6qerzA0hjx7MncyfatoWQh498BTnVU/0
+vkkePRCY9NfKbQsljx5sdxS82T8YSh49ULKIrSi4f4s8emCRZV9zaUcYefQi
+K89D4fGMcPLohcPPNKN2QTh59MJA7m6jw/oI+n/Zi8pBOf+lcRHk0YtTsqWd
+6acjyaMXE8bJpbYeiCSPPshJhye5PYkkjz5IOTTt5y2KIo8+mFgaBEvdiCKP
+PixIkKra0x9FHn240iCKT1xwmzz6cPoMb8ytwtvk0Y91uuYV85ZGk0c/cit2
+VmksiyGPflzUbN7/Qi6GPPohkXXbItE1hjz6Mdl0ndvc1zHk0Y/RTk4yD8fF
+kkc/ciZrWAfmx5LHANJFQxtqDOLIYwB/btZLVg+JI48BFLYv0ZypHk8eA7++
+r1oJw2zjyWMA49KHAsZKJ5DHAI652GU/4iaQxyBG+xzeFSRMII9BVFo4Wku4
+3SGPQXBHWZgcrr9DHoPgNNn3jdp+lzwG8eCqh+fuL3fJYxDu69rVDvgkkscQ
+KmoESlofE8ljCKckt+72s0oijyEoznmn0qSUTB5DMLfSd3d5eo88hjA/wWjs
+J8E98hjChR8TZgsCkslDwlh9ke24Iy0p+D9vXR3S
+            "]]}, "Charting`Private`Tag#1"], 
+         Annotation[{
+           Hue[0.9060679774997897, 0.6, 0.6], 
+           Directive[
+            PointSize[
+             Rational[1, 90]], 
+            AbsoluteThickness[2], 
+            RGBColor[1, 0, 0], 
+            Thickness[Large]], 
+           Line[CompressedData["
+1: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
+            "]]}, "Charting`Private`Tag#2"], 
+         Annotation[{
+           Hue[0.1421359549995791, 0.6, 0.6], 
+           Directive[
+            PointSize[
+             Rational[1, 90]], 
+            AbsoluteThickness[2], 
+            RGBColor[0, 1, 0], 
+            Thickness[Large]], 
+           Line[CompressedData["
+1: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
+iFXq9q5Mxv8Bue4+NA==
+            "]]}, "Charting`Private`Tag#3"]}}, <|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PanelPlotLayout" -> <||>, 
+          "PlotRange" -> {{0, 2.}, {-0.06825949588475742, 1.194000000009827}},
+           "Frame" -> {{True, True}, {True, True}}, "AxesOrigin" -> {0, 0}, 
+          "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {True, True}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             PointSize[
+              Rational[1, 90]], 
+             AbsoluteThickness[2], 
+             RGBColor[0, 1, 0], 
+             Thickness[Large]], 
+            Directive[
+             PointSize[
+              Rational[1, 90]], 
+             AbsoluteThickness[2], 
+             RGBColor[1, 0, 0], 
+             Thickness[Large]], 
+            Directive[
+             PointSize[
+              Rational[1, 90]], 
+             AbsoluteThickness[2], 
+             RGBColor[0, 0, 1], 
+             Thickness[Large]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+              Identity[
+               Part[#, 1]], 
+              Identity[
+               Part[#, 2]]}& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          ListLinePlot, "GroupHighlight" -> False|>|>, 
+       "DynamicHighlight"]], {{}, {}}}, AspectRatio -> 
+    NCache[GoldenRatio^(-1), 0.6180339887498948], Axes -> {True, True}, 
+    AxesLabel -> {
+      FormBox[
+       TagBox["\"Zombie Removal Rate (\[Delta]Z)\"", HoldForm], 
+       TraditionalForm], 
+      FormBox[
+       TagBox["\"Final Population\"", HoldForm], TraditionalForm]}, 
+    AxesOrigin -> {0, 0}, DisplayFunction -> Identity, 
+    Frame -> {{True, True}, {True, True}}, FrameLabel -> {{
+       FormBox[
+        TagBox["\"Final Population\"", HoldForm], TraditionalForm], None}, {
+       FormBox[
+        TagBox["\"Dimensionless Removal Rate (\[Delta]Z)\"", HoldForm], 
+        TraditionalForm], None}}, 
+    FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
+    GridLines -> {None, None}, GridLinesStyle -> Directive[
+      GrayLevel[0.5, 0.4]], 
+    Method -> {
+     "AxisPadding" -> Scaled[0.02], "DefaultBoundaryStyle" -> Automatic, 
+      "DefaultGraphicsInteraction" -> {
+       "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+        "Effects" -> {
+         "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+          "Droplines" -> {
+           "freeformCursorMode" -> True, 
+            "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+      "DefaultMeshStyle" -> AbsolutePointSize[6], "DefaultPlotStyle" -> {
+        Directive[
+         RGBColor[0.368417, 0.506779, 0.709798], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.880722, 0.611041, 0.142051], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.560181, 0.691569, 0.194885], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.922526, 0.385626, 0.209179], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.528488, 0.470624, 0.701351], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.772079, 0.431554, 0.102387], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.363898, 0.618501, 0.782349], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[1, 0.75, 0], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.647624, 0.37816, 0.614037], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.571589, 0.586483, 0.], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.915, 0.3325, 0.2125], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.40082222609352647`, 0.5220066643438841, 0.85], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.9728288904374106, 0.621644452187053, 0.07336199581899142], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.736782672705901, 0.358, 0.5030266573755369], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.28026441037696703`, 0.715, 0.4292089322474965], 
+         AbsoluteThickness[2]]}, "DomainPadding" -> Scaled[0.02], 
+      "RangePadding" -> Scaled[0.05], "OptimizePlotMarkers" -> True, 
+      "IncludeHighlighting" -> "CurrentSet", "HighlightStyle" -> Automatic, 
+      "OptimizePlotMarkers" -> True, 
+      "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& )}}, 
+    PlotRange -> {{0, 2.}, {-0.06825949588475742, 1.194000000009827}}, 
+    PlotRangeClipping -> True, PlotRangePadding -> {{
+       Scaled[0.02], 
+       Scaled[0.02]}, {
+       Scaled[0.05], 
+       Scaled[0.05]}}, Ticks -> {Automatic, Automatic}], 
+   FormBox[
+    FormBox[
+     TemplateBox[{
+      "\"Final Human Population (H)\"", "\"Final Zombie Population (Z)\""}, 
+      "LineLegend", DisplayFunction -> (FormBox[
+        StyleBox[
+         StyleBox[
+          PaneBox[
+           TagBox[
+            GridBox[{{
+               TagBox[
+                GridBox[{{
+                   GraphicsBox[{{
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    AbsoluteThickness[2], 
+                    RGBColor[0, 0, 1], 
+                    Thickness[Large]], {
+                    LineBox[{{0, 12.5}, {20, 12.5}}]}}, {
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    AbsoluteThickness[2], 
+                    RGBColor[0, 0, 1], 
+                    Thickness[Large]], {}}}, AspectRatio -> Full, 
+                    ImageSize -> {20, 12.5}, PlotRangePadding -> None, 
+                    ImagePadding -> Automatic, 
+                    BaselinePosition -> (Scaled[0.18000000000000002`] -> 
+                    Baseline)], #}, {
+                   GraphicsBox[{{
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    AbsoluteThickness[2], 
+                    RGBColor[1, 0, 0], 
+                    Thickness[Large]], {
+                    LineBox[{{0, 12.5}, {20, 12.5}}]}}, {
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    AbsoluteThickness[2], 
+                    RGBColor[1, 0, 0], 
+                    Thickness[Large]], {}}}, AspectRatio -> Full, 
+                    ImageSize -> {20, 12.5}, PlotRangePadding -> None, 
+                    ImagePadding -> Automatic, 
+                    BaselinePosition -> (Scaled[0.18000000000000002`] -> 
+                    Baseline)], #2}}, 
+                 GridBoxAlignment -> {
+                  "Columns" -> {Center, Left}, "Rows" -> {{Baseline}}}, 
+                 AutoDelete -> False, 
+                 GridBoxDividers -> {
+                  "Columns" -> {{False}}, "Rows" -> {{False}}}, 
+                 GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}},
+                  GridBoxSpacings -> {
+                  "Columns" -> {{0.5}}, "Rows" -> {{0.8}}}], "Grid"]}}, 
+             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+             AutoDelete -> False, 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{1}}, "Rows" -> {{0}}}], 
+            "Grid"], Alignment -> Left, AppearanceElements -> None, 
+           ImageMargins -> {{5, 5}, {5, 5}}, ImageSizeAction -> 
+           "ResizeToFit"], LineIndent -> 0, StripOnInput -> False], {
+         FontFamily -> "Arial"}, Background -> Automatic, StripOnInput -> 
+         False], TraditionalForm]& ), 
+      InterpretationFunction :> (RowBox[{"LineLegend", "[", 
+         RowBox[{
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Directive", "[", 
+                 RowBox[{
+                   RowBox[{"PointSize", "[", 
+                    FractionBox["1", "90"], "]"}], ",", 
+                   RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", 
+                   
+                   TemplateBox[<|"color" -> RGBColor[0, 0, 1]|>, 
+                    "RGBColorSwatchTemplate"], ",", 
+                   RowBox[{"Thickness", "[", "Large", "]"}]}], "]"}], ",", 
+               RowBox[{"Directive", "[", 
+                 RowBox[{
+                   RowBox[{"PointSize", "[", 
+                    FractionBox["1", "90"], "]"}], ",", 
+                   RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", 
+                   
+                   TemplateBox[<|"color" -> RGBColor[1, 0, 0]|>, 
+                    "RGBColorSwatchTemplate"], ",", 
+                   RowBox[{"Thickness", "[", "Large", "]"}]}], "]"}]}], "}"}],
+            ",", 
+           RowBox[{"{", 
+             RowBox[{#, ",", #2}], "}"}], ",", 
+           RowBox[{"LegendMarkers", "\[Rule]", 
+             RowBox[{"{", 
+               RowBox[{
+                 RowBox[{"{", 
+                   RowBox[{"False", ",", "Automatic"}], "}"}], ",", 
+                 RowBox[{"{", 
+                   RowBox[{"False", ",", "Automatic"}], "}"}], ",", 
+                 RowBox[{"{", 
+                   RowBox[{"False", ",", "Automatic"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"Joined", "\[Rule]", 
+             RowBox[{"{", 
+               RowBox[{"True", ",", "True", ",", "True"}], "}"}]}], ",", 
+           RowBox[{"LabelStyle", "\[Rule]", 
+             RowBox[{"{", "}"}]}], ",", 
+           RowBox[{"LegendLayout", "\[Rule]", "\"Column\""}]}], "]"}]& ), 
+      Editable -> True], TraditionalForm], TraditionalForm]},
+  "Legended",
+  DisplayFunction->(GridBox[{{
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"], 
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, GridBoxItemSize -> Automatic, 
+    BaselinePosition -> {1, 1}]& ),
+  Editable->True,
+  InterpretationFunction->(RowBox[{"Legended", "[", 
+     RowBox[{#, ",", 
+       RowBox[{"Placed", "[", 
+         RowBox[{#2, ",", "After"}], "]"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{{3.942675890076733*^9, 3.9426759184996157`*^9}, 
+   3.942675989191101*^9, {3.942676129051154*^9, 3.942676156190126*^9}, {
+   3.942676226955785*^9, 3.9426762623223867`*^9}},
+ CellLabel->
+  "Out[300]=",ExpressionUUID->"575472a4-31d0-4bab-aa7c-4e568f2794e2"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{-1790, Automatic}, {Automatic, -53}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"f9214a3d-f812-4737-b30d-60145d5cf20b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 20246, 455, 2113, "Code",ExpressionUUID->"a54f7314-71ab-4641-8904-2e99c7a8588b"],
+Cell[20825, 479, 12694, 221, 555, "Output",ExpressionUUID->"b9b9cc8f-aa3b-4e51-a247-58bf3e5f29be"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33556, 705, 167, 3, 52, "Subtitle",ExpressionUUID->"72385e2d-ddc4-4373-b764-5e1ac04289f0"],
+Cell[CellGroupData[{
+Cell[33748, 712, 19749, 465, 2189, "Code",ExpressionUUID->"be0c59b6-a896-402d-8585-c57d9f83c3f4"],
+Cell[53500, 1179, 11561, 204, 733, "Output",ExpressionUUID->"7ce5de1e-a1d1-4456-bbbb-2fec8564b2a9"]
+}, Open  ]],
+Cell[65076, 1386, 2737, 75, 315, "Code",ExpressionUUID->"ff03b2ad-0f99-48d3-99ec-bed19f0734c7"],
+Cell[CellGroupData[{
+Cell[67838, 1465, 9749, 226, 1163, "Code",ExpressionUUID->"898fc4e4-dba5-45f3-95af-d047980301bb"],
+Cell[77590, 1693, 496, 10, 26, "Message",ExpressionUUID->"513222ab-035d-4f97-8e9a-abbb8dd9daed"],
+Cell[78089, 1705, 496, 10, 26, "Message",ExpressionUUID->"567044c0-67dd-4292-a5f3-8db954feae57"],
+Cell[78588, 1717, 495, 10, 26, "Message",ExpressionUUID->"d42d7f61-e526-4ea6-819a-1813b828f75a"],
+Cell[79086, 1729, 494, 10, 26, "Message",ExpressionUUID->"b36e026e-8fea-46a5-9679-3fdc70ff22ce"],
+Cell[79583, 1741, 45767, 900, 250, "Output",ExpressionUUID->"575472a4-31d0-4bab-aa7c-4e568f2794e2"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

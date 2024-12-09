@@ -1,0 +1,441 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     19531,        431]
+NotebookOptionsPosition[     19044,        414]
+NotebookOutlinePosition[     19440,        430]
+CellTagsIndexPosition[     19397,        427]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Interactive", " ", "Model", " ", "with", " ", "Sliders"}], " ", 
+   "*)"}], "\n", 
+  RowBox[{
+   RowBox[{"Manipulate", "[", "\n", " ", 
+    RowBox[{
+     RowBox[{"Module", "[", "\n", "  ", 
+      RowBox[{
+       RowBox[{"{", "\n", "   ", 
+        RowBox[{
+        "params", ",", " ", "equations", ",", " ", "initialConditions", ",", 
+         " ", "solution"}], "\n", "   ", "}"}], ",", "\n", "   ", "\n", "   ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Define", " ", "Parameters"}], " ", "*)"}], "\n", "   ", 
+       RowBox[{
+        RowBox[{"params", " ", "=", " ", 
+         RowBox[{"{", "\n", "     ", 
+          RowBox[{
+           RowBox[{"beta", " ", "->", " ", "infectionRate"}], ",", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Infection", " ", "rate", " ", "from", " ", "Susceptibles", " ", 
+             "to", " ", "Infected"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"alphaZ", " ", "->", " ", "alphaZRate"}], ",", "     ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Rate", " ", "of", " ", "Infected", " ", "turning", " ", "into", 
+             " ", "Zombies"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"alphaT", " ", "->", " ", "alphaTRate"}], ",", "     ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Rate", " ", "of", " ", "Infected", " ", "turning", " ", "into", 
+             " ", "Turned", " ", "Zombies"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"gammaS", " ", "->", " ", "gammaSRate"}], ",", "     ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Rate", " ", "of", " ", "Zombies", " ", "killed", " ", "by", " ", 
+             "humans"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"gammaT", " ", "->", " ", "gammaTRate"}], ",", "     ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Rate", " ", "of", " ", "Zombies", " ", "killed", " ", "by", " ", 
+             "Turned", " ", "Zombies"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"deltaS", " ", "->", " ", "deltaSRate"}], " ", ",", 
+           "     ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Natural", " ", "death", " ", "rate", " ", "of", " ", "Turned", 
+             " ", "Zombies"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{"tau", " ", "->", " ", "tauRate"}]}], "\n", "   ", "}"}]}],
+         ";", "\n", "   ", "\n", "   ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Define", " ", "Equations"}], " ", "*)"}], "\n", "   ", 
+        RowBox[{"equations", " ", "=", " ", 
+         RowBox[{"{", "\n", "     ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"S", "'"}], "[", "t", "]"}], " ", "==", " ", 
+            RowBox[{
+             RowBox[{"-", "beta"}], " ", 
+             RowBox[{"S", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}]}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Infected", "'"}], "[", "t", "]"}], " ", "==", " ", 
+            RowBox[{
+             RowBox[{"beta", " ", 
+              RowBox[{"S", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"alphaZ", " ", "+", " ", "alphaT"}], ")"}], " ", 
+              RowBox[{"Infected", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+            RowBox[{
+             RowBox[{"alphaZ", " ", 
+              RowBox[{"Infected", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+             RowBox[{"gammaS", " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+             RowBox[{"gammaT", " ", 
+              RowBox[{"T", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+             RowBox[{"tau", " ", 
+              RowBox[{"R", "[", "t", "]"}]}]}]}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"T", "'"}], "[", "t", "]"}], " ", "==", " ", 
+            RowBox[{
+             RowBox[{"alphaT", " ", 
+              RowBox[{"Infected", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+             RowBox[{"deltaS", " ", 
+              RowBox[{"T", "[", "t", "]"}]}]}]}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"R", "'"}], "[", "t", "]"}], " ", "==", " ", 
+            RowBox[{
+             RowBox[{"gammaS", " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+             RowBox[{"deltaS", " ", 
+              RowBox[{"T", "[", "t", "]"}]}], " ", "+", " ", 
+             RowBox[{"gammaT", " ", 
+              RowBox[{"T", "[", "t", "]"}], " ", 
+              RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+             RowBox[{"tau", " ", 
+              RowBox[{"R", "[", "t", "]"}]}]}]}]}], "\n", "   ", "}"}]}], ";",
+         "\n", "   ", "\n", "   ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Initial", " ", "Conditions"}], " ", "*)"}], "\n", "   ", 
+        RowBox[{"initialConditions", " ", "=", " ", 
+         RowBox[{"{", "\n", "     ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"S", "[", "0", "]"}], " ", "==", " ", "0.5"}], ",", 
+           "         ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Initial", " ", "fraction", " ", "of", " ", "Susceptibles"}], " ",
+             "*)"}], "\n", "     ", 
+           RowBox[{
+            RowBox[{"Infected", "[", "0", "]"}], " ", "==", " ", "0.1"}], ",",
+            "  ", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Initial", " ", "fraction", " ", "of", " ", "Infected"}], 
+            " ", "*)"}], "\n", "     ", 
+           RowBox[{
+            RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", "0.3"}], ",", 
+           "         ", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Initial", " ", "fraction", " ", "of", " ", "Zombies"}], 
+            " ", "*)"}], "\n", "     ", 
+           RowBox[{
+            RowBox[{"T", "[", "0", "]"}], " ", "==", " ", "0.05"}], ",", 
+           "        ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Initial", " ", "fraction", " ", "of", " ", "Turned", " ", 
+             "Zombies"}], " ", "*)"}], "\n", "     ", 
+           RowBox[{
+            RowBox[{"R", "[", "0", "]"}], " ", "==", " ", "0"}]}], 
+          "            ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"Initially", " ", "Removed"}], " ", "*)"}], "\n", "   ", 
+          "}"}]}], ";", "\n", "   ", "\n", "   ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Solve", " ", "the", " ", "System"}], " ", "*)"}], "\n", 
+        "   ", 
+        RowBox[{"solution", " ", "=", " ", "\n", "    ", 
+         RowBox[{"NDSolve", "[", "\n", "      ", 
+          RowBox[{
+           RowBox[{"Join", "[", 
+            RowBox[{
+             RowBox[{"equations", " ", "/.", " ", "params"}], ",", " ", 
+             "initialConditions"}], "]"}], ",", "\n", "      ", 
+           RowBox[{"{", 
+            RowBox[{
+            "S", ",", " ", "Infected", ",", " ", "Z", ",", " ", "T", ",", " ",
+              "R"}], "}"}], ",", "\n", "      ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "10000"}], "}"}]}], "\n", 
+          "    ", "]"}]}], ";", "\n", "   ", "\n", "   ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Plot", " ", "Results"}], " ", "*)"}], "\n", "   ", 
+        RowBox[{"Plot", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"S", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Infected", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Z", "[", "t", "]"}], ",", " ", 
+              RowBox[{"T", "[", "t", "]"}], ",", " ", 
+              RowBox[{"R", "[", "t", "]"}]}], "}"}], " ", "/.", " ", 
+            "solution"}], "]"}], ",", "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "1000"}], "}"}], ",", "\n", 
+          "    ", 
+          RowBox[{"PlotLegends", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Susceptibles (S)\>\"", ",", " ", "\"\<Infected\>\"", ",", 
+             " ", "\"\<Zombies (Z)\>\"", ",", " ", "\n", "      ", 
+             "\"\<Turned Zombies (T)\>\"", ",", " ", "\"\<Removed (R)\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", "    ", 
+          RowBox[{"PlotStyle", " ", "->", " ", "Thick"}], ",", "\n", "    ", 
+          RowBox[{"AxesLabel", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Time (t)\>\"", ",", " ", "\"\<Population Fraction\>\""}], 
+            "}"}]}], ",", "\n", "    ", 
+          RowBox[{"PlotTheme", " ", "->", " ", "\"\<Scientific\>\""}]}], "\n",
+          "   ", "]"}]}]}], "\n", "  ", "]"}], ",", "\n", " ", "\n", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Sliders", " ", "for", " ", "Parameters"}], " ", "*)"}], "\n", 
+     " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "infectionRate", ",", " ", "0.8", ",", " ", 
+         "\"\<Infection Rate (\[Beta])\>\""}], "}"}], ",", " ", "0.01", ",", 
+       " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "alphaZRate", ",", " ", "0.6", ",", " ", 
+         "\"\<Infected to Zombies (\[Alpha]_Z)\>\""}], "}"}], ",", " ", 
+       "0.01", ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "alphaTRate", ",", " ", "0.4", ",", " ", 
+         "\"\<Infected to Turned (\[Alpha]_T)\>\""}], "}"}], ",", " ", "0.01",
+        ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "gammaSRate", ",", " ", "0.05", ",", " ", 
+         "\"\<Zombies Killed by Humans (\[Gamma]_S)\>\""}], "}"}], ",", " ", 
+       "0.01", ",", " ", "0.5", ",", " ", "\n", "  ", "0.01"}], "}"}], ",", 
+     "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "gammaTRate", ",", " ", "0.3", ",", " ", 
+         "\"\<Zombies Killed by Turned (\[Gamma]_T)\>\""}], "}"}], ",", " ", 
+       "0.01", ",", " ", "0.5", ",", " ", "\n", "  ", "0.01"}], "}"}], ",", 
+     "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "deltaSRate", ",", " ", "0.02", ",", " ", 
+         "\"\<Turned Death Rate (\[Delta]_S)\>\""}], "}"}], ",", " ", "0.01", 
+       ",", " ", "0.1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "tauRate", ",", " ", "0.04", ",", " ", "\"\<Dead to Zombie\>\""}], 
+        "}"}], ",", " ", "0.01", ",", " ", "1", ",", " ", "0.01"}], "}"}]}], 
+    "\n", "]"}], "\n"}]}]], "Code",
+ CellChangeTimes->{
+  3.94093491160124*^9, {3.940935066925754*^9, 3.940935128047976*^9}, {
+   3.940935187039813*^9, 3.940935241260744*^9}, {3.94093527208917*^9, 
+   3.940935272538912*^9}},
+ CellLabel->"In[31]:=",ExpressionUUID->"35b6d17c-9bba-4ad3-be5a-9b6938c83884"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alphaTRate$$ = 
+    0.4, $CellContext`alphaZRate$$ = 0.6, $CellContext`deltaSRate$$ = 
+    0.1, $CellContext`gammaSRate$$ = 0.05, $CellContext`gammaTRate$$ = 
+    0.3, $CellContext`infectionRate$$ = 0.8, $CellContext`tauRate$$ = 0.3, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`infectionRate$$], 0.8, "Infection Rate (\[Beta])"}, 
+      0.01, 1, 0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`alphaZRate$$], 0.6, 
+       "Infected to Zombies (\[Alpha]_Z)"}, 0.01, 1, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`alphaTRate$$], 0.4, 
+       "Infected to Turned (\[Alpha]_T)"}, 0.01, 1, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`gammaSRate$$], 0.05, 
+       "Zombies Killed by Humans (\[Gamma]_S)"}, 0.01, 0.5, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`gammaTRate$$], 0.3, 
+       "Zombies Killed by Turned (\[Gamma]_T)"}, 0.01, 0.5, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`deltaSRate$$], 0.02, 
+       "Turned Death Rate (\[Delta]_S)"}, 0.01, 0.1, 0.01, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`tauRate$$], 0.04, "Dead to Zombie"}, 0.01, 1, 0.01, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    506.87382812499993`, {109.5444062273699, 115.27633982111993`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alphaTRate$$ = 
+        0.4, $CellContext`alphaZRate$$ = 0.6, $CellContext`deltaSRate$$ = 
+        0.02, $CellContext`gammaSRate$$ = 0.05, $CellContext`gammaTRate$$ = 
+        0.3, $CellContext`infectionRate$$ = 0.8, $CellContext`tauRate$$ = 
+        0.04}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`params$, $CellContext`equations$, \
+$CellContext`initialConditions$, $CellContext`solution$}, \
+$CellContext`params$ = {$CellContext`beta -> $CellContext`infectionRate$$, \
+$CellContext`alphaZ -> $CellContext`alphaZRate$$, $CellContext`alphaT -> \
+$CellContext`alphaTRate$$, $CellContext`gammaS -> $CellContext`gammaSRate$$, \
+$CellContext`gammaT -> $CellContext`gammaTRate$$, $CellContext`deltaS -> \
+$CellContext`deltaSRate$$, $CellContext`tau -> $CellContext`tauRate$$}; \
+$CellContext`equations$ = {
+          Derivative[
+            1][$CellContext`S][$CellContext`t] == (-$CellContext`beta) \
+$CellContext`S[$CellContext`t] $CellContext`Z[$CellContext`t], 
+           Derivative[
+            1][$CellContext`Infected][$CellContext`t] == $CellContext`beta \
+$CellContext`S[$CellContext`t] $CellContext`Z[$CellContext`t] - \
+($CellContext`alphaZ + $CellContext`alphaT) \
+$CellContext`Infected[$CellContext`t] $CellContext`Z[$CellContext`t], 
+           Derivative[
+            1][$CellContext`Z][$CellContext`t] == $CellContext`alphaZ \
+$CellContext`Infected[$CellContext`t] $CellContext`Z[$CellContext`t] - \
+$CellContext`gammaS $CellContext`Z[$CellContext`t] - $CellContext`gammaT \
+$CellContext`T[$CellContext`t] $CellContext`Z[$CellContext`t] + \
+$CellContext`tau $CellContext`R[$CellContext`t], 
+           Derivative[
+            1][$CellContext`T][$CellContext`t] == $CellContext`alphaT \
+$CellContext`Infected[$CellContext`t] $CellContext`Z[$CellContext`t] - \
+$CellContext`deltaS $CellContext`T[$CellContext`t], 
+           Derivative[
+            1][$CellContext`R][$CellContext`t] == $CellContext`gammaS \
+$CellContext`Z[$CellContext`t] + $CellContext`deltaS \
+$CellContext`T[$CellContext`t] + $CellContext`gammaT \
+$CellContext`T[$CellContext`t] $CellContext`Z[$CellContext`t] - \
+$CellContext`tau $CellContext`R[$CellContext`t]}; \
+$CellContext`initialConditions$ = {$CellContext`S[0] == 
+           0.5, $CellContext`Infected[0] == 0.1, $CellContext`Z[0] == 
+           0.3, $CellContext`T[0] == 0.05, $CellContext`R[0] == 
+           0}; $CellContext`solution$ = NDSolve[
+           Join[
+            
+            ReplaceAll[$CellContext`equations$, $CellContext`params$], \
+$CellContext`initialConditions$], {$CellContext`S, $CellContext`Infected, \
+$CellContext`Z, $CellContext`T, $CellContext`R}, {$CellContext`t, 0, 10000}]; 
+        Plot[
+          Evaluate[
+           ReplaceAll[{
+             $CellContext`S[$CellContext`t], 
+             $CellContext`Infected[$CellContext`t], 
+             $CellContext`Z[$CellContext`t], 
+             $CellContext`T[$CellContext`t], 
+             $CellContext`R[$CellContext`t]}, $CellContext`solution$]], \
+{$CellContext`t, 0, 1000}, 
+          PlotLegends -> {
+           "Susceptibles (S)", "Infected", "Zombies (Z)", 
+            "Turned Zombies (T)", "Removed (R)"}, PlotRange -> All, PlotStyle -> 
+          Thick, AxesLabel -> {"Time (t)", "Population Fraction"}, PlotTheme -> 
+          "Scientific"]], 
+      "Specifications" :> {{{$CellContext`infectionRate$$, 0.8, 
+          "Infection Rate (\[Beta])"}, 0.01, 1, 
+         0.01}, {{$CellContext`alphaZRate$$, 0.6, 
+          "Infected to Zombies (\[Alpha]_Z)"}, 0.01, 1, 
+         0.01}, {{$CellContext`alphaTRate$$, 0.4, 
+          "Infected to Turned (\[Alpha]_T)"}, 0.01, 1, 
+         0.01}, {{$CellContext`gammaSRate$$, 0.05, 
+          "Zombies Killed by Humans (\[Gamma]_S)"}, 0.01, 0.5, 
+         0.01}, {{$CellContext`gammaTRate$$, 0.3, 
+          "Zombies Killed by Turned (\[Gamma]_T)"}, 0.01, 0.5, 
+         0.01}, {{$CellContext`deltaSRate$$, 0.02, 
+          "Turned Death Rate (\[Delta]_S)"}, 0.01, 0.1, 
+         0.01}, {{$CellContext`tauRate$$, 0.04, "Dead to Zombie"}, 0.01, 1, 
+         0.01}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{549.9738281249998, {318.054831642409, 323.786765236159}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.94093491509095*^9, 3.940934926592743*^9}, {
+  3.940935136819943*^9, 3.940935147107188*^9}, {3.940935188531061*^9, 
+  3.9409351959948587`*^9}, {3.940935242148697*^9, 3.9409352865720873`*^9}},
+ CellLabel->"Out[31]=",ExpressionUUID->"e608510f-cb86-491d-ac82-e37b4254106a"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{316, Automatic}, {Automatic, 50}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"be9a7107-1a96-4a64-b101-b554327da83b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 11428, 259, 1333, "Code",ExpressionUUID->"35b6d17c-9bba-4ad3-be5a-9b6938c83884"],
+Cell[12007, 283, 7021, 128, 658, "Output",ExpressionUUID->"e608510f-cb86-491d-ac82-e37b4254106a"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

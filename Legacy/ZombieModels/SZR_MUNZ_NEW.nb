@@ -1,0 +1,406 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     16750,        396]
+NotebookOptionsPosition[     16267,        379]
+NotebookOutlinePosition[     16660,        395]
+CellTagsIndexPosition[     16617,        392]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Define", " ", "the", " ", "system", " ", "of", " ", "equations"}],
+    " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"zombieSystem", "[", 
+      RowBox[{"\[Beta]Z_", ",", " ", "\[Delta]Z_", ",", " ", "\[Eta]_"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"{", "\n", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"H", "'"}], "[", "t", "]"}], " ", "==", " ", 
+        RowBox[{
+         RowBox[{"-", "\[Beta]Z"}], " ", 
+         RowBox[{"H", "[", "t", "]"}], " ", 
+         RowBox[{"Z", "[", "t", "]"}]}]}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+        RowBox[{
+         RowBox[{"\[Beta]Z", " ", 
+          RowBox[{"H", "[", "t", "]"}], " ", 
+          RowBox[{"Z", "[", "t", "]"}]}], " ", "+", " ", 
+         RowBox[{"\[Eta]", " ", 
+          RowBox[{"R", "[", "t", "]"}]}], " ", "-", " ", 
+         RowBox[{"\[Delta]Z", " ", 
+          RowBox[{"H", "[", "t", "]"}], " ", 
+          RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"R", "'"}], "[", "t", "]"}], " ", "==", " ", 
+        RowBox[{
+         RowBox[{"\[Delta]Z", " ", 
+          RowBox[{"H", "[", "t", "]"}], " ", 
+          RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+         RowBox[{"\[Eta]", " ", 
+          RowBox[{"R", "[", "t", "]"}]}]}]}]}], "\n", "}"}]}], ";"}], "\n", 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Solve", " ", "the", " ", "system", " ", "numerically"}], " ", 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"solveSystem", "[", 
+      RowBox[{
+      "\[Beta]Z_", ",", " ", "\[Delta]Z_", ",", " ", "\[Eta]_", ",", " ", 
+       "H0_", ",", " ", "Z0_", ",", " ", "R0_", ",", " ", "tmax_"}], "]"}], 
+     " ", ":=", " ", "\n", "  ", 
+     RowBox[{"NDSolve", "[", "\n", "   ", 
+      RowBox[{
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"zombieSystem", "[", 
+          RowBox[{"\[Beta]Z", ",", " ", "\[Delta]Z", ",", " ", "\[Eta]"}], 
+          "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"H", "[", "0", "]"}], " ", "==", " ", "H0"}], ",", " ", 
+           RowBox[{
+            RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", "Z0"}], ",", " ", 
+           RowBox[{
+            RowBox[{"R", "[", "0", "]"}], " ", "==", " ", "R0"}]}], "}"}]}], 
+        "]"}], ",", " ", "\n", "   ", 
+       RowBox[{"{", 
+        RowBox[{"H", ",", " ", "Z", ",", " ", "R"}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}]}], "\n", "   ", 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Fixed", " ", "points", " ", "function"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"findFixedPoints", "[", 
+      RowBox[{"\[Beta]Z_", ",", " ", "\[Delta]Z_", ",", " ", "\[Eta]_"}], 
+      "]"}], " ", ":=", " ", "\n", " ", 
+     RowBox[{"Solve", "[", "\n", "  ", 
+      RowBox[{
+       RowBox[{"{", "\n", "   ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "\[Beta]Z"}], " ", "H", " ", "Z"}], " ", "==", " ", 
+          "0"}], ",", " ", "\n", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"\[Beta]Z", " ", "H", " ", "Z"}], " ", "+", " ", 
+           RowBox[{"\[Eta]", " ", "R"}], " ", "-", " ", 
+           RowBox[{"\[Delta]Z", " ", "H", " ", "Z"}]}], " ", "==", " ", "0"}],
+          ",", " ", "\n", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"\[Delta]Z", " ", "H", " ", "Z"}], " ", "-", " ", 
+           RowBox[{"\[Eta]", " ", "R"}]}], " ", "==", " ", "0"}]}], "\n", 
+        "   ", "}"}], ",", "\n", "  ", 
+       RowBox[{"{", 
+        RowBox[{"H", ",", " ", "Z", ",", " ", "R"}], "}"}]}], "\n", "  ", 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Interactive", " ", "manipulation"}], " ", "*)"}], "\n", 
+   RowBox[{"Manipulate", "[", "\n", " ", 
+    RowBox[{
+     RowBox[{"Module", "[", "\n", "  ", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "sol", ",", " ", "fixedPoints", ",", " ", "hPlot", ",", " ", "zPlot", 
+         ",", " ", "rPlot"}], "}"}], ",", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Solve", " ", "the", " ", "system"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{
+        RowBox[{"sol", " ", "=", " ", 
+         RowBox[{"solveSystem", "[", 
+          RowBox[{
+          "\[Beta]Z", ",", " ", "\[Delta]Z", ",", " ", "\[Eta]", ",", " ", 
+           "H0", ",", " ", "Z0", ",", " ", "R0", ",", " ", "tmax"}], "]"}]}], 
+        ";", "\n", "  ", "\n", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Compute", " ", "fixed", " ", "points"}], " ", "*)"}], "\n", 
+        "  ", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"fixedPoints", " ", "=", " ", 
+           RowBox[{"findFixedPoints", "[", 
+            RowBox[{"\[Beta]Z", ",", " ", "\[Delta]Z", ",", " ", "\[Eta]"}], 
+            "]"}]}], ";"}], "*)"}], "\n", "  ", "\n", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Plot", " ", "the", " ", "solutions"}], " ", "*)"}], "\n", 
+        "  ", 
+        RowBox[{"hPlot", " ", "=", " ", "\n", "   ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"Evaluate", "[", 
+            RowBox[{
+             RowBox[{"H", "[", "t", "]"}], " ", "/.", " ", "sol"}], "]"}], 
+           ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", " ", 
+           RowBox[{"PlotStyle", " ", "->", " ", "Blue"}], ",", " ", "\n", 
+           "    ", 
+           RowBox[{"PlotLegends", " ", "->", " ", "\"\<Expressions\>\""}], 
+           ",", " ", 
+           RowBox[{"PlotLabel", " ", "->", " ", "\"\<H(t)\>\""}]}], "]"}]}], 
+        ";", "\n", "  ", 
+        RowBox[{"zPlot", " ", "=", " ", "\n", "   ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"Evaluate", "[", 
+            RowBox[{
+             RowBox[{"Z", "[", "t", "]"}], " ", "/.", " ", "sol"}], "]"}], 
+           ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", " ", 
+           RowBox[{"PlotStyle", " ", "->", " ", "Red"}], ",", " ", "\n", 
+           "    ", 
+           RowBox[{"PlotLegends", " ", "->", " ", "\"\<Expressions\>\""}], 
+           ",", " ", 
+           RowBox[{"PlotLabel", " ", "->", " ", "\"\<Z(t)\>\""}]}], "]"}]}], 
+        ";", "\n", "  ", 
+        RowBox[{"rPlot", " ", "=", " ", "\n", "   ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"Evaluate", "[", 
+            RowBox[{
+             RowBox[{"R", "[", "t", "]"}], " ", "/.", " ", "sol"}], "]"}], 
+           ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", " ", 
+           RowBox[{"PlotStyle", " ", "->", " ", "Green"}], ",", " ", "\n", 
+           "    ", 
+           RowBox[{"PlotLegends", " ", "->", " ", "\"\<Expressions\>\""}], 
+           ",", " ", 
+           RowBox[{"PlotLabel", " ", "->", " ", "\"\<R(t)\>\""}]}], "]"}]}], 
+        ";", "\n", "  ", "\n", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "Display", " ", "plots", " ", "and", " ", "fixed", " ", "points"}], 
+         " ", "*)"}], "\n", "  ", 
+        RowBox[{"Column", "[", 
+         RowBox[{"{", "\n", "    ", 
+          RowBox[{"Show", "[", 
+           RowBox[{
+           "hPlot", ",", " ", "zPlot", ",", " ", "rPlot", ",", " ", "\n", 
+            "     ", 
+            RowBox[{"PlotRange", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", " ", "tmax"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", " ", "1"}], "}"}]}], "}"}]}], ",", " ", 
+            RowBox[{"AxesLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<t\>\"", ",", " ", "\"\<Population\>\""}], 
+              "}"}]}]}], "]"}], "\n", "    ", "}"}], "]"}]}]}], "\n", "  ", 
+      "]"}], ",", "\n", " ", "\n", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Sliders", " ", "for", " ", "parameters"}], " ", "*)"}], "\n", 
+     " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "\[Beta]Z", ",", " ", "0.00095", ",", " ", 
+         "\"\<\[Beta]Z (Infection Rate)\>\""}], "}"}], ",", " ", "0.1", ",", 
+       " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "\[Delta]Z", ",", " ", "0.005", ",", " ", 
+         "\"\<\[Delta]Z (Recovery Rate)\>\""}], "}"}], ",", " ", "0.1", ",", 
+       " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "\[Eta]", ",", " ", "0.0001", ",", " ", 
+         "\"\<\[Eta] (Resurrection Rate)\>\""}], "}"}], ",", " ", "0.1", ",", 
+       " ", "1", ",", " ", "0.01"}], "}"}], ",", "\n", " ", "\n", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Sliders", " ", "for", " ", "initial", " ", "conditions"}], " ",
+       "*)"}], "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "H0", ",", " ", "0.9", ",", " ", "\"\<H(0) (Initial Humans)\>\""}], 
+        "}"}], ",", " ", "0", ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", 
+     "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "Z0", ",", " ", "0.1", ",", " ", "\"\<Z(0) (Initial Zombies)\>\""}], 
+        "}"}], ",", " ", "0", ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", 
+     "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "R0", ",", " ", "0", ",", " ", "\"\<R(0) (Initial Resurrected)\>\""}],
+         "}"}], ",", " ", "0", ",", " ", "1", ",", " ", "0.01"}], "}"}], ",", 
+     "\n", " ", "\n", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Slider", " ", "for", " ", "simulation", " ", "time"}], " ", 
+      "*)"}], "\n", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"tmax", ",", " ", "50", ",", " ", "\"\<Simulation Time\>\""}],
+         "}"}], ",", " ", "10", ",", " ", "100", ",", " ", "1"}], "}"}]}], 
+    "\n", " ", "]"}], "\n"}]}]], "Code",
+ CellChangeTimes->{
+  3.942490431242176*^9, {3.942490497205844*^9, 3.942490511301465*^9}, {
+   3.942490602345028*^9, 3.942490612775926*^9}, {3.94249093954741*^9, 
+   3.942490955401011*^9}, {3.942490998600875*^9, 3.942490998758081*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"cad24187-cc5e-4e02-99bf-d748fbcce18f"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`H0$$ = 0.9, $CellContext`R0$$ = 
+    0, $CellContext`tmax$$ = 10000, $CellContext`Z0$$ = 
+    0.1, $CellContext`\[Beta]Z$$ = 0.0095, $CellContext`\[Delta]Z$$ = 
+    0.005, $CellContext`\[Eta]$$ = 0.0001, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Beta]Z$$], 0.00095, "\[Beta]Z (Infection Rate)"}, 
+      0.1, 1, 0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]Z$$], 0.005, "\[Delta]Z (Recovery Rate)"}, 
+      0.1, 1, 0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Eta]$$], 0.0001, "\[Eta] (Resurrection Rate)"}, 
+      0.1, 1, 0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`H0$$], 0.9, "H(0) (Initial Humans)"}, 0, 1, 0.01, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`Z0$$], 0.1, "Z(0) (Initial Zombies)"}, 0, 1, 0.01, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`R0$$], 0, "R(0) (Initial Resurrected)"}, 0, 1, 0.01, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`tmax$$], 50, "Simulation Time"}, 10, 100, 1, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    942.5252380371094, {299.20822711909443`, 304.94016071284443`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`H0$$ = 0.9, $CellContext`R0$$ = 
+        0, $CellContext`tmax$$ = 50, $CellContext`Z0$$ = 
+        0.1, $CellContext`\[Beta]Z$$ = 0.00095, $CellContext`\[Delta]Z$$ = 
+        0.005, $CellContext`\[Eta]$$ = 0.0001}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`sol$, $CellContext`fixedPoints$, \
+$CellContext`hPlot$, $CellContext`zPlot$, $CellContext`rPlot$}, \
+$CellContext`sol$ = $CellContext`solveSystem[$CellContext`\[Beta]Z$$, \
+$CellContext`\[Delta]Z$$, $CellContext`\[Eta]$$, $CellContext`H0$$, \
+$CellContext`Z0$$, $CellContext`R0$$, $CellContext`tmax$$]; \
+$CellContext`hPlot$ = Plot[
+           Evaluate[
+            ReplaceAll[
+             $CellContext`H[$CellContext`t], $CellContext`sol$]], \
+{$CellContext`t, 0, $CellContext`tmax$$}, PlotStyle -> Blue, PlotLegends -> 
+           "Expressions", PlotLabel -> "H(t)"]; $CellContext`zPlot$ = Plot[
+           Evaluate[
+            ReplaceAll[
+             $CellContext`Z[$CellContext`t], $CellContext`sol$]], \
+{$CellContext`t, 0, $CellContext`tmax$$}, PlotStyle -> Red, PlotLegends -> 
+           "Expressions", PlotLabel -> "Z(t)"]; $CellContext`rPlot$ = Plot[
+           Evaluate[
+            ReplaceAll[
+             $CellContext`R[$CellContext`t], $CellContext`sol$]], \
+{$CellContext`t, 0, $CellContext`tmax$$}, PlotStyle -> Green, PlotLegends -> 
+           "Expressions", PlotLabel -> "R(t)"]; Column[{
+           
+           Show[$CellContext`hPlot$, $CellContext`zPlot$, $CellContext`rPlot$,
+             PlotRange -> {{0, $CellContext`tmax$$}, {0, 1}}, 
+            AxesLabel -> {"t", "Population"}]}]], 
+      "Specifications" :> {{{$CellContext`\[Beta]Z$$, 0.00095, 
+          "\[Beta]Z (Infection Rate)"}, 0.1, 1, 
+         0.01}, {{$CellContext`\[Delta]Z$$, 0.005, 
+          "\[Delta]Z (Recovery Rate)"}, 0.1, 1, 
+         0.01}, {{$CellContext`\[Eta]$$, 0.0001, 
+          "\[Eta] (Resurrection Rate)"}, 0.1, 1, 
+         0.01}, {{$CellContext`H0$$, 0.9, "H(0) (Initial Humans)"}, 0, 1, 
+         0.01}, {{$CellContext`Z0$$, 0.1, "Z(0) (Initial Zombies)"}, 0, 1, 
+         0.01}, {{$CellContext`R0$$, 0, "R(0) (Initial Resurrected)"}, 0, 1, 
+         0.01}, {{$CellContext`tmax$$, 50, "Simulation Time"}, 10, 100, 1}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      985.6252380371093, {471.05865253413344`, 476.79058612788344`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.942490438590528*^9, 3.9424904456458673`*^9}, 
+   3.942490512467022*^9, {3.9424906156445637`*^9, 3.942490623156178*^9}, {
+   3.942490654361699*^9, 3.942490656796743*^9}, {3.94249098943933*^9, 
+   3.94249101231881*^9}},
+ CellLabel->"Out[30]=",ExpressionUUID->"77e59483-5aa3-4034-b4e5-d36465c04dc7"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c733366a-b23f-4c54-8b78-2535aa4a55df"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 10619, 261, 1314, "Code",ExpressionUUID->"cad24187-cc5e-4e02-99bf-d748fbcce18f"],
+Cell[11198, 285, 5053, 91, 964, "Output",ExpressionUUID->"77e59483-5aa3-4034-b4e5-d36465c04dc7"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

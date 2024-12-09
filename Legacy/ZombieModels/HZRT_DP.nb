@@ -1,0 +1,563 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     25349,        555]
+NotebookOptionsPosition[     24577,        535]
+NotebookOutlinePosition[     24970,        551]
+CellTagsIndexPosition[     24927,        548]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\n", " ", 
+   RowBox[{
+    RowBox[{"Module", "[", "\n", "  ", 
+     RowBox[{
+      RowBox[{"{", "\n", "   ", 
+       RowBox[{
+       "eqns", ",", " ", "sol", ",", " ", "H", ",", " ", "Z", ",", " ", "T", 
+        ",", " ", "t", ",", " ", "Hfunc", ",", " ", "Zfunc", ",", " ", 
+        "Tfunc", ",", " ", "vectorField"}], "\n", "  ", "}"}], ",", "\n", 
+      "  ", "\n", "  ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{
+        "Define", " ", "the", " ", "differential", " ", "equations", " ", 
+         "with", " ", "predator"}], "-", 
+        RowBox[{"prey", " ", "interaction"}]}], " ", "*)"}], "\n", "  ", 
+      RowBox[{
+       RowBox[{"eqns", " ", "=", " ", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"H", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{"\[Alpha]S", " ", "-", " ", 
+            RowBox[{"\[Beta]Z", " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]S", " ", 
+             RowBox[{"H", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Z", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"\[Beta]Z", " ", 
+             RowBox[{"H", "[", "t", "]"}], " ", 
+             RowBox[{"Z", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Alpha]", " ", 
+             RowBox[{"Z", "[", "t", "]"}], " ", 
+             RowBox[{"T", "[", "t", "]"}]}], " ", "+", " ", 
+            RowBox[{"\[Delta]Z", " ", 
+             RowBox[{"Z", "[", "t", "]"}]}]}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"T", "'"}], "[", "t", "]"}], " ", "==", " ", 
+           RowBox[{
+            RowBox[{"\[Gamma]", " ", 
+             RowBox[{"Z", "[", "t", "]"}], " ", 
+             RowBox[{"T", "[", "t", "]"}]}], " ", "-", " ", 
+            RowBox[{"\[Delta]T", " ", 
+             RowBox[{"T", "[", "t", "]"}]}]}]}]}], "\n", "  ", "}"}]}], ";", 
+       "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Solve", " ", "the", " ", "equations", " ", "numerically"}], 
+        " ", "*)"}], "\n", "  ", 
+       RowBox[{"sol", " ", "=", " ", 
+        RowBox[{"NDSolve", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"eqns", ",", " ", "\n", "     ", 
+            RowBox[{
+             RowBox[{"H", "[", "0", "]"}], " ", "==", " ", "H0"}], ",", " ", 
+            "\n", "     ", 
+            RowBox[{
+             RowBox[{"Z", "[", "0", "]"}], " ", "==", " ", "Z0"}], ",", " ", 
+            "\n", "     ", 
+            RowBox[{
+             RowBox[{"T", "[", "0", "]"}], " ", "==", " ", "T0"}]}], "\n", 
+           "    ", "}"}], ",", " ", "\n", "    ", 
+          RowBox[{"{", 
+           RowBox[{"H", ",", " ", "Z", ",", " ", "T"}], "}"}], ",", " ", "\n",
+           "    ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}]}], "\n", 
+         "  ", "]"}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Extract", " ", "solution", " ", "functions"}], " ", "*)"}], 
+       "\n", "  ", 
+       RowBox[{"Hfunc", " ", "=", " ", 
+        RowBox[{"H", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Zfunc", " ", "=", " ", 
+        RowBox[{"Z", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+       RowBox[{"Tfunc", " ", "=", " ", 
+        RowBox[{"T", " ", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Define", " ", "the", " ", "vector", " ", "field", " ", "for", " ", 
+         "phase", " ", "plots"}], " ", "*)"}], "\n", "  ", 
+       RowBox[{"vectorField", " ", "=", " ", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{"\[Alpha]S", " ", "-", " ", 
+           RowBox[{"\[Beta]Z", " ", "H", " ", "Z"}], " ", "-", " ", 
+           RowBox[{"\[Delta]S", " ", "H"}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"\[Beta]Z", " ", "H", " ", "Z"}], " ", "-", " ", 
+           RowBox[{"\[Alpha]", " ", "Z", " ", "T"}], " ", "+", " ", 
+           RowBox[{"\[Delta]Z", " ", "Z"}]}], ",", "\n", "    ", 
+          RowBox[{
+           RowBox[{"\[Gamma]", " ", "Z", " ", "T"}], " ", "-", " ", 
+           RowBox[{"\[Delta]T", " ", "T"}]}]}], "\n", "  ", "}"}]}], ";", 
+       "\n", "  ", "\n", "  ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Display", " ", "the", " ", "results"}], " ", "*)"}], "\n", 
+       "  ", 
+       RowBox[{"Column", "[", 
+        RowBox[{"{", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Plot", "[", "\n", "     ", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Hfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Zfunc", "[", "t", "]"}], ",", " ", 
+              RowBox[{"Tfunc", "[", "t", "]"}]}], "}"}], ",", "\n", "     ", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", "\n",
+             "     ", 
+            RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", "     ", 
+            
+            RowBox[{"PlotLegends", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Humans (H)\>\"", ",", " ", "\"\<Zombies (Z)\>\"", ",", 
+               " ", "\"\<Turned (T)\>\"", ",", " ", "\"\<Removed (R)\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"PlotStyle", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"Blue", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Red", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Green", ",", " ", "Thick"}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"Purple", ",", " ", "Thick"}], "}"}]}], "}"}]}], ",", 
+            "\n", "     ", 
+            RowBox[{"AxesLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Time (t)\>\"", ",", " ", "\"\<Population\>\""}], 
+              "}"}]}], ",", "\n", "     ", 
+            RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", "     ", 
+            RowBox[{"FrameLabel", " ", "->", " ", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\<Time (t)\>\"", ",", " ", "\"\<Population Fractions\>\""}], 
+              "}"}]}]}], "\n", "    ", "]"}], ",", "\n", "    ", 
+          RowBox[{"Grid", "[", 
+           RowBox[{"{", "\n", "      ", 
+            RowBox[{"{", "\n", "        ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+               RowBox[{"Phase", " ", "plot", " ", "H"}], "-", "Z"}], " ", 
+              "*)"}], "\n", "        ", 
+             RowBox[{"Show", "[", "\n", "         ", 
+              RowBox[{
+               RowBox[{"StreamPlot", "[", "\n", "          ", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"vectorField", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+                    RowBox[{"vectorField", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "}"}], " ", "/.", " ", 
+                  RowBox[{"{", 
+                   RowBox[{"T", " ", "->", " ", "0"}], "}"}]}], ",", "\n", 
+                 "          ", 
+                 RowBox[{"{", 
+                  RowBox[{"H", ",", " ", "0", ",", " ", "1"}], "}"}], ",", 
+                 " ", 
+                 RowBox[{"{", 
+                  RowBox[{"Z", ",", " ", "0", ",", " ", "1"}], "}"}], ",", 
+                 "\n", "          ", 
+                 RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n", 
+                 "          ", 
+                 RowBox[{"AxesLabel", " ", "->", " ", 
+                  RowBox[{"{", 
+                   RowBox[{
+                   "\"\<Humans (H)\>\"", ",", " ", "\"\<Zombies (Z)\>\""}], 
+                   "}"}]}], ",", "\n", "          ", 
+                 RowBox[{"StreamStyle", " ", "->", " ", 
+                  RowBox[{"Arrowheads", "[", "Small", "]"}]}], ",", "\n", 
+                 "          ", 
+                 RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n", 
+                 "          ", 
+                 RowBox[{"FrameLabel", " ", "->", " ", 
+                  RowBox[{"{", 
+                   RowBox[{
+                   "\"\<Humans (H)\>\"", ",", " ", "\"\<Zombies (Z)\>\""}], 
+                   "}"}]}]}], "\n", "         ", "]"}], ",", "\n", 
+               "         ", 
+               RowBox[{"ParametricPlot", "[", "\n", "          ", 
+                RowBox[{
+                 RowBox[{"Evaluate", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Hfunc", "[", "t", "]"}], ",", " ", 
+                    RowBox[{"Zfunc", "[", "t", "]"}]}], "}"}], "]"}], ",", 
+                 " ", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", " ", "0", ",", " ", "tmax"}], "}"}], ",", 
+                 "\n", "          ", 
+                 RowBox[{"PlotStyle", " ", "->", " ", 
+                  RowBox[{"{", 
+                   RowBox[{"Thick", ",", " ", "Green"}], "}"}]}]}], "\n", 
+                "         ", "]"}]}], "\n", "        ", "]"}], "\n", "      ",
+              "}"}], "\n", "    ", "}"}], "]"}]}], "\n", "   ", "}"}], 
+        "]"}]}]}], "\n", " ", "]"}], ",", "\n", " ", "\n", " ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Sliders", " ", "for", " ", "parameters", " ", "and", " ", "initial", 
+      " ", "conditions"}], " ", "*)"}], "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Alpha]S", ",", " ", "0", ",", " ", 
+        "\"\<Human growth rate (alpha_S)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Zeta]", ",", " ", "0.0001", ",", " ", 
+        "\"\<Zombie growth rate (alpha_Z)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Beta]Z", ",", " ", "0.0095", ",", " ", 
+        "\"\<Zombification rate S to Z (beta_Z)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]S", ",", " ", "0", ",", " ", 
+        "\"\<Human removal rate (delta_S)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]Z", ",", " ", "0.01", ",", " ", 
+        "\"\<Zombie removal rate (delta_Z)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Delta]T", ",", " ", "0.005", ",", " ", 
+        "\"\<Turned removal rate (delta_T)\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Alpha]", ",", " ", "0.005", ",", " ", 
+        "\"\<Probability of effective kill\>\""}], "}"}], ",", " ", "0", ",", 
+      " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Gamma]", ",", " ", "0.01", ",", " ", 
+        "\"\<Turned zombie growth rate (gamma)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "1", ",", " ", "0.001"}], "}"}], ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "H0", ",", " ", "0.9", ",", " ", "\"\<Initial humans (H0)\>\""}], 
+       "}"}], ",", " ", "0.1", ",", " ", "1.0", ",", " ", "0.01"}], "}"}], 
+    ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "Z0", ",", " ", "0.1", ",", " ", "\"\<Initial zombies (Z0)\>\""}], 
+       "}"}], ",", " ", "0.01", ",", " ", "1.0", ",", " ", "0.01"}], "}"}], 
+    ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "T0", ",", " ", "0", ",", " ", "\"\<Initial Turned Zombies (T0)\>\""}],
+        "}"}], ",", " ", "0.01", ",", " ", "1.0", ",", " ", "0.01"}], "}"}], 
+    ",", "\n", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "tmax", ",", " ", "100000", ",", " ", "\"\<Simulation time\>\""}], 
+       "}"}], ",", " ", "10", ",", " ", "1000000", ",", " ", "1"}], "}"}]}], 
+   "\n", "]"}], "\n"}]], "Code",
+ CellChangeTimes->{
+  3.942495186756497*^9, {3.942496135104827*^9, 3.9424962389928293`*^9}, {
+   3.942497121616688*^9, 3.942497226956147*^9}, {3.942497294990691*^9, 
+   3.9424973030158*^9}, {3.94249806015821*^9, 3.942498156904758*^9}, {
+   3.942498193077704*^9, 3.942498199188542*^9}, {3.9424983132066*^9, 
+   3.9424983253917427`*^9}, {3.9425037002103987`*^9, 
+   3.9425037464682007`*^9}, {3.942503918992092*^9, 3.942503976765892*^9}, {
+   3.942504011922077*^9, 3.942504277955044*^9}, {3.9425045406758137`*^9, 
+   3.942504544744919*^9}, {3.942504623037784*^9, 3.942504631467711*^9}, 
+   3.94250486759324*^9, {3.942505255180842*^9, 3.9425053820769463`*^9}, {
+   3.942505559282407*^9, 3.942505559793021*^9}, {3.942506226260388*^9, 
+   3.9425062497299833`*^9}, {3.9425063776749973`*^9, 3.942506455226036*^9}, {
+   3.9425087430856323`*^9, 3.942508747479969*^9}, {3.9425094542638702`*^9, 
+   3.9425094587718697`*^9}},ExpressionUUID->"4c40d768-8634-45e8-8732-\
+24743a1e5a19"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`H0$$ = 0.13, $CellContext`T0$$ = 
+    0.03, $CellContext`tmax$$ = 53632, $CellContext`Z0$$ = 
+    0.1, $CellContext`\[Alpha]$$ = 0., $CellContext`\[Alpha]S$$ = 
+    0.001, $CellContext`\[Beta]Z$$ = 0.0095, $CellContext`\[Gamma]$$ = 
+    0.008, $CellContext`\[Delta]S$$ = 0.0001, $CellContext`\[Delta]T$$ = 
+    0.003, $CellContext`\[Delta]Z$$ = 0.015, $CellContext`\[Zeta]$$ = 0.002, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Alpha]S$$], 0, "Human growth rate (alpha_S)"}, 0, 
+      1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Zeta]$$], 0.0001, "Zombie growth rate (alpha_Z)"}, 
+      0, 1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Beta]Z$$], 0.0095, 
+       "Zombification rate S to Z (beta_Z)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Delta]S$$], 0, "Human removal rate (delta_S)"}, 0, 
+      1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]Z$$], 0.01, "Zombie removal rate (delta_Z)"},
+       0, 1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Delta]T$$], 0.005, 
+       "Turned removal rate (delta_T)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Alpha]$$], 0.005, "Probability of effective kill"},
+       0, 1, 0.001, ControlType -> Manipulator}, {{
+       Hold[$CellContext`\[Gamma]$$], 0.01, 
+       "Turned zombie growth rate (gamma)"}, 0, 1, 0.001, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`H0$$], 0.9, "Initial humans (H0)"}, 0.1, 1., 0.01, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`Z0$$], 0.1, "Initial zombies (Z0)"}, 0.01, 1., 0.01, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`T0$$], 0, "Initial Turned Zombies (T0)"}, 0.01, 1., 
+      0.01, ControlType -> Manipulator}, {{
+       Hold[$CellContext`tmax$$], 100000, "Simulation time"}, 10, 1000000, 1, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    681.1281005859375, {415.80809581011334`, 421.54002940386334`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`H0$$ = 0.9, $CellContext`T0$$ = 
+        0, $CellContext`tmax$$ = 100000, $CellContext`Z0$$ = 
+        0.1, $CellContext`\[Alpha]$$ = 0.005, $CellContext`\[Alpha]S$$ = 
+        0, $CellContext`\[Beta]Z$$ = 0.0095, $CellContext`\[Gamma]$$ = 
+        0.01, $CellContext`\[Delta]S$$ = 0, $CellContext`\[Delta]T$$ = 
+        0.005, $CellContext`\[Delta]Z$$ = 0.01, $CellContext`\[Zeta]$$ = 
+        0.0001}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`eqns$, $CellContext`sol$, $CellContext`H$, \
+$CellContext`Z$, $CellContext`T$, $CellContext`t$, $CellContext`Hfunc$, \
+$CellContext`Zfunc$, $CellContext`Tfunc$, $CellContext`vectorField$}, \
+$CellContext`eqns$ = {
+          Derivative[
+            1][$CellContext`H$][$CellContext`t$] == $CellContext`\[Alpha]S$$ - \
+$CellContext`\[Beta]Z$$ $CellContext`H$[$CellContext`t$] \
+$CellContext`Z$[$CellContext`t$] + $CellContext`\[Delta]S$$ \
+$CellContext`H$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`Z$][$CellContext`t$] == $CellContext`\[Beta]Z$$ \
+$CellContext`H$[$CellContext`t$] $CellContext`Z$[$CellContext`t$] - \
+$CellContext`\[Alpha]$$ $CellContext`Z$[$CellContext`t$] \
+$CellContext`T$[$CellContext`t$] - $CellContext`\[Delta]Z$$ \
+$CellContext`Z$[$CellContext`t$], 
+           Derivative[
+            1][$CellContext`T$][$CellContext`t$] == $CellContext`\[Gamma]$$ \
+$CellContext`Z$[$CellContext`t$] $CellContext`T$[$CellContext`t$] - \
+$CellContext`\[Delta]T$$ $CellContext`T$[$CellContext`t$]}; $CellContext`sol$ = 
+         NDSolve[{$CellContext`eqns$, $CellContext`H$[
+             0] == $CellContext`H0$$, $CellContext`Z$[
+             0] == $CellContext`Z0$$, $CellContext`T$[
+             0] == $CellContext`T0$$}, {$CellContext`H$, $CellContext`Z$, \
+$CellContext`T$}, {$CellContext`t$, 
+            0, $CellContext`tmax$$}]; $CellContext`Hfunc$ = 
+         ReplaceAll[$CellContext`H$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Zfunc$ = 
+         ReplaceAll[$CellContext`Z$, 
+           Part[$CellContext`sol$, 1]]; $CellContext`Tfunc$ = 
+         ReplaceAll[$CellContext`T$, 
+           
+           Part[$CellContext`sol$, 
+            1]]; $CellContext`vectorField$ = {$CellContext`\[Alpha]S$$ - \
+$CellContext`\[Beta]Z$$ $CellContext`H$ $CellContext`Z$ - $CellContext`\
+\[Delta]S$$ $CellContext`H$, $CellContext`\[Beta]Z$$ $CellContext`H$ \
+$CellContext`Z$ - $CellContext`\[Alpha]$$ $CellContext`Z$ $CellContext`T$ + \
+$CellContext`\[Delta]Z$$ $CellContext`Z$, $CellContext`\[Gamma]$$ \
+$CellContext`Z$ $CellContext`T$ - $CellContext`\[Delta]T$$ $CellContext`T$}; 
+        Column[{
+           Plot[{
+             $CellContext`Hfunc$[$CellContext`t$], 
+             $CellContext`Zfunc$[$CellContext`t$], 
+             $CellContext`Tfunc$[$CellContext`t$]}, {$CellContext`t$, 
+             0, $CellContext`tmax$$}, PlotRange -> All, 
+            PlotLegends -> {
+             "Humans (H)", "Zombies (Z)", "Turned (T)", "Removed (R)"}, 
+            PlotStyle -> {{Blue, Thick}, {Red, Thick}, {Green, Thick}, {
+              Purple, Thick}}, AxesLabel -> {"Time (t)", "Population"}, Frame -> 
+            True, FrameLabel -> {"Time (t)", "Population Fractions"}], 
+           Grid[{{
+              Show[
+               StreamPlot[
+                ReplaceAll[{
+                  Part[$CellContext`vectorField$, 1], 
+                  Part[$CellContext`vectorField$, 2]}, {$CellContext`T$ -> 
+                  0}], {$CellContext`H$, 0, 1}, {$CellContext`Z$, 0, 1}, 
+                PlotRange -> All, AxesLabel -> {"Humans (H)", "Zombies (Z)"}, 
+                StreamStyle -> Arrowheads[Small], Frame -> True, 
+                FrameLabel -> {"Humans (H)", "Zombies (Z)"}], 
+               ParametricPlot[
+                Evaluate[{
+                  $CellContext`Hfunc$[$CellContext`t$], 
+                  $CellContext`Zfunc$[$CellContext`t$]}], {$CellContext`t$, 
+                 0, $CellContext`tmax$$}, PlotStyle -> {Thick, Green}]]}}]}]],
+       "Specifications" :> {{{$CellContext`\[Alpha]S$$, 0, 
+          "Human growth rate (alpha_S)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Zeta]$$, 0.0001, 
+          "Zombie growth rate (alpha_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Beta]Z$$, 0.0095, 
+          "Zombification rate S to Z (beta_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]S$$, 0, 
+          "Human removal rate (delta_S)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]Z$$, 0.01, 
+          "Zombie removal rate (delta_Z)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Delta]T$$, 0.005, 
+          "Turned removal rate (delta_T)"}, 0, 1, 
+         0.001}, {{$CellContext`\[Alpha]$$, 0.005, 
+          "Probability of effective kill"}, 0, 1, 
+         0.001}, {{$CellContext`\[Gamma]$$, 0.01, 
+          "Turned zombie growth rate (gamma)"}, 0, 1, 
+         0.001}, {{$CellContext`H0$$, 0.9, "Initial humans (H0)"}, 0.1, 1., 
+         0.01}, {{$CellContext`Z0$$, 0.1, "Initial zombies (Z0)"}, 0.01, 1., 
+         0.01}, {{$CellContext`T0$$, 0, "Initial Turned Zombies (T0)"}, 0.01, 
+         1., 0.01}, {{$CellContext`tmax$$, 100000, "Simulation time"}, 10, 
+         1000000, 1}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      1101.9010888671874`, {443.57852122515243`, 449.31045481890243`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.942508750272216*^9, 3.9425088580242023`*^9}, 
+   3.9425088930124397`*^9, {3.942509239858314*^9, 3.942509241073876*^9}},
+ CellLabel->"Out[25]=",ExpressionUUID->"9ec9e940-ff37-4c0d-adf0-3f378456ae26"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve", "ndsz", 
+   "\"At \\!\\(\\*RowBox[{\\\"t$724379\\\"}]\\) == \
+\\!\\(\\*RowBox[{\\\"1932.7371534121392`\\\"}]\\), step size is effectively \
+zero; singularity or stiff system suspected.\"", 2, 26, 106, 
+   34233222380577360052, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.942508853308119*^9},
+ CellLabel->"",ExpressionUUID->"1af62759-3198-4bc4-9681-012181f020df"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve", "ndsz", 
+   "\"At \\!\\(\\*RowBox[{\\\"t$756028\\\"}]\\) == \
+\\!\\(\\*RowBox[{\\\"6209.420381278779`\\\"}]\\), step size is effectively \
+zero; singularity or stiff system suspected.\"", 2, 26, 107, 
+   34233222380577360052, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9425089807761517`*^9},
+ CellLabel->"",ExpressionUUID->"7033c90f-c7b9-49aa-b26e-8abb00c90223"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve", "ndsz", 
+   "\"At \\!\\(\\*RowBox[{\\\"t$766754\\\"}]\\) == \
+\\!\\(\\*RowBox[{\\\"7463.149221509996`\\\"}]\\), step size is effectively \
+zero; singularity or stiff system suspected.\"", 2, 26, 109, 
+   34233222380577360052, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.942509140153727*^9},
+ CellLabel->"",ExpressionUUID->"f79a6154-99c9-409a-abc2-62b74e5ecf77"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.1 for Mac OS X x86 (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"84ca4ee8-5424-4fd3-bab7-ac699ad9610c"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 13929, 319, 1653, "Code",ExpressionUUID->"4c40d768-8634-45e8-8732-24743a1e5a19"],
+Cell[14508, 343, 8748, 156, 909, "Output",ExpressionUUID->"9ec9e940-ff37-4c0d-adf0-3f378456ae26"],
+Cell[23259, 501, 432, 9, 26, "Message",ExpressionUUID->"1af62759-3198-4bc4-9681-012181f020df"],
+Cell[23694, 512, 433, 9, 26, "Message",ExpressionUUID->"7033c90f-c7b9-49aa-b26e-8abb00c90223"],
+Cell[24130, 523, 431, 9, 26, "Message",ExpressionUUID->"f79a6154-99c9-409a-abc2-62b74e5ecf77"]
+}, Open  ]]
+}
+]
+*)
+
